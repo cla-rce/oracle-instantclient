@@ -1,0 +1,7 @@
+<% if node[:cla_unix_baseline][:use_system_proxy] then %>
+setenv http_proxy "<%= node[:cla_unix_baseline][:system_proxy] %>"
+setenv ftp_proxy "<%= node[:cla_unix_baseline][:system_proxy] %>"
+setenv no_proxy "<%= node[:cla_unix_baseline][:proxy_ignore_domains] %>"
+setenv HTTP_PROXY "<%= node[:cla_unix_baseline][:system_proxy] %>"
+setenv FTP_PROXY "<%= node[:cla_unix_baseline][:system_proxy] %>"
+<% end %>

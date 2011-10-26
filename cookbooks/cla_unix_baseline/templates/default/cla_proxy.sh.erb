@@ -1,0 +1,8 @@
+<% if node[:cla_unix_baseline][:use_system_proxy] then %>
+http_proxy=<%= node[:cla_unix_baseline][:system_proxy] %>
+ftp_proxy=<%= node[:cla_unix_baseline][:system_proxy] %>
+no_proxy=<%= node[:cla_unix_baseline][:proxy_ignore_domains] %>
+HTTP_PROXY=<%= node[:cla_unix_baseline][:system_proxy] %>
+FTP_PROXY=<%= node[:cla_unix_baseline][:system_proxy] %>
+export http_proxy ftp_proxy no_proxy HTTP_PROXY FTP_PROXY
+<% end %>

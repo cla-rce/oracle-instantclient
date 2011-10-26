@@ -1,0 +1,3 @@
+<% if node[:cla_unix_baseline][:use_system_proxy] then %>
+Acquire::http::Proxy "<%= node[:cla_unix_baseline][:system_proxy] %>";
+<% end %>
