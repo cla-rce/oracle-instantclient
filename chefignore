@@ -9,3 +9,7 @@
 
 # subversion
 */.svn/*
+
+# OS X
+*/.DS_Store
+*/._*
