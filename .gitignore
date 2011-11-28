@@ -2,3 +2,4 @@
 .chef
 metadata.json
 .rvmrc
+.DS_Store
