@@ -46,7 +46,7 @@ when "ubuntu"
     variables( 
       :distro_name => node[:lsb][:codename]
     )
-    not_if "/bin/test -f /etc/apt/sources.list.d/ubuntu-enable-partner.list"
+    not_if "/usr/bin/test -f /etc/apt/sources.list.d/ubuntu-enable-partner.list"
   end
 
   script "enable_ppa" do
@@ -54,9 +54,9 @@ when "ubuntu"
     user "root"
     cwd "/tmp"
     code <<-EOH
-    /usr/bin/add-apt-repository #{node[:cla_baseline][:base_ppa]}
+    /usr/bin/add-apt-repository #{node[:cla_unix_baseline][:base_ppa]}
     EOH
-    not_if "/bin/test -f /etc/apt/sources.list.d/buysse-umn-lucid.list"
+    not_if "/usr/bin/test -f /etc/apt/sources.list.d/buysse-umn-lucid.list"
   end
 
 when "redhat", "centos"

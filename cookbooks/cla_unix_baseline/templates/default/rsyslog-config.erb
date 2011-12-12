@@ -1,5 +1,5 @@
 ## forward all messages to syslog
-<% node[:cla_baseline][:syslog_servers].each do |server| %>
+<% node[:cla_unix_baseline][:syslog_servers].each do |server| %>
 <% server.match('(:\d+)') ? (port = "") : (port = ":514") %>
 *.info   				  @<%= server %>
 <% end %>

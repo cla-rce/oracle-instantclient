@@ -38,8 +38,7 @@ end
 
 script "clean_shell_fragment_symlinks" do 
   interpreter "/bin/bash"
-  action :none
-  supports :run
+  action :nothing
   code <<-EOH
   cd /etc/profile.d
   for i in cla_shell_fragments/*.sh cla_shell_fragments/*.csh ; do 

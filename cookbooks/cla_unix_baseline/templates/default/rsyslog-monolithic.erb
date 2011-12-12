@@ -78,7 +78,7 @@ local7.*                                                /var/log/boot.log
 # ### end of the forwarding rule ###
 
 ## forward all messages to syslog servers
-<% node[:cla_baseline][:syslog_servers].each do |server| %>
+<% node[:cla_unix_baseline][:syslog_servers].each do |server| %>
 <% server.match('(:\d+)') ? (port = "") : (port = ":514") %>
 *.info                                    @<%= server %>
 <% end %>
