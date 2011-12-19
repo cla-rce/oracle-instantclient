@@ -22,7 +22,7 @@
 # Check platform
 case node[:platform]
 when "ubuntu"
-  packages = ['auth-client-config','ldap-auth-client']
+  packages = ['nscd', 'auth-client-config','ldap-auth-client', 'libpam-cracklib']
   packages.each do |p|
     package p
   end

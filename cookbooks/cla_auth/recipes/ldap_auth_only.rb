@@ -26,7 +26,6 @@ when "ubuntu"
   template "/etc/ldap.conf" do
     source "ubuntu-ldap-generic.conf.erb"
     notifies :run, "execute[nssldap-update-ignoreusers]"
-    notifies :run, "execute[check-if-updated-ignoreusers]"
     notifies :restart, "service[nscd]"
     notifies :run, "execute[cache-updated-ignoreusers]"
   end
@@ -41,9 +40,9 @@ when "ubuntu"
     source "cla-auth-ldaponly.profile"
   end
   execute "auth_client_conf_ldap_authonly" do 
-    command "auth-client-config -p cla-ldap-authonly -a"
+    command "auth-client-config -p cla-auth-ldaponly -a"
     # don't do anything if we don't need to (we match profile now)
-    not_if "auth-client-config -p cla-ldap-authonly -a -s"
+    not_if "auth-client-config -p cla-auth-ldaponly -a -s"
   end
 
   execute "nssldap-update-ignoreusers" do 
