@@ -1,0 +1,15 @@
+### managed by chef
+### very minimal, required components only
+
+#base dc=cla,dc=umn,dc=edu
+base <%= node[:cla_auth][:ldap_base] %>
+
+#uri ldaps://ldap2.claoit.umn.edu ldaps://ldap3.claoit.umn.edu
+uri <%= node[:cla_auth][:ldap_servers].join " " %>
+
+ldap_version 3
+#rootbinddn cn=manager,dc=example,dc=net
+pam_password md5
+tls_checkpeer yes
+tls_cacertfile /etc/ssl/certs/cla_auth_cacert.pem
+
