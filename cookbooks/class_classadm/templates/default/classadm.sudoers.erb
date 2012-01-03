@@ -1,0 +1,8 @@
+# <%= @params[:name] %> software administration commands
+
+Defaults:%<%= node[:classadm][:group] %> logfile=/var/log/classadm.log
+
+# allowed commands
+<% @params[:commands].each do |cmd| -%>
+%<%= node[:classadm][:group] %>	ALL = <%= cmd %>
+<% end -%>
