@@ -21,6 +21,8 @@
 # Check platform
 case node[:platform]
 when "ubuntu"
+  include_recipe "apt::default"
+  
   # fix the default umask on Ubuntu
   execute "append_umask_session" do 
     # test moved to template for ldif to keep things rolling with appropriate deps.
@@ -49,7 +51,7 @@ when "ubuntu"
     not_if "/usr/bin/test -f /etc/apt/sources.list.d/ubuntu-enable-partner.list"
   end
 
-  script "enable_ppa" do
+  script "enable_ppa_buysse" do
     interpreter "bash"
     user "root"
     cwd "/tmp"
@@ -68,6 +70,8 @@ when "redhat", "centos"
 end
 
 include_recipe "cla_shell::default"
+include_recipe "cla_sudo::default"
 include_recipe "cla_unix_baseline::syslog_setup"
 include_recipe "cla_unix_baseline::base_packages"
 include_recipe "cla_unix_baseline::system_proxy"
+include_recipe "cla_clamav::default"
