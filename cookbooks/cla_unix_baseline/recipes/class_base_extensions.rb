@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cla_unix_baseline
-# Recipe:: class_app_server_packages
+# Recipe:: class_base_extensions
 #
 # Copyright 2011, Joshua Buysse, (C) Regents of the University of Minnesota
 #
@@ -40,5 +40,10 @@ when "redhat", "centos"
   end
 end
 
+# class users?  Need to refactor
+
 include_recipe "class_git::default"
-include_recipe "postfix::default"
+# in base
+#include_recipe "postfix::default"
+# refactor
+#include_recipe "class_classadm::default"

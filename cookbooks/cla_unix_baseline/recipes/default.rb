@@ -63,8 +63,10 @@ when "ubuntu"
 
 when "redhat", "centos"
   
-  ### need to fill in:
   ## epel repository
+  include_recipe "yum::epel"
+
+  ### need to fill in:
   ## local repositories
   
 end
