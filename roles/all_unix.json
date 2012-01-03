@@ -1,6 +1,12 @@
 {
   "name": "all_unix",
   "default_attributes": {
+    "chef_client": {
+      "init_style": "runit",
+      "server_url": "https://api.opscode.com/organizations/claumn",
+      "splay": 60,
+      "interval": 1800
+    }
   },
   "json_class": "Chef::Role",
   "env_run_lists": {
@@ -8,6 +14,8 @@
   "run_list": [
     "recipe[chef_handler::default]",
     "recipe[chef_handler::cla_syslog]",
+    "recipe[chef-client::default]",
+    "recipe[chef-client::delete_validation]",
     "recipe[cla_unix_baseline::default]"
   ],
   "description": "",
