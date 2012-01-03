@@ -18,11 +18,6 @@
 #
 
 ### ensure the correct chef gem is installed
-gem_package "chef" do 
-  version "0.10.8"
-  action :install
-end
-
 
 # Check platform
 case node[:platform]
