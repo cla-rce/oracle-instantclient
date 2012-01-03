@@ -1,0 +1,68 @@
+## advisory section
+[cla_db_mgmt]
+full_db_version	= <%= @instance[:full_db_version] %>
+full_db_version_dir = <%= @versioninfo['unpack_dir'] %>
+instancename	= <%= @instance[:id] %>
+version_id      = <%= @versioninfo[:id] %>
+
+
+[client]
+port		= <%= @instance[:port] || "3306" %>
+socket		= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}/mysql.sock" %>
+
+[mysqld_safe]
+socket		= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}/mysql.sock" %>
+nice		= 0
+
+[mysqld]
+user		= <%= @instance[:user] %>
+socket		= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}/mysql.sock" %>
+port		= <%= @instance[:port] || "3306" %>
+bind-address	= <%= @instance[:bind_address] || "0.0.0.0" %>
+basedir		= <%= "#{node[:cla_db_mgmt][:basedir]}/share/software/#{@versioninfo['unpack_dir']}" %>
+datadir		= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}" %>
+
+innodb_data_home_dir	= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}" %>
+innodb_log_group_home	= <%= "#{node[:cla_db_mgmt][:datadir]}/#{@instance[:id]}" %>
+innodb_data_file_path	= ibdata1:16M:autoextend
+
+## logging info
+log-error	= <%= "#{node[:cla_db_mgmt][:logdir]}/#{@instance[:id]}.error.log" %>
+
+slow_query_log_file	= <%= "#{node[:cla_db_mgmt][:logdir]}/#{@instance[:id]}.slow_query.log" %>
+
+# the general log gets big fast, generally turn it on dynamically
+general_log_file	= <%= "#{node[:cla_db_mgmt][:logdir]}/#{@instance[:id]}.general.log" %>
+<% if @instance[:enable_general_log] then %>
+general_log 	= 1
+<% else %>
+general_log 	= 0
+<% end %>
+
+## binary logging, needed for replication
+<% if @instance[:enable_binary_log] then %>
+log-bin			= <%= "#{node[:cla_db_mgmt][:logdir]}/#{@instance[:id]}-bin.log" %>
+log-bin-index		= <%= "#{node[:cla_db_mgmt][:logdir]}/#{@instance[:id]}-bin.index" %>
+binlog_format		= mixed
+<% end %>
+
+server-id		= <%= @instance[:server_id] || 1 %>
+
+max_allowed_packet 	= <%= @instance[:max_allowed_packet] || "16M" %>
+
+!include <%= "#{node[:cla_db_mgmt][:basedir]}/etc/instances/#{@instance[:id]}.mysqld_tuning.conf" %>
+
+
+[mysqldump]
+quick
+max_allowed_packet	= <%= @instance[:max_allowed_packet] || "16M" %>
+
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+key_buffer_size = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+

@@ -1,0 +1,17 @@
+### default to tiny, chef never replaces this
+key_buffer_size = 16M
+table_open_cache = 64
+sort_buffer_size = 512K
+net_buffer_length = 8K
+read_buffer_size = 256K
+read_rnd_buffer_size = 512K
+myisam_sort_buffer_size = 8M
+innodb_buffer_pool_size = 128M
+innodb_additional_mem_pool_size = 2M
+# Set .._log_file_size to 25 % of buffer pool size
+## this is hard to set later, so we're allowing this to be tuned before creating the instance
+innodb_log_file_size = <%= @instance[:initial_innodb_log_size] || "64M" %>
+innodb_log_buffer_size = 8M
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50
+
