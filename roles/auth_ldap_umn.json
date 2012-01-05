@@ -3,10 +3,10 @@
   "default_attributes": {
     "cla_auth": {
       "ldap_base": "ou=People,o=University of Minnesota,c=US",
+      "ldap_cacert_fname": "cacert_bundle.pem",
       "ldap_servers": [
-        "ldapauth.umn.edu"
-        ],
-      "ldap_cacert_fname": "cacert_bundle.pem"
+        "ldaps://ldapauth.umn.edu"
+      ]
     }
   },
   "json_class": "Chef::Role",

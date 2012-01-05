@@ -16,7 +16,9 @@
     "recipe[chef_handler::cla_syslog]",
     "recipe[chef-client::default]",
     "recipe[chef-client::delete_validation]",
-    "recipe[cla_unix_baseline::default]"
+    "recipe[cla_unix_baseline::default]",
+    "recipe[cla_users::local_admins]",
+    "recipe[cla_users]"
   ],
   "description": "",
   "chef_type": "role",
