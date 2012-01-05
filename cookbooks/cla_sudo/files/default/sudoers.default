@@ -45,7 +45,7 @@ Defaults !env_reset
 
 
 ### system administrators
-User_Alias 	SYSTEM_ADMINS=buysse,pnw,esser,adam,wunde005
+User_Alias 	SYSTEM_ADMINS=buysse,pnw,esser,adam,wunde005,kerzn002
 SYSTEM_ADMINS	ALL=(ALL) ALL
 
 # allow local admins on the box in with sudo
