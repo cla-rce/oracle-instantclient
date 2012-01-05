@@ -1,0 +1,11 @@
+{
+  "comment": "LOCAL_ADMIN Peter Walz",
+  "class": "system",
+  "ssh_keys": [
+    "ssh-dss AAAAB3NzaC1kc3MAAACBAPNY6z1Hz11n05JtZ1MF/cSX1KDBcJI2gsCzQRizXQeYckE/Hpo7LCYSkntt7qpwD94oWxWemnbpTaWqu2AA41NbIyrJ+sw9gG6yLUj4ooKjEXPdMJJONf1UnOUkOtox3+eRKHd/AiLBR3lUG/MN6Ie2SwyabOAtEFCRUaQmHEJ/AAAAFQD5nahE+hgJW5GhCL8V9tK9B/JtCQAAAIEAz6jlEODnZEkipQdiePoFTw9L19SyPNXIgK1w+LCQ0ZcbajrJnYGy6PExhewEOyNYXLyuR5D/kBvdmPRxRFaCJVzwYbCQw0kV+3N+zWT+ppN6ALwUPgIqkX+4QPSjLOCW8BB5s+ZoimEWQPDZ6Ea43GXBRdjtdM38owxIOiXNGOUAAACBALK7xAwVfto6YJI7KknqEdIa//dcG1g3i4PGmEn9ChmX/Skn+g0mNUWXnZd+PSwSj1yPUGz3/maUiiSwgDTvoz+K1nkvJx2En022sML4f0PWkHRKJjdQlJiuBfQnLxO/yTSoW25zIhUT6dbf2EGthZ34ndnbEIgcALyoxtpAx7H2 pnw@orson.cla.umn.edu",
+    "ssh-dss AAAAB3NzaC1kc3MAAACBAPk+x5eoUpG/YZ7Cm6+OmoDPYsZyiBu0oszRoxAKJiVqfr2pJrEFdlfqBAxQd0wf6HqlxxO1ksImxMxOCvpxQ/b2mY4Zs18xlhpTDL4ubD+zvtpDDh0MiARSNpkiEJZJH6aVJoS2mT6iHNmso9Oq6P9KKjs4sKOzes1j+wd3JavxAAAAFQDtdqegysQxepYWRm1QFNwK5kYmFwAAAIEAiBowDFx5QyupZwOrAEhrMHBemhu3ntxtLFEib+wXeammkk+eAFIEhyuvx1eW5BUcFoHjJC312gRsqei9ZDTIyY3yNjNk2djHZcBMN8sdTn+b2Lmp19z35/VAiFlBQgEGAW+b6eBXBPXWucIdRCjTTMJtB3MCNyfnru7qcBuITWIAAACAYuHjxQ3RMAKvmAZEkWt4WzCIxBaKqQDJPvs7HfWdnNXJYpW3ZxGj9vldWw8jpAzPAOX3n96l9pj2APw4zckydnHtvZiTeENt7DrpznD+aFOaA0RiEGxyRjn9jcCmj0Wkbjj3j+33Av1ThmGrfVCus5j+OpbTyp6407emUkvPuyY= pnw@OIT-200751480.local"
+  ],
+  "id": "local_pnw",
+  "shell": "/bin/bash",
+  "password_hash": "$1$Z.JYWnkl$pIoOts.0XQ26MPD2ts48V."
+}

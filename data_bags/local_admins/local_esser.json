@@ -1,0 +1,10 @@
+{
+	"id": "local_esser",
+	"class": "system",
+	"shell": "/bin/bash",
+	"comment": "LOCAL_ADMIN Mark Esser",
+	"password_hash": "*",
+	"ssh_keys": [
+		"ssh-dss AAAAB3NzaC1kc3MAAACBAN1c5cQkWgK237BFAdTGub9kbzq3Nu/BbM59zjIXhNqEkq9uox0dJI/7cDLmvnzSxhZp6bJKNKitaZZcHLH2KfSX6EomXSAwfME9s7p6IYGmEuIhuvFbqutOBEvbCCL3t3RCPqv37vKT/pmnQxpYmPFH6gK5Rw7w2uwcah4RP0HnAAAAFQC0gVLSzQhUaKBtWWN1CgM/7SSRawAAAIEA2Ai/fMuINtgki73Sg9Quy4C14UjaDEOAsuNKW27scqjjaWaXqmH/DHTY3sa/s5QdnBoc30V6s+0nx354kMTIOygKRR+DCTGDb/yhiI/AMHfWo/W+V5SPQA2xgJYGZaXSWbI6mR3DSgYJUjBUq8VIflE9cDNtn7vXOyzRgs2mNOgAAACAXxH7bmYUA0ZjH1phWsfGQbM+a1PW/6JV2Zm03TzfnLaGWFPJ2l2SsczvTblXNRS3XVWeYAEtMBVtxgE3mqPs1QVRdje8jGmo5r5zL9OSJKgJ+RbXZ9fGdbPZfEMl9Wt8pPfC1Izfr7WFCI52UkQEoH+jwruAMKtVBoTZYQ/VhLQ= esser@aten.cla.umn.edu"
+	]
+}

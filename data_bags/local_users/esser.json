@@ -1,0 +1,10 @@
+{
+	"id": "esser",
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Mark Esser",
+	"password_hash": "*",
+	"ssh_keys": [
+	
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"id": "wunde005",
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Eric Wunderlin",
+	"password_hash": "*",
+	"ssh_keys": [
+]
+}

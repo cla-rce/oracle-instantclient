@@ -1,0 +1,9 @@
+{
+	"id": "goggins",
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Joe Goggins",
+	"password_hash": "$1$DeacCnWd$OgGRX/H1oPT2ps7m6TfW0/",
+	"ssh_keys": [
+	]
+}

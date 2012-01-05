@@ -1,0 +1,11 @@
+{
+	"id": "local_kerzn002",
+	"class": "system",
+
+	"shell": "/bin/bash",
+	"comment": "LOCAL_ADMIN Jeff Kerzner",
+	"password_hash": "$1$Uv1n69AL$3qFZ4ycVA01zvFDc0QMJj1",
+	"ssh_keys": [
+"ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAwF1DkkO8fNk0DgGC0zjAvIo/euHqv+w5cP2Ew0BgSEW19bo6OKLPOZGymJ8RCEY/lKPj 4KBACOHzeQHCRhj3wZg/jXNxXdciSX5BrMIKyMINEkpQVltHe0doV7nim6T3RB55EZ6XAtt95BTQuxqxbkd5pQ0ooBO0QZJzycFZ5PRs uRFTuLjclJEKFXzlVWTUVCHmyRGMiHns3iomHPRWyEpiXkWcJBdXlLBYZEXvJ9m7JLU88cmOmaRCXpn/uP06z1AHkvJGmn9iweo+LHML okZ0VlzTbexTlE3Au0Ok8x3Dt5GYwVVco1E9xhx/Vn+2c2iI405fbYJlZDqNUxQ== kerzn002@walrus"
+	]
+}
