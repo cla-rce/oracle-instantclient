@@ -335,3 +335,8 @@ lars0954	CEHD_WORDPRESS_SERVER=(root) ALL,!SHELLS
 User_Alias	GANESHA_ADMINS=sdierks,swans290
 Host_Alias	GANESHA_VM=ganesha,ganesha.cla.umn.edu
 GANESHA_ADMINS	GANESHA_VM=(root) ALL,!SHELLS
+
+## RT94705 allow c4writi members to sudo to shared tasks user
+## -jjb
+Host_Alias	C4W_WEB=scrawl,scrawl.cla.umn.edu,c4w-dev,c4w-dev.cla.umn.edu
+%c4writi	C4W_WEB=(c4w-tasks) ALL
