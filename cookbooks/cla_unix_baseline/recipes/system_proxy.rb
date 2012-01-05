@@ -24,6 +24,7 @@ when "ubuntu", "debian"
   
   template "/etc/apt/apt.conf.d/99_cla_proxy" do 
     source "apt_proxy.erb"
+    mode "0755"
   end
 
 when "redhat", "centos"
@@ -37,13 +38,16 @@ end
 
 template "/etc/wgetrc" do 
   source "wgetrc.erb"
+  mode "0755"
 end
 
 template "/etc/profile.d/cla_proxy.sh" do
   source "cla_proxy.sh.erb"
+  mode "0755"
 end
 
 template "/etc/profile.d/cla_proxy.csh" do
   source "cla_proxy.csh.erb"
+  mode "0755"
 end
 
