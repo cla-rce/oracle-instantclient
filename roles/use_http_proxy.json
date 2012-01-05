@@ -1,6 +1,10 @@
 {
   "name": "use_http_proxy",
   "default_attributes": {
+    "chef": { 
+      "http_proxy": "http://labproxy.cla.umn.edu:3128",
+      "https_proxy": "http://labproxy.cla.umn.edu:3128"
+    }
   },
   "json_class": "Chef::Role",
   "env_run_lists": {
