@@ -322,9 +322,9 @@ User_Alias	CLASS_TESTING_ADMINS=perr0273,kendrick
 Host_Alias	CLASS_TESTING=class-rhel6-a,class-rhel6-a.cla.umn.edu,class-rhel6-b,class-rhel6-b.cla.umn.edu,class-web,class-web.cla.umn.edu
 CLASS_TESTING_ADMINS	CLASS_TESTING=(ALL) ALL
 
-# CLASS DB server
+# CLASS DB server testing
 User_Alias	CLASS_DB_SERVER_ADMINS=perr0273,kendrick
-Host_Alias	CLASS_DB_SERVERS=isengard,isengard.cla.umn.edu
+Host_Alias	CLASS_DB_SERVERS=isengard,isengard.cla.umn.edu,orthanc,orthanc.cla.umn.edu
 CLASS_DB_SERVER_ADMINS	CLASS_DB_SERVERS=(ALL) ALL
 
 # Allow Brian Larson administrative privs on cehd-wordpress server
