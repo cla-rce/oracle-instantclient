@@ -1,0 +1,17 @@
+{
+  "name": "oracle_client",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "recipe[oracle-instantclient::default]",
+    "recipe[oracle-instantclient::sdk]",
+    "recipe[oracle-instantclient::sqlplus]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
