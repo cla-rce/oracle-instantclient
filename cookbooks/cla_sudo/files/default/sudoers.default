@@ -206,7 +206,8 @@ User_Alias	ECON_ADMINS=doh
 User_Alias	MPC_ADMINS=pclark
 User_Alias	CSOM_SVCDESK=marti149,smelk003,cnoyed
 User_Alias	PSYCH_ADMINS=cbates,stee0152
-User_Alias	SMBPASSWD_ALL=smelk003,cbates,doh
+## allowing smbpasswd for mayotte as well, 2012-01-09
+User_Alias	SMBPASSWD_ALL=smelk003,cbates,doh,mayotte
 
 ECON_ADMINS	valhalla=DPASSWD
 MPC_ADMINS	valhalla=DPASSWD
