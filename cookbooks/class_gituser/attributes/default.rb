@@ -1,0 +1,5 @@
+default['gituser']['user'] = "git"
+default['gituser']['group'] = "git"
+default['gituser']['home_dir'] = "/home/git"
+default['gituser']['scripts_dir'] = "/data/scripts"
+default['gituser']['gitroot_dir'] = "/data/gitroot"

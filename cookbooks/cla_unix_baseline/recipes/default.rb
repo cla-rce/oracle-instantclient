@@ -30,6 +30,7 @@ when "ubuntu"
     command "/bin/echo 'session	optional	pam_umask.so	usergroups' >> /etc/pam.d/common-session"
     not_if "/bin/grep pam_umask.so.*usergroups /etc/pam.d/common-session"
   end
+  
   execute "append_umask_session_noninteractive" do 
     # test moved to template for ldif to keep things rolling with appropriate deps.
     command "/bin/echo 'session	optional	pam_umask.so	usergroups' >> /etc/pam.d/common-session-noninteractive"
@@ -50,6 +51,7 @@ when "ubuntu"
       :distro_name => node[:lsb][:codename]
     )
     not_if "/usr/bin/test -f /etc/apt/sources.list.d/ubuntu-enable-partner.list"
+    notifies :run, "execute[apt_update]", :immediately
   end
 
   script "enable_ppa_buysse" do
@@ -60,6 +62,12 @@ when "ubuntu"
     /usr/bin/add-apt-repository #{node[:cla_unix_baseline][:base_ppa]}
     EOH
     not_if "/usr/bin/test -f /etc/apt/sources.list.d/buysse-umn-lucid.list"
+    notifies :run, "execute[apt_update]", :immediately
+  end
+
+  execute "apt_update" do 
+    command "apt-get update"
+    action :nothing
   end
 
 when "redhat", "centos"
