@@ -24,4 +24,5 @@ depends "class_phpmysqlsessions"
 depends "class_php"
 depends "cla_cronjobs"
 depends "logrotate"
+depends "ntp"
 

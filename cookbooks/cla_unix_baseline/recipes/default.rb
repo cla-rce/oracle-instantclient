@@ -79,6 +79,8 @@ include_recipe "cla_unix_baseline::base_packages"
 include_recipe "cla_unix_baseline::system_proxy"
 include_recipe "cla_cronjobs::default"
 include_recipe "logrotate::default"
+include_recipe "ntp::default"
+
 ## this needs work first -- don't cross filesystem boundaries when scanning, only do local filesystems
 ## modify cron with my version and skip mail, send via syslog/splunk
 #include_recipe "cla_clamav::default"
