@@ -23,5 +23,8 @@
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "ntp": {
+      "servers": ["128.101.101.101", "134.84.84.84"]
+    }
   }
 }
