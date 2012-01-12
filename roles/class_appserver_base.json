@@ -1,0 +1,19 @@
+{
+  "name": "class_appserver_base",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "recipe[cla_unix_base::class_base_extensions]",
+    "recipe[cla_unix_base::class_appserver]",
+    "recipe[class_gituser::default]",
+    "recipe[class_crontasks]",
+    "recipe[class_vhosts::default]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
