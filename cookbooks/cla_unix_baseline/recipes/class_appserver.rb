@@ -20,20 +20,31 @@
 ## merged from class perl::modules, crimson-tools::default, freetds, lasso (partial, no RH),
 ##   
 
-#### STUB: jansson package
-#### STUB: eaccelerator
-#### STUB: gituser recipe
+#### Done: jansson package
+#### Done: eaccelerator
+#### Done: gituser recipe
+  ## keep separate
 #### STUB: classadm::apache2
-#### STUB: class crontasks
-#### STUB: class vhosts
-#### STUB: class clustersync
+#### Done: class crontasks
+  ## this creats a task user and sets up sudo rights
+  ## keep separate
+#### Done: class vhosts
+  ## keep separate, rename class_vhosts
+#### Done: class clustersync
+  ## keep separate, rename class_clustersync
+  
+# role runlist (for slave) needs this, gituser::default, crontasks::default, 
+#   class_hosts::default, class_clustersync::default
+# role runlist (for master) needs change to class_clustersync::master
 
 
-
+# merged from many of their cookbooks.
 ubuntu_lucid_plist = %w{ unison wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  imagemagick gsfonts freetds-bin liblasso3 php5-lasso PhpDocumentor }
+  imagemagick gsfonts freetds-bin liblasso3 php5-lasso PhpDocumentor php5-eaccelerator 
+  libjansson-dev libjansson4 }
 
-### not implemented for rhel: lasso
+### not implemented for rhel: lasso eaccelerator jansson, no nodes expected on rhel
+###   but maintaining as much as possible in case of future use
 rh_5_plist = %w{ unison227 wv xpdf poppler-utils html2ps tidy aspell aspell-en 
   ImageMagick ghostscript-fonts freetds phpdoc }
 
@@ -97,7 +108,7 @@ include_recipe "class_phpmysqlsessions::default"
 
 include_recipe "apache2::mod_php5"
 
-# from perl::modules
+# from perl::modules as modified by CLASS
 perl_modules.each do |pkg|
   package pkg do
     action :install

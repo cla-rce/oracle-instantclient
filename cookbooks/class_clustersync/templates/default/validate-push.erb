@@ -1,0 +1,36 @@
+#!/bin/sh
+
+case "$SSH_ORIGINAL_COMMAND" in
+*\&*)
+echo "Rejected"
+;;
+*\(*)
+echo "Rejected"
+;;
+*\{*)
+echo "Rejected"
+;;
+*\;*)
+echo "Rejected"
+;;
+*\<*)
+echo "Rejected"
+;;
+*\`*)
+echo "Rejected"
+;;
+*\|*)
+echo "Rejected"
+;;
+<% node['clustersync']['sync_dirs'].each do |d| -%>
+rsync\ --server\ -logDtprCze.iLs\ .\ <%= d + (d[-1,1] == "/" ? "" : "/") %>)
+$SSH_ORIGINAL_COMMAND
+;;
+<% end -%>
+unison\ -server*)
+$SSH_ORIGINAL_COMMAND
+;;
+*)
+echo "Rejected"
+;;
+esac 
