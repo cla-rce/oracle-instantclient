@@ -34,6 +34,9 @@ gem update --no-rdoc --no-ri
 gem install ohai --no-rdoc --no-ri --verbose
 gem install chef --no-rdoc --no-ri --verbose <%= bootstrap_version_string %>
 
+## for sanity, need to do this
+ln -sf /var/lib/gems/1.8/bin/chef-client /usr/bin/chef-client
+
 mkdir -p /etc/chef
 
 (
