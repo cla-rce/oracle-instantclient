@@ -43,11 +43,11 @@
       "display_errors": "On",
       "log_errors": "Off",
       "html_errors": "Off",
-      "register_globals": "On", # ugh. crimson.
+      "register_globals": "On", 
       "register_long_arrays": "Off",
       "register_argc_argv": "On",
       "post_max_size": "100M",
-      "magic_quotes_gpc": "On", # ugh. crimson.
+      "magic_quotes_gpc": "On", 
       "upload_max_filesize": "999M",
       "date_timezone": "America/Chicago",
       "date_default_latitude": "44.975952",
