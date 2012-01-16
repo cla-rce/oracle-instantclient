@@ -1,0 +1,12 @@
+{
+  "id": "asstdean",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "asstdean.class.umn.edu",
+      "ServerAlias": "www.asstdean.class.umn.edu assistantdean.class.umn.edu www.assistantdean.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 38
+    }
+  }
+}

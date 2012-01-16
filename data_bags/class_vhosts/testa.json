@@ -1,0 +1,11 @@
+{
+  "id": "testa",
+  "server_roles": ["devserver"],
+  "vhosts": {
+    "*:80": {
+      "ServerName": "testa.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 14
+    }
+  }
+}

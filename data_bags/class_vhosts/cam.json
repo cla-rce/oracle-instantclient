@@ -1,0 +1,10 @@
+{
+  "id": "cam",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "cam.class.umn.edu",
+      "CommID": 11
+    }
+  }
+}

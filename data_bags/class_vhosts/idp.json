@@ -1,0 +1,10 @@
+{
+  "id": "idp",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "idp.class.umn.edu",
+      "CommID": 5
+    }
+  }
+}

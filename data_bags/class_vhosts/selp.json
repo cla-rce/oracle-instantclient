@@ -1,0 +1,12 @@
+{
+  "id": "selp",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "selp.umn.edu",
+      "ServerAlias": "www.selp.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 66
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "frazzle",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "frazzle.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 23
+    }
+  }
+}

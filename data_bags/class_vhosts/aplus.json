@@ -1,0 +1,21 @@
+{
+  "id": "aplus",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:11080": {
+      "ServerName": "aplus.umn.edu",
+      "ServerAlias": "www.aplus.umn.edu ets.umn.edu www.ets.umn.edu cassini.umn.edu www.cassini.umn.edu",
+      "RedirectMatch": {
+        "/(.*)": "https://aplus.umn.edu/$1"
+      }
+    },
+    "*:11443": {
+      "ServerName": "aplus.umn.edu",
+      "ServerAlias": "www.aplus.umn.edu ets.umn.edu www.ets.umn.edu cassini.umn.edu www.cassini.umn.edu",
+      "DocumentRoot": "/data/www/mycla/",
+      "SSLCertificate": "aplus",
+      "SSLCertificateChain": "incommon",
+      "UseServerName": true
+    }
+  }
+}

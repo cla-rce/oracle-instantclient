@@ -1,0 +1,11 @@
+{
+  "id": "bse",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "bse.umn.edu",
+      "ServerAlias": "www.bse.umn.edu",
+      "Redirect": { "/": "http://hns.class.umn.edu/documents/Biol_Soc_Envt.html" }
+    }
+  }
+}

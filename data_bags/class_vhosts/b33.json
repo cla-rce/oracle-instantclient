@@ -1,0 +1,11 @@
+{
+  "id": "b33",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "b33.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 52
+    }
+  }
+}

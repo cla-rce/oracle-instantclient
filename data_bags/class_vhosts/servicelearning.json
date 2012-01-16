@@ -1,0 +1,21 @@
+{
+  "id": "servicelearning",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:19080": {
+      "ServerName": "www.servicelearning.umn.edu",
+      "ServerAlias": "servicelearning.umn.edu csl.umn.edu www.csl.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "UseServerName": true,
+      "CommID": 26
+    },
+    "*:19443": {
+      "ServerName": "www.servicelearning.umn.edu",
+      "ServerAlias": "servicelearning.umn.edu csl.umn.edu www.csl.umn.edu",
+      "DocumentRoot": "/data/www/slp/",
+      "SSLCertificate": "servicelearning",
+      "SSLCertificateChain": "incommon",
+      "UseServerName": true
+    }
+  }
+}

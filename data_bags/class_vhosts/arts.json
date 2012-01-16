@@ -1,0 +1,10 @@
+{
+  "id": "arts",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "arts.class.umn.edu",
+      "CommID": 1
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "majordecision",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "majordecision.umn.edu",
+      "ServerAlias": "www.majordecision.umn.edu",
+      "Redirect": { "/": "https://www.class.umn.edu/choosing_a_major/" }
+    }
+  }
+}

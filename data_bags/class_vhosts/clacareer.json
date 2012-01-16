@@ -1,0 +1,13 @@
+{
+  "id": "clacareer",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.clacareer.umn.edu",
+      "ServerAlias": "clacareer.umn.edu careerservices.class.umn.edu www.careerservices.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 24,
+      "UseServerName": true
+    }
+  }
+}

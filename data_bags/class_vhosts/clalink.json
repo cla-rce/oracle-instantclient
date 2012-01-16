@@ -1,0 +1,11 @@
+{
+  "id": "clalink",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.clalink.cla.umn.edu",
+      "ServerAlias": "clalink.cla.umn.edu",
+      "Redirect": { "/": "http://www.cclc.umn.edu/clalink/" }
+    }
+  }
+}

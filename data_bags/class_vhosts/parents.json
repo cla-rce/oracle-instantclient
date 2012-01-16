@@ -1,0 +1,12 @@
+{
+  "id": "parents",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "parents.class.umn.edu",
+      "ServerAlias": "parent.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 45
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "ssdb",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:18080": {
+      "ServerName": "www.ssdb.umn.edu",
+      "ServerAlias": "ssdb.umn.edu",
+      "RedirectMatch": {
+        "/(.*)": "https://www.ssdb.umn.edu/$1"
+      }
+    },
+    "*:18443": {
+      "ServerName": "www.ssdb.umn.edu",
+      "ServerAlias": "ssdb.umn.edu",
+      "DocumentRoot": "/data/www/mycla/",
+      "SSLCertificate": "ssdb",
+      "SSLCertificateChain": "incommon",
+      "UseServerName": true
+    }
+  }
+}

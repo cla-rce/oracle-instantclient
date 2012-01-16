@@ -1,0 +1,24 @@
+{
+  "id": "volunteer",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:16080": {
+      "ServerName": "volunteer.cla.umn.edu",
+      "ServerAlias": "www.volunteer.cla.umn.edu",
+      "DocumentRoot": "/data/www/volunteer/",
+      "Alias": {
+        "/crimson/": "/data/www/htdocs/crimson/"
+      }
+    },
+    "*:16443": {
+      "ServerName": "volunteer.cla.umn.edu",
+      "ServerAlias": "www.volunteer.cla.umn.edu",
+      "DocumentRoot": "/data/www/volunteer/",
+      "SSLCertificate": "volunteer",
+      "SSLCertificateChain": "incommon",
+      "Alias": {
+        "/crimson/": "/data/www/htdocs/crimson/"
+      }
+    }
+  }
+}

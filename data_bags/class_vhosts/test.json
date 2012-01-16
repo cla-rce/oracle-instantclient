@@ -1,0 +1,30 @@
+{
+  "id": "test",
+  "server_roles": ["devserver"],
+  "vhosts": {
+    "*:80": {
+      "ServerName": "test.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10
+    },
+    "*:443": {
+      "ServerName": "test.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "SSLCertificate": "dev",
+      "SSLCertificateChain": "incommon",
+      "CommID": 10,
+      "Alias": {
+        "/alumni/": "/data/www/alumni/",
+        "/chronos/": "/data/www/chronos/",
+        "/cic2009/": "/data/www/cic2009/",
+        "/general/": "/data/www/general/",
+        "/minion_auth/": "/data/www/minion_auth/",
+        "/mycla/": "/data/www/mycla/",
+        "/scholarships/": "/data/www/scholarships/",
+        "/secure/": "/data/www/secure/",
+        "/slp/": "/data/www/slp/",
+        "/volunteer/": "/data/www/volunteer/"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "claopenhouse",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "claopenhouse.umn.edu",
+      "ServerAlias": "www.claopenhouse.umn.edu",
+      "Redirect": { "/": "https://www.class.umn.edu/secure/cla_open_house/" }
+    }
+  }
+}

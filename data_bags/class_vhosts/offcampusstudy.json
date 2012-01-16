@@ -1,0 +1,13 @@
+{
+  "id": "offcampusstudy",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.offcampusstudy.umn.edu",
+      "ServerAlias": "offcampusstudy.umn.edu nse.umn.edu www.nse.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "UseServerName": true,
+      "CommID": 28
+    }
+  }
+}

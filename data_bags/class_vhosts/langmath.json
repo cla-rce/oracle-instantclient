@@ -1,0 +1,10 @@
+{
+  "id": "langmath",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "langmath.class.umn.edu",
+      "CommID": 4
+    }
+  }
+}

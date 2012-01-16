@@ -1,0 +1,12 @@
+{
+  "id": "scr",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.scr.umn.edu",
+      "ServerAlias": "scr.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 62
+    }
+  }
+}

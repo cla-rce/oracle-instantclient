@@ -1,0 +1,11 @@
+{
+  "id": "advisingtools",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "advisingtools.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 19
+    }
+  }
+}

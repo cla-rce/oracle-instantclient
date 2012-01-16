@@ -1,0 +1,27 @@
+{
+  "id": "crimson",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:20080": {
+      "ServerName": "crimson.class.umn.edu",
+      "ServerAlias": "www.crimson.class.umn.edu",
+      "Redirect": {
+        "/": "https://crimson.class.umn.edu/"
+      }
+    },
+    "*:20443": {
+      "ServerName": "crimson.class.umn.edu",
+      "ServerAlias": "www.crimson.class.umn.edu",
+      "SSLCertificate": "crimson",
+      "SSLCertificateChain": "incommon",
+      "DocumentRoot": "/data/www/crimson/",
+      "RedirectMatch": {
+        "/$": "https://crimson.class.umn.edu/home.php"
+      },
+      "Alias": {
+        "/crimson/": "/data/www/htdocs/crimson/",
+        "/crimsonAdmin/": "/data/www/crimson/"
+      }
+    }
+  }
+}

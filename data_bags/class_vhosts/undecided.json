@@ -1,0 +1,12 @@
+{
+  "id": "undecided",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "undecided.class.umn.edu",
+      "ServerAlias": "www.undecided.class.umn.edu undecided.umn.edu www.undecided.umn.edu undeclared.umn.edu www.undeclared.umn.edu undeclared.class.umn.edu www.undeclared.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 53
+    }
+  }
+}

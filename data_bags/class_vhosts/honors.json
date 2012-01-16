@@ -1,0 +1,13 @@
+{
+  "id": "honors",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "honors.class.umn.edu",
+      "ServerAlias": "www.honors.class.umn.edu",
+      "Redirect": {
+        "/": "http://www.cla.umn.edu/honors/"
+      }
+    }
+  }
+}

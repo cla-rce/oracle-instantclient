@@ -1,0 +1,11 @@
+{
+  "id": "mlk",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "mlk.class.umn.edu",
+      "ServerAlias": "www.mlk.class.umn.edu",
+      "CommID": 7
+    }
+  }
+}

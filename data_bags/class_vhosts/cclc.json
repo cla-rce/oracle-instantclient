@@ -1,0 +1,12 @@
+{
+  "id": "cclc",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "cclc.umn.edu",
+      "ServerAlias": "www.cclc.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 31
+    }
+  }
+}

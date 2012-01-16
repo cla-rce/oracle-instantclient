@@ -1,0 +1,10 @@
+{
+  "id": "claadmin",
+  "server_roles": ["appmaster","appslave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.cla-admin.umn.edu",
+      "CommID": 18
+    }
+  }
+}
