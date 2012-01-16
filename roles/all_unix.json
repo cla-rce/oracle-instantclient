@@ -25,6 +25,9 @@
       "server_url": "https://api.opscode.com/organizations/claumn",
       "splay": 60,
       "interval": 1800
+    },
+    "postfix": { 
+      "relayhost": "mail.socsci.umn.edu"
     }
   }
 }
