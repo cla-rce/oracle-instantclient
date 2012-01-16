@@ -7,6 +7,7 @@
   },
   "run_list": [
     "recipe[cla_unix_baseline::class_base_extensions]",
+    "recipe[class_classadm::default]",
     "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_gituser::default]",
     "recipe[class_vhosts::default]"
