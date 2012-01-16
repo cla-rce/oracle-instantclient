@@ -6,9 +6,8 @@
   "env_run_lists": {
   },
   "run_list": [
-    "recipe[cla_unix_base::class_base_extensions]",
-    "recipe[cla_unix_base::class_dbserver]",
-    "recipe[class_crontasks]"
+    "recipe[cla_unix_baseline::class_base_extensions]",
+    "recipe[cla_unix_baseline::class_dbserver]"
   ],
   "description": "",
   "chef_type": "role",
