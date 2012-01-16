@@ -6,10 +6,9 @@
   "env_run_lists": {
   },
   "run_list": [
-    "recipe[cla_unix_base::class_base_extensions]",
-    "recipe[cla_unix_base::class_appserver]",
+    "recipe[cla_unix_baseline::class_base_extensions]",
+    "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_gituser::default]",
-    "recipe[class_crontasks]",
     "recipe[class_vhosts::default]"
   ],
   "description": "",
