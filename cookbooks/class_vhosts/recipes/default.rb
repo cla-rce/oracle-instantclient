@@ -4,7 +4,7 @@ current_vhosts = Array.new
 enabled_vhosts = Array.new
 ssl_certs = Hash.new
 
-class_data_bag_secret = File.open(node['vhosts']['secret_path']).read
+class_data_bag_secret = File.open(node['class_vhosts']['secret_path']).read
 
 # get the currently enabled vhosts
 if File.directory?("#{node[:apache][:dir]}/sites-enabled/")
@@ -26,7 +26,7 @@ end
 end
 
 # generate vhosts from data bags
-search(:vhosts).each do |vhost|
+search(:class_vhosts).each do |vhost|
   if not (vhost['server_roles'] & node['roles']).empty?
     if vhost.has_key?('default_site') and not (vhost['default_site'] & node['roles']).empty?
       vhost_name = "default"

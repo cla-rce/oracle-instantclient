@@ -1,8 +1,8 @@
-include_recipe "classadm"
-include_recipe "apache2"
+include_recipe "class_classadm::default"
+include_recipe "apache2::default"
 
 # grab classadm users
-users = search(:users, "classadm:true").collect{|u| u['id']}
+users = search(:users, "class_classadm:true").collect{|u| u['id']}
 
 # add users to apache group
 group node[:apache][:group] do
@@ -12,7 +12,7 @@ end
 
 # ensure web logs are accessible by classadm users
 directory node[:apache][:log_dir] do
-  group node[:classadm][:group]
+  group node[:class_classadm][:group]
   mode "2775"
 end
 

@@ -1,2 +1,2 @@
-default[:classadm][:group] = "classadm"
-default[:classadm][:dirs] = []
+default[:class_classadm][:group] = "classadm"
+default[:class_classadm][:dirs] = []

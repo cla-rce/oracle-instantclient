@@ -2,15 +2,15 @@
 users = search(:users, "classadm:true").collect{|u| u['id']}
 
 # create the classadm group
-group node[:classadm][:group] do
+group node[:class_classadm][:group] do
   members users
   action :create
 end
 
 # ensure that the specified directories are writable by classadm users
-node[:classadm][:dirs].each do |dir|
+node[:class_classadm][:dirs].each do |dir|
   directory dir do
-    group node[:classadm][:group]
+    group node[:class_classadm][:group]
     mode "2775"
   end
 end

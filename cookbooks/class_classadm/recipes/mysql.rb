@@ -1,4 +1,4 @@
-include_recipe "classadm"
+include_recipe "class_classadm::default"
 
 # allow classadms to manage mysql
 classadm_commands "mysql" do

@@ -1,4 +1,4 @@
-include_recipe "git"
+#include_recipe "git"
 
 # add the git user
 user node['gituser']['user'] do

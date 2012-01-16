@@ -6,14 +6,78 @@
   "env_run_lists": {
   },
   "run_list": [
-    "recipe[cla_unix_base::class_base_extensions]",
-    "recipe[cla_unix_base::class_appserver]",
+    "role[class_base]",
+    "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_gituser::default]",
-    "recipe[class_crontasks]",
     "recipe[class_vhosts::default]"
   ],
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "apache": {
+      "listen_ports": [ "80", "443" ],
+      "timeout": 300,
+      "keepalive": "On",
+      "traceenable": "Off",
+      "user": "www-data",
+      "group": "www-data",
+      "contact": "classoad@umn.edu",
+      "limitrequestbody": 1093941836,
+      "acceptpathinfo": "On",
+      "serversignature": "Off",
+      "directoryindex": ["index.php", "index.html"],
+      "prefork": {
+        "startservers": 10,
+        "minspareservers": 5,
+        "maxspareservers": 10,
+        "maxclients": 50,
+        "maxrequestsperchild": 0
+      }
+    },
+    "php": {
+      "short_open_tag": "On",
+      "expose_php": "Off",
+      "max_execution_time": 10000,
+      "memory_limit": "256M",
+      "error_reporting": "E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT",
+      "display_errors": "On",
+      "log_errors": "Off",
+      "html_errors": "Off",
+      "register_globals": "On", 
+      "register_long_arrays": "Off",
+      "register_argc_argv": "On",
+      "post_max_size": "100M",
+      "magic_quotes_gpc": "On", 
+      "upload_max_filesize": "999M",
+      "date_timezone": "America/Chicago",
+      "date_default_latitude": "44.975952",
+      "date_default_longitude": "-93.236699",
+      "mysql_allow_persistent": "Off",
+      "session_gc_maxlifetime": 10800,
+      "zlib_output_compression": "On",
+      "eaccelerator_shm_size": 32,
+      "session_save_handler": "user",
+      "auto_prepend_file": "/data/www/sessions/mysql_session_handler.php"
+    },
+    "class_phpmysqlsessions": {
+      "hostname": "moria",
+      "username": "php_sessions",
+      "password": "fz8b32hd91m",
+      "table": "php_sessions",
+      "path": "/data/www/sessions/"
+    },
+    "memcached": {
+      "user": "nobody",
+      "memory": 64,
+      "port": 11211
+    },
+    "class_crontasks": {
+      "user": "class_tasks",
+      "groups": ["www-data","classadm"],
+      "admin_group": "classadm"
+    },
+    "postfix": {
+      "masquerade_domains": ["mordor.class.umn.edu"]
+    }
   }
 }
