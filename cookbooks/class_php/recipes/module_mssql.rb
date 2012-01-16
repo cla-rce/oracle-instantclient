@@ -1,4 +1,4 @@
-include_recipe "freetds"
+#include_recipe "freetds"
 
 package "php-mssql" do
   case node[:platform]

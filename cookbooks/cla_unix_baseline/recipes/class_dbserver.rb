@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cla_unix_baseline
-# Recipe:: class_appserver
+# Recipe:: class_dbserver
 #
 # Copyright 2011, Joshua Buysse, (C) Regents of the University of Minnesota
 #
@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# slightly modified from appbase recipe, to install the PHP tools without Apache
+# allow code to run, but no vhosts or a few added bits
+
 ## merged from class perl::modules, crimson-tools::default, freetds, lasso (partial, no RH),
 ##   
 
@@ -28,10 +31,6 @@
 #### Done: class crontasks
   ## this creats a task user and sets up sudo rights
   ## keep separate
-#### Done: class vhosts
-  ## keep separate, rename class_vhosts
-#### Done: class clustersync
-  ## keep separate, rename class_clustersync
   
 # role runlist (for slave) needs this, gituser::default, crontasks::default, 
 #   class_hosts::default, class_clustersync::default
@@ -74,10 +73,10 @@ end
 include_recipe "perl"
 
 include_recipe "mysql::client"
-include_recipe "apache2::default"
-include_recipe "apache2::mod_deflate"
-include_recipe "apache2::mod_rewrite"
-include_recipe "apache2::mod_ssl"
+#include_recipe "apache2::default"
+#include_recipe "apache2::mod_deflate"
+#include_recipe "apache2::mod_rewrite"
+#include_recipe "apache2::mod_ssl"
 
 ## need a bunch of php stuff
 include_recipe "php::default"
@@ -107,9 +106,9 @@ include_recipe "class_php::module_tidy"
 include_recipe "class_php::module_xml"
 include_recipe "class_php::module_xsl"
 
-include_recipe "class_phpmysqlsessions::default"
+#include_recipe "class_phpmysqlsessions::default"
 
-include_recipe "apache2::mod_php5"
+#include_recipe "apache2::mod_php5"
 
 # from perl::modules as modified by CLASS
 perl_modules.each do |pkg|
