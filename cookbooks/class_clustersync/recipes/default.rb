@@ -1,5 +1,5 @@
 # Dependencies
-include_recipe "unison"
+include_recipe "unison::default"
 
 # generate servers.conf file
 template "/etc/servers.conf" do
@@ -8,7 +8,7 @@ template "/etc/servers.conf" do
   group "root"
   mode "0644"
   variables(
-    :servers => node['clustersync']['servers']
+    :servers => node['class_clustersync']['servers']
   )
 end
 

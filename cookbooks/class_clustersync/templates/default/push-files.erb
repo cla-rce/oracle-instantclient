@@ -3,7 +3,7 @@
 HOME=/var/state/unison
 PIDFILE=push-files.pid
 LOCALNAMES="`/bin/hostname -s`|`/bin/hostname -f`|`/bin/hostname -i`"
-SYNCDIRS="<%= node['clustersync']['sync_dirs'].join(" ") %>"
+SYNCDIRS="<%= node['class_clustersync']['sync_dirs'].join(" ") %>"
 
 # make sure a servers.conf file exists
 if [ ! -f "/etc/servers.conf" ]; then

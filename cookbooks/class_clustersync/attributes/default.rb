@@ -1,2 +1,2 @@
-default['clustersync']['sync_dirs'] = []
-default['clustersync']['servers'] = []
+default['class_clustersync']['sync_dirs'] = []
+default['class_clustersync']['servers'] = []

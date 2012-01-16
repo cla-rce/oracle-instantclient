@@ -1,16 +1,16 @@
 # Dependencies
-include_recipe "clustersync"
-include_recipe "logrotate"
+include_recipe "class_clustersync::default"
+include_recipe "logrotate::default"
 
 # Add cron jobs
-cron "clustersync" do
+cron "class_clustersync" do
   minute "*/5"
   user "root"
   command "/usr/local/scripts/push-files >> /var/log/push-files.log"
 end
 
 # Add log rotation
-logrotate "clustersync" do
+logrotate "class_clustersync" do
   files ["/var/log/push-files.log","/var/log/unison.log"]
   frequency :monthly
   rotate_count 5
