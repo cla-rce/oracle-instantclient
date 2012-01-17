@@ -1,5 +1,6 @@
 # Dependencies
-include_recipe "unison::default"
+### assume this is there from base
+#include_recipe "unison::default"
 
 # generate servers.conf file
 template "/etc/servers.conf" do
