@@ -2,6 +2,13 @@
 ### assume this is there from base
 #include_recipe "unison::default"
 
+# if we're putting a template there, need to ensure the target dir exists...
+directory "/usr/local/scripts" do 
+  mode "0755" 
+  owner "root"
+  group "root"
+end
+
 # generate servers.conf file
 template "/etc/servers.conf" do
   source "servers.conf.erb"
