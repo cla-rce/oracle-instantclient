@@ -12,7 +12,7 @@
     "recipe[chef-client::delete_validation]",
     "recipe[cla_unix_baseline::default]",
     "recipe[cla_users::local_admins]",
-    "recipe[cla_users]"
+    "recipe[cla_users::default]"
   ],
   "description": "",
   "chef_type": "role",
