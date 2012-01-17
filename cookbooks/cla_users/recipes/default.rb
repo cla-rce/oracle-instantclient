@@ -33,73 +33,75 @@ ruby_block "reset group list" do
   action :nothing
 end
 
-home_base_dir = node[:cla_users][:local_user_home] ? 
-                node[:cla_users][:local_user_home] : 
-                "/home"
+home_base_dir = node[:cla_users][:local_user_home] ? node[:cla_users][:local_user_home] : "/home"
 
-search(:local_users) do |u|
-  if not(u['server_roles'] & node['roles']).empty? 
-    # append user's additional groups to additional_groups
-    if not u['groups'].nil? and not u['groups'].empty?
-      u['groups'].each do |g|
-        if not additional_groups.has_key?(g)
-          additional_groups[g] = Array.new
+#### we need to *not* apply these rules on machines that have
+#### integration -- this is the "out" that can be set on an integration role
+if not node['cla_users']['ignore_local_users'] then 
+
+  search(:local_users) do |u|
+    if not(u['server_roles'] & node['roles']).empty? 
+      # append user's additional groups to additional_groups
+      if not u['groups'].nil? and not u['groups'].empty?
+        u['groups'].each do |g|
+          if not additional_groups.has_key?(g)
+            additional_groups[g] = Array.new
+          end
+          additional_groups[g] << u['id']
         end
-        additional_groups[g] << u['id']
       end
-    end
-     
-    if u['home_dir'] then
-      home_dir = u['home_dir']
-    else
-      home_dir = "#{home_base_dir}/#{u['id']}" 
-    end
-    
-    # add the user to the system
-    user u['id'] do
-      uid u['uid'] if u['uid']
-      gid u['gid'] if u['gid']
-      shell u['shell'] if u['shell']
-      comment u['comment'] if u['comment']
-      if (node[:cla_users][:local_users_use_password] and u['password_hash']) then
-        password u['password_hash']
-      end
-      home "/home/#{u['id']}"
-      supports :manage_home => true
-      notifies :create, "ruby_block[reset group list]", :immediately
-    end
 
-    # add authorized_keys file (if any)
-    if (node[:cla_users][:local_users_add_ssh_keys] and u.has_key?('authorized_keys')) then
-      directory "/home/#{u['id']}/.ssh" do
-        owner u['id']
-        mode 0700
+      if u['home_dir'] then
+        home_dir = u['home_dir']
+      else
+        home_dir = "#{home_base_dir}/#{u['id']}" 
       end
-      template "/home/#{u['id']}/.ssh/authorized_keys" do
-        source "authorized_keys.erb"
-        owner u['id']
-        mode 0600
-        variables(:authorized_keys => secret['authorized_keys'])
-        action :create_if_missing
+
+      # add the user to the system
+      user u['id'] do
+        uid u['uid'] if u['uid']
+        gid u['gid'] if u['gid']
+        shell u['shell'] if u['shell']
+        comment u['comment'] if u['comment']
+        if (node[:cla_users][:local_users_use_password] and u['password_hash']) then
+          password u['password_hash']
+        end
+        home "/home/#{u['id']}"
+        supports :manage_home => true
+        notifies :create, "ruby_block[reset group list]", :immediately
+      end
+
+      # add authorized_keys file (if any)
+      if (node[:cla_users][:local_users_add_ssh_keys] and u.has_key?('authorized_keys')) then
+        directory "/home/#{u['id']}/.ssh" do
+          owner u['id']
+          mode 0700
+        end
+        template "/home/#{u['id']}/.ssh/authorized_keys" do
+          source "authorized_keys.erb"
+          owner u['id']
+          mode 0600
+          variables(:authorized_keys => secret['authorized_keys'])
+          action :create_if_missing
+        end
       end
     end
   end
-end
 
-# assign users to additional groups
-additional_groups.each do |g,u|
-  group g do
-    ginfo = data_bag_item(:local_groups, g) || Hash.new
-    if ginfo['users'] then
-      ginfo['users'].each do |adduser| 
-        u << adduser
+  # assign users to additional groups
+  additional_groups.each do |g,u|
+    group g do
+      ginfo = data_bag_item(:local_groups, g) || Hash.new
+      if ginfo['users'] then
+        ginfo['users'].each do |adduser| 
+          u << adduser
+        end
       end
+      gid ginfo['gid'] if ginfo['gid']
+      members u
+      append false
+      action [:create, :modify, :manage]
     end
-    gid ginfo['gid'] if ginfo['gid']
-    members u
-    append false
-    action [:create, :modify, :manage]
   end
-end
 
-
+end # ignore_local_users is false
