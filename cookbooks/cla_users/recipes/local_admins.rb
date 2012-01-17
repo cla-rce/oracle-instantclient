@@ -66,4 +66,5 @@ end
 group "#{node[:cla_users][:local_admin_group]}" do
   gid node[:cla_users][:local_admin_group_gid]
   members local_admin_group
+  action [:create, :modify, :manage]
 end
