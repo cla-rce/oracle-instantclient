@@ -40,7 +40,8 @@ home_base_dir = node[:cla_users][:local_user_home] ? node[:cla_users][:local_use
 if not node['cla_users']['ignore_local_users'] then 
 
   search(:local_users) do |u|
-    if (u['server_roles'] & node['roles'])
+    match_roles = u['server_roles'] & node['roles']
+    if match_roles and not match_roles.nil? and not match_roles.empty?
       # append user's additional groups to additional_groups
       if not u['groups'].nil?
         u['groups'].each do |g|
