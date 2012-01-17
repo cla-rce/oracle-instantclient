@@ -3,6 +3,6 @@
   "comment": "Placement test dropbox",
   "server_roles": ["class_dev"],
   "shell": "/usr/bin/rssh",
-  "password_hash": "*",
-  "ssh_keys": [ ]
+  "password_hash": "VzIxGLDS5egCc",
+  "ssh_keys": [ "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEAmfgE+WPSUgCD15ejp7Y61tiwr4HSv3BJ5zseWxoy56w43GK+g3oaVeqApX+q8PJKegE6O/YqMe513E+NqmfAxOE4AyAttiXj5jNd8fZWWQxKNPa0ErF8Vs8ZimGpRFLXTmrZ7oN8bCE0oE2czAF/naHydtpejbBfHNmUbhuGm1k= eptreg@tank" ]
 }

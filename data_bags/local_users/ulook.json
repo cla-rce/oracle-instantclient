@@ -3,7 +3,7 @@
   "comment": "uLook dropbox",
   "server_roles": ["class_dev"],
   "shell": "/usr/bin/rssh",
-  "password_hash": "*",
-  "ssh_keys": [ ]
+  "password_hash": "$1$WhE9eISC$sWigNZH54Tk4gmz/0z2Rz/",
+  "ssh_keys": ["ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEA0T/b7SEjo5XwphjfSOzviK7DoYQPu7BkRFr7xeFjIBTvPd/gCX0r3ulh+yOo8E2Iy6XvNWnBUL+W7koxoriaCP7SzHbwDahLkflVrA+nSOUir3pVRSMyODbJxAF6iel407wtbio0hF5yQt6teBVpf0Jx8H8M38yERgMfLl+6H5E= ulook@tank", "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA30g4LklcueSsNjc9rjL79yOp+1GFq3291Ul6mrm+rTLTtnHlRYP0jmdD358qZYy7u7wGcp6TnByceModme1ewy/i4WPMGBOhZHetkfMoenLLwfBqGOLqpbtIOE9kPkb+D5hrHD1B1YIUZX8TuCent7/jAKosh6U9zlRORY/EYsEIGKBXWWu+Zavy2NohGYk7GBLNOkBrtrWSbe2wqo6QAD/K0+WfEOaU9+XxHPdiw6DjfHCqEFT+7RRkY1dB0kUbKR1yf2EFc9oT9gD8ieaH1Pc5rH6060P35oT8BZsvKaD4sA+fpgfuqaf2pxOyVexOS0qsaekzekl+sKEsnjx1BQ== root@moria1" ]
 
 }
