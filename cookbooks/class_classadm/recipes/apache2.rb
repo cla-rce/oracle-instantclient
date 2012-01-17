@@ -2,7 +2,7 @@ include_recipe "class_classadm::default"
 include_recipe "apache2::default"
 
 # grab classadm users
-users = search(:users, "class_classadm:true").collect{|u| u['id']}
+users = search(:local_users, "classadm:true").collect{|u| u['id']}
 
 # add users to apache group
 group node[:apache][:group] do

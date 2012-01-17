@@ -1,5 +1,5 @@
 # grab classadm users
-users = search(:users, "classadm:true").collect{|u| u['id']}
+users = search(:local_users, "classadm:true").collect{|u| u['id']}
 
 # create the classadm group
 group node[:class_classadm][:group] do
