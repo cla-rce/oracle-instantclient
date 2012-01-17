@@ -1,6 +1,6 @@
 # Dependencies
 include_recipe "class_clustersync::default"
-include_recipe "logrotate::default"
+include_recipe "logrotate_37signals::default"
 
 # Add cron jobs
 cron "class_clustersync" do
