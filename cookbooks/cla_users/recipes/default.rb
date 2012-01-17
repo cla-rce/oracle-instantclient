@@ -40,10 +40,11 @@ home_base_dir = node[:cla_users][:local_user_home] ? node[:cla_users][:local_use
 if not node['cla_users']['ignore_local_users'] then 
 
   search(:local_users) do |u|
-    if not(u['server_roles'] & node['roles'])
+    if (u['server_roles'] & node['roles'])
       # append user's additional groups to additional_groups
-      if u['groups']
+      if not u['groups'].nil?
         u['groups'].each do |g|
+          log "Group found: #{g} for #{u['id']}"
           if not additional_groups.has_key?(g)
             additional_groups[g] = Array.new
           end
@@ -69,6 +70,7 @@ if not node['cla_users']['ignore_local_users'] then
         home "/home/#{u['id']}"
         supports :manage_home => true
         notifies :create, "ruby_block[reset group list]", :immediately
+        action [:create, :manage, :modify]
       end
 
       # add authorized_keys file (if any)
@@ -91,7 +93,13 @@ if not node['cla_users']['ignore_local_users'] then
   # assign users to additional groups
   additional_groups.each do |g,u|
     group g do
-      ginfo = data_bag_item(:local_groups, g) || Hash.new
+      ginfo = Hash.new
+      # data bag item is optional, catch the exception
+      begin
+        ginfo = data_bag_item(:local_groups, g)
+      rescue Exception => e
+        nil
+      end
       if ginfo['users'] then
         ginfo['users'].each do |adduser| 
           u << adduser
