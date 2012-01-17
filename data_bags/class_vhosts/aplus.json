@@ -1,6 +1,6 @@
 {
   "id": "aplus",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:11080": {
       "ServerName": "aplus.umn.edu",
@@ -13,7 +13,7 @@
       "ServerName": "aplus.umn.edu",
       "ServerAlias": "www.aplus.umn.edu ets.umn.edu www.ets.umn.edu cassini.umn.edu www.cassini.umn.edu",
       "DocumentRoot": "/data/www/mycla/",
-      "SSLCertificate": "aplus",
+      "SSLCertificate": "aplus.umn.edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true
     }

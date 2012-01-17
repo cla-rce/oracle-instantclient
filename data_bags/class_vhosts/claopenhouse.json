@@ -1,6 +1,6 @@
 {
   "id": "claopenhouse",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:10080": {
       "ServerName": "claopenhouse.umn.edu",

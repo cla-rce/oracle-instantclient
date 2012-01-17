@@ -1,7 +1,7 @@
 {
   "id": "rivendell",
-  "server_roles": ["devserver"],
-  "default_site": ["devserver"],
+  "server_roles": ["class_appserver_dev"],
+  "default_site": ["class_appserver_dev"],
   "vhosts": {
     "*:80": {
       "ServerName": "dev.class.umn.edu",
@@ -15,7 +15,7 @@
     },
     "*:443": {
       "ServerName": "dev.class.umn.edu",
-      "SSLCertificate": "dev",
+      "SSLCertificate": "dev.class.umn.edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/htdocs/",
       "Redirect": {

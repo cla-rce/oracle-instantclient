@@ -1,6 +1,6 @@
 {
   "id": "mycla",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:14080": {
       "ServerName": "mycla.umn.edu",
@@ -13,7 +13,7 @@
       "ServerName": "mycla.umn.edu",
       "ServerAlias": "www.mycla.umn.edu",
       "DocumentRoot": "/data/www/mycla/",
-      "SSLCertificate": "mycla",
+      "SSLCertificate": "mycla.umn.edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true,
       "Location": {

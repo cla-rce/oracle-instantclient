@@ -1,6 +1,6 @@
 {
   "id": "scholarships",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:16080": {
       "ServerName": "scholarships.cla.umn.edu",
@@ -12,7 +12,7 @@
       "ServerName": "scholarships.cla.umn.edu",
       "ServerAlias": "www.scholarships.cla.umn.edu",
       "DocumentRoot": "/data/www/scholarships/",
-      "SSLCertificate": "scholarships",
+      "SSLCertificate": "scholarships.cla.umn.edu",
       "SSLCertificateChain": "incommon"
     }
   }

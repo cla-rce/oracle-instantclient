@@ -1,6 +1,6 @@
 {
   "id": "chronos",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:13080": {
       "ServerName": "chronos.umn.edu",
@@ -11,7 +11,7 @@
     "*:13443": {
       "ServerName": "chronos.umn.edu",
       "DocumentRoot": "/data/www/chronos/",
-      "SSLCertificate": "chronos",
+      "SSLCertificate": "chronos.umn.edu",
       "SSLCertificateChain": "incommon"
     }
   }

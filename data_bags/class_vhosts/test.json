@@ -1,6 +1,6 @@
 {
   "id": "test",
-  "server_roles": ["devserver"],
+  "server_roles": ["class_appserver_dev"],
   "vhosts": {
     "*:80": {
       "ServerName": "test.class.umn.edu",
@@ -10,7 +10,7 @@
     "*:443": {
       "ServerName": "test.class.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
-      "SSLCertificate": "dev",
+      "SSLCertificate": "dev.class.umn.edu",
       "SSLCertificateChain": "incommon",
       "CommID": 10,
       "Alias": {

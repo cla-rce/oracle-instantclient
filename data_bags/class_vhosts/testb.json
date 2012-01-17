@@ -1,6 +1,6 @@
 {
   "id": "testb",
-  "server_roles": ["devserver"],
+  "server_roles": ["class_appserver_dev"],
   "vhosts": {
     "*:80": {
       "ServerName": "testb.class.umn.edu",

@@ -1,6 +1,6 @@
 {
   "id": "volunteer",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:16080": {
       "ServerName": "volunteer.cla.umn.edu",
@@ -14,7 +14,7 @@
       "ServerName": "volunteer.cla.umn.edu",
       "ServerAlias": "www.volunteer.cla.umn.edu",
       "DocumentRoot": "/data/www/volunteer/",
-      "SSLCertificate": "volunteer",
+      "SSLCertificate": "volunteer.cla.umn.edu",
       "SSLCertificateChain": "incommon",
       "Alias": {
         "/crimson/": "/data/www/htdocs/crimson/"

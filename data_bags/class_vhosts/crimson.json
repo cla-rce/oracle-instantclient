@@ -1,6 +1,6 @@
 {
   "id": "crimson",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:20080": {
       "ServerName": "crimson.class.umn.edu",
@@ -12,7 +12,7 @@
     "*:20443": {
       "ServerName": "crimson.class.umn.edu",
       "ServerAlias": "www.crimson.class.umn.edu",
-      "SSLCertificate": "crimson",
+      "SSLCertificate": "crimson.class.umn.edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/crimson/",
       "RedirectMatch": {

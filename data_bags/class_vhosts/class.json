@@ -1,7 +1,7 @@
 {
   "id": "class",
-  "server_roles": ["appmaster","appslave"],
-  "default_site": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "default_site": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:10080": {
       "ServerName": "www.class.umn.edu",
@@ -24,7 +24,7 @@
     "*:10443": {
       "ServerName": "www.class.umn.edu",
       "ServerAlias": "class.umn.edu",
-      "SSLCertificate": "class",
+      "SSLCertificate": "class.umn.edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/crimson/",
       "CommID": 10,

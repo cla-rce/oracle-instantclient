@@ -1,6 +1,6 @@
 {
   "id": "cvs",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:15080": {
       "ServerName": "cvs.class.umn.edu",
@@ -10,7 +10,7 @@
     },
     "*:15443": {
       "ServerName": "cvs.class.umn.edu",
-      "SSLCertificate": "git",
+      "SSLCertificate": "git.class.umn.edu",
       "SSLCertificateChain": "incommon",
       "Redirect": {
         "/": "https://git.minions.umn.edu/viewvc/"

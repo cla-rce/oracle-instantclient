@@ -1,6 +1,6 @@
 {
   "id": "teste",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:10080": {
       "ServerName": "teste.class.umn.edu",
@@ -10,7 +10,7 @@
     "*:10443": {
       "ServerName": "teste.class.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
-      "SSLCertificate": "class",
+      "SSLCertificate": "class.umn.edu",
       "SSLCertificateChain": "incommon",
       "CommID": 17
     }

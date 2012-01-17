@@ -1,6 +1,6 @@
 {
   "id": "parents",
-  "server_roles": ["appmaster","appslave"],
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:10080": {
       "ServerName": "parents.class.umn.edu",
