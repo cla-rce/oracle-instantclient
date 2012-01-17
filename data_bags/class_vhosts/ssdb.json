@@ -13,7 +13,7 @@
       "ServerName": "www.ssdb.umn.edu",
       "ServerAlias": "ssdb.umn.edu",
       "DocumentRoot": "/data/www/mycla/",
-      "SSLCertificate": "ssdb.umn.edu",
+      "SSLCertificate": "ssdb_umn_edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true
     }

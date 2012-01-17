@@ -13,7 +13,7 @@
       "ServerName": "git.minions.umn.edu",
       "ServerAlias": "git.class.umn.edu",
       "DocumentRoot": "/usr/local/gitpublic/",
-      "SSLCertificate": "git.class.umn.edu",
+      "SSLCertificate": "git_class_umn_edu",
       "SSLCertificateChain": "incommon",
       "RedirectMatch": {
         "/viewvc/$": "https://git.minions.umn.edu/viewvc/cgi-bin/viewvc.cgi/"

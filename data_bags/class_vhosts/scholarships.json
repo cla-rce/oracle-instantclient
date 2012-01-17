@@ -12,7 +12,7 @@
       "ServerName": "scholarships.cla.umn.edu",
       "ServerAlias": "www.scholarships.cla.umn.edu",
       "DocumentRoot": "/data/www/scholarships/",
-      "SSLCertificate": "scholarships.cla.umn.edu",
+      "SSLCertificate": "scholarships_cla_umn_edu",
       "SSLCertificateChain": "incommon"
     }
   }

@@ -13,7 +13,7 @@
       "ServerName": "www.servicelearning.umn.edu",
       "ServerAlias": "servicelearning.umn.edu csl.umn.edu www.csl.umn.edu",
       "DocumentRoot": "/data/www/slp/",
-      "SSLCertificate": "servicelearning.umn.edu",
+      "SSLCertificate": "servicelearning_umn_edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true
     }

@@ -10,7 +10,7 @@
     "*:10443": {
       "ServerName": "teste.class.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
-      "SSLCertificate": "class.umn.edu",
+      "SSLCertificate": "class_umn_edu",
       "SSLCertificateChain": "incommon",
       "CommID": 17
     }

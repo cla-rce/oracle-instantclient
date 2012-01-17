@@ -13,7 +13,7 @@
       "ServerName": "mycla.umn.edu",
       "ServerAlias": "www.mycla.umn.edu",
       "DocumentRoot": "/data/www/mycla/",
-      "SSLCertificate": "mycla.umn.edu",
+      "SSLCertificate": "mycla_umn_edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true,
       "Location": {

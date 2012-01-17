@@ -11,7 +11,7 @@
     "*:13443": {
       "ServerName": "chronos.umn.edu",
       "DocumentRoot": "/data/www/chronos/",
-      "SSLCertificate": "chronos.umn.edu",
+      "SSLCertificate": "chronos_umn_edu",
       "SSLCertificateChain": "incommon"
     }
   }

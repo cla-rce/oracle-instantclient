@@ -14,7 +14,7 @@
       "ServerName": "volunteer.cla.umn.edu",
       "ServerAlias": "www.volunteer.cla.umn.edu",
       "DocumentRoot": "/data/www/volunteer/",
-      "SSLCertificate": "volunteer.cla.umn.edu",
+      "SSLCertificate": "volunteer_cla_umn_edu",
       "SSLCertificateChain": "incommon",
       "Alias": {
         "/crimson/": "/data/www/htdocs/crimson/"

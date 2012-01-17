@@ -13,7 +13,7 @@
       "ServerName": "aplus.umn.edu",
       "ServerAlias": "www.aplus.umn.edu ets.umn.edu www.ets.umn.edu cassini.umn.edu www.cassini.umn.edu",
       "DocumentRoot": "/data/www/mycla/",
-      "SSLCertificate": "aplus.umn.edu",
+      "SSLCertificate": "aplus_umn_edu",
       "SSLCertificateChain": "incommon",
       "UseServerName": true
     }

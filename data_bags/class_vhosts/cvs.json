@@ -10,7 +10,7 @@
     },
     "*:15443": {
       "ServerName": "cvs.class.umn.edu",
-      "SSLCertificate": "git.class.umn.edu",
+      "SSLCertificate": "git_class_umn_edu",
       "SSLCertificateChain": "incommon",
       "Redirect": {
         "/": "https://git.minions.umn.edu/viewvc/"

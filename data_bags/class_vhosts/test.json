@@ -10,7 +10,7 @@
     "*:443": {
       "ServerName": "test.class.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
-      "SSLCertificate": "dev.class.umn.edu",
+      "SSLCertificate": "dev_class_umn_edu",
       "SSLCertificateChain": "incommon",
       "CommID": 10,
       "Alias": {

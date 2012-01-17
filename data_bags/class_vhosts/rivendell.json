@@ -15,7 +15,7 @@
     },
     "*:443": {
       "ServerName": "dev.class.umn.edu",
-      "SSLCertificate": "dev.class.umn.edu",
+      "SSLCertificate": "dev_class_umn_edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/htdocs/",
       "Redirect": {

@@ -24,7 +24,7 @@
     "*:10443": {
       "ServerName": "www.class.umn.edu",
       "ServerAlias": "class.umn.edu",
-      "SSLCertificate": "class.umn.edu",
+      "SSLCertificate": "class_umn_edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/crimson/",
       "CommID": 10,
