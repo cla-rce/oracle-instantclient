@@ -5,5 +5,6 @@
   "server_roles": ["class_base"],
   "classadm": true,
   "password_hash": "*",
+  "shell": /bin/bash",
   "ssh_keys": [ ]
 }
