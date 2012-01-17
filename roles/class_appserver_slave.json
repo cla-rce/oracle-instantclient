@@ -6,10 +6,17 @@
   "env_run_lists": {
   },
   "run_list": [
-    "role[class_appserver_base]","recipe[class_clustersync::default]"
+    "role[class_appserver_base]",
+    "recipe[class_clustersync::default]"
   ],
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "apache": {
+      "listen_ports": [ "10080", "10443", "11080", "11443", "12080", "12443", "13080", "13443", "14080", "14443", "15080", "15443", "16080", "16443", "17080", "17443", "18080", "18443", "19080", "19443", "20080" ,"20443" ]
+    },
+    "class_gituser": {
+      "live_dir": "/data/gitlive"
+    }
   }
 }
