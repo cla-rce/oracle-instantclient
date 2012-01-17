@@ -1,0 +1,15 @@
+{
+  "name": "rvm",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+
+  ],
+  "description": "Host has RVM installed, tag for now",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
