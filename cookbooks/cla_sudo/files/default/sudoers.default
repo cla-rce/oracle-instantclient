@@ -341,3 +341,9 @@ GANESHA_ADMINS	GANESHA_VM=(root) ALL,!SHELLS
 ## -jjb
 Host_Alias	C4W_WEB=scrawl,scrawl.cla.umn.edu,c4w-dev,c4w-dev.cla.umn.edu
 %c4writi	C4W_WEB=(c4w-tasks) ALL
+
+#### this needs to be at the end, for now.  Other bits will move here once the LWRP is
+#### completed and working, currently in flux
+
+includedir /etc/sudoers.d
+
