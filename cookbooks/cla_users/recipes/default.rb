@@ -38,7 +38,7 @@ home_base_dir = node[:cla_users][:local_user_home] ?
                 "/home"
 
 search(:local_users) do |u|
-  if not(u['server_roles'] & node['roles']).empty? 
+  if not(u['server_roles'] & node['roles']) 
     # append user's additional groups to additional_groups
     if not u['groups'].nil? and not u['groups'].empty?
       u['groups'].each do |g|

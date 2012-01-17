@@ -18,5 +18,8 @@
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "cla_users": { 
+      "local_users_use_password": false
+    }
   }
 }

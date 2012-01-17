@@ -1,6 +1,11 @@
 {
   "name": "all_unix",
   "default_attributes": {
+    "cla_users": { 
+      "local_users_add_ssh_keys": true,
+      "local_users_user_password": true,
+      "ignore_local_users": false
+    }
   },
   "json_class": "Chef::Role",
   "env_run_lists": {

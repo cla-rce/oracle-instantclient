@@ -3,6 +3,6 @@ maintainer_email "buysse@umn.edu"
 license          "Apache 2.0"
 description      "Installs/Configures cla_users"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.10.0"
+version          "0.10.1"
 
 depends "cla_sudo"

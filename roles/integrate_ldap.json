@@ -1,5 +1,5 @@
 {
-  "name": "auth_ldap_cla",
+  "name": "integrate_ldap",
   "default_attributes": {
   },
   "json_class": "Chef::Role",
@@ -8,12 +8,8 @@
   "run_list": [
 
   ],
-  "description": "",
+  "description": "LDAP integration tag",
   "chef_type": "role",
   "override_attributes": {
-    "cla_users": { 
-      "local_users_use_password": false,
-      "ignore_local_users": true
-    }
   }
 }

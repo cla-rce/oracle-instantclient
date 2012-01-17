@@ -3,6 +3,7 @@
 	"class": "normal",
 	"shell": "/bin/bash",
 	"comment": "Eric Wunderlin",
+        "groups": [ "sysadmin" ],
 	"password_hash": "*",
 	"ssh_keys": [
 ]
