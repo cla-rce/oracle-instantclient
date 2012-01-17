@@ -1,5 +1,6 @@
 {
 	"id": "buysse",
+        "server_roles": ["all_unix"],
 	"class": "normal",
 	"shell": "/bin/bash",
 	"comment": "Joshua Buysse",
