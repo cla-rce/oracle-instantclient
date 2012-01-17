@@ -1,0 +1,8 @@
+{
+  "id": "jaws",
+  "comment": "Placement test dropbox",
+  "server_roles": ["class_dev"],
+  "shell": "/usr/bin/rssh",
+  "password_hash": "*",
+  "ssh_keys": [ ]
+}

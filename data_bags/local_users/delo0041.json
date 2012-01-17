@@ -1,0 +1,9 @@
+{
+  "id": "delo0041",
+  "comment": "Colin DeLong",
+  "groups": ["classdev"],
+  "server_roles": ["class_dev"],
+  "password_hash": "*",
+  "classadm": true,
+  "ssh_keys": [ ]
+}
