@@ -1,4 +1,6 @@
 .rake_test_cache
-.chef
+.chef/knife.rb
+.chef/*.pem
 metadata.json
 .rvmrc
+.DS_Store

@@ -1,0 +1,11 @@
+{
+	"id": "kemal",
+        "server_roles": ["all_unix"],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Kemal Badur",
+	"password_hash": "*",
+	"ssh_keys": [
+
+	]
+}

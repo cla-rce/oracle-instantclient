@@ -1,0 +1,12 @@
+{
+  "id": "minions",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "minions.umn.edu",
+      "ServerAlias": "minions.class.umn.edu 17j.class.umn.edu nerdroom.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 39
+    }
+  }
+}

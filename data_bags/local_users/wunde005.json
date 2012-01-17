@@ -1,0 +1,11 @@
+{
+	"id": "wunde005",
+        "server_roles": ["all_unix"],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Eric Wunderlin",
+        "groups": [ "sysadmin" ],
+	"password_hash": "*",
+	"ssh_keys": [
+]
+}

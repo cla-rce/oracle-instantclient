@@ -1,0 +1,12 @@
+{
+  "id": "ats",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "ats.class.umn.edu",
+      "ServerAlias": "www.ats.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 63
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "transfer",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "transfer.class.umn.edu",
+      "ServerAlias": "www.transfer.class.umn.edu transferguide.cla.umn.edu www.transferguide.cla.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 48
+    }
+  }
+}

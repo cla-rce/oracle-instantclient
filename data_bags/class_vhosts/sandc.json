@@ -1,0 +1,10 @@
+{
+  "id": "sandc",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:80": {
+      "ServerName": "sandc.class.umn.edu",
+      "CommID": 8
+    }
+  }
+}

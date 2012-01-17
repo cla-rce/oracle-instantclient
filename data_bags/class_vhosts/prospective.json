@@ -1,0 +1,11 @@
+{
+  "id": "prospective",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "prospective.cla.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 22
+    }
+  }
+}

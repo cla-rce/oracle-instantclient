@@ -1,0 +1,18 @@
+{
+  "id": "testc",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "testc.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 14
+    },
+    "*:10443": {
+      "ServerName": "testc.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "SSLCertificate": "class_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "CommID": 14
+    }
+  }
+}

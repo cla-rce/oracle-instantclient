@@ -1,0 +1,18 @@
+{
+  "id": "chronos",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:13080": {
+      "ServerName": "chronos.umn.edu",
+      "RedirectMatch": {
+        "/(.*)": "https://chronos.umn.edu/$1"
+      }
+    },
+    "*:13443": {
+      "ServerName": "chronos.umn.edu",
+      "DocumentRoot": "/data/www/chronos/",
+      "SSLCertificate": "chronos_umn_edu",
+      "SSLCertificateChain": "incommon"
+    }
+  }
+}

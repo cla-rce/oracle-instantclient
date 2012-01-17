@@ -1,0 +1,11 @@
+{
+  "id": "steps",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "steps.umn.edu",
+      "ServerAlias": "www.steps.umn.edu",
+      "Redirect": { "/": "http://www.class.umn.edu/steps/" }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "all_unix",
+  "default_attributes": {
+    "cla_users": { 
+      "local_users_add_ssh_keys": true,
+      "local_users_user_password": true,
+      "ignore_local_users": false
+    }
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "recipe[chef_handler::default]",
+    "recipe[chef_handler::cla_syslog]",
+    "recipe[chef-client::default]",
+    "recipe[chef-client::delete_validation]",
+    "recipe[cla_unix_baseline::default]",
+    "recipe[cla_users::local_admins]",
+    "recipe[cla_users::default]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "override_attributes": {
+    "ntp": {
+      "servers": ["128.101.101.101", "134.84.84.84"]
+    },
+    "chef_client": {
+      "init_style": "runit",
+      "server_url": "https://api.opscode.com/organizations/claumn",
+      "splay": 60,
+      "interval": 1800
+    },
+    "postfix": { 
+      "relayhost": "mail.socsci.umn.edu"
+    }
+  }
+}

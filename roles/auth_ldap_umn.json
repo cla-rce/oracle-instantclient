@@ -1,0 +1,25 @@
+{
+  "name": "auth_ldap_umn",
+  "default_attributes": {
+    "cla_auth": {
+      "ldap_base": "ou=People,o=University of Minnesota,c=US",
+      "ldap_cacert_fname": "cacert_bundle.pem",
+      "ldap_servers": [
+        "ldaps://ldapauth.umn.edu"
+      ]
+    }
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "recipe[cla_auth::ldap_auth_only]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "override_attributes": {
+    "cla_users": { 
+      "local_users_use_password": false
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "scholarships",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:16080": {
+      "ServerName": "scholarships.cla.umn.edu",
+      "ServerAlias": "www.scholarships.cla.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 61
+    },
+    "*:16443": {
+      "ServerName": "scholarships.cla.umn.edu",
+      "ServerAlias": "www.scholarships.cla.umn.edu",
+      "DocumentRoot": "/data/www/scholarships/",
+      "SSLCertificate": "scholarships_cla_umn_edu",
+      "SSLCertificateChain": "incommon"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "class_db_base",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "role[class_base]",
+    "recipe[cla_unix_baseline::class_dbserver]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "map",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "map.class.umn.edu",
+      "ServerAlias": "www.map.class.umn.edu mcguire.umn.edu www.mcguire.umn.edu www.mcguire.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 51
+    }
+  }
+}

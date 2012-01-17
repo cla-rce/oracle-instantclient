@@ -1,0 +1,20 @@
+{
+  "name": "class_base",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "recipe[cla_unix_baseline::class_base_extensions]",
+    "recipe[class_classadm::default]"
+  ],
+  "description": "",
+  "chef_type": "role",
+
+  "override_attributes": {
+    "class_classadm": {
+      "group": "classadm"
+    }
+  }
+}

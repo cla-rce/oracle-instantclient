@@ -1,0 +1,10 @@
+{
+	"id": "local_kemal",
+	"class": "system",
+
+	"shell": "/bin/bash",
+	"comment": "LOCAL_ADMIN Kemal Badur",
+	"password_hash": "*",
+	"ssh_keys": [
+	]
+}

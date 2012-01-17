@@ -1,0 +1,12 @@
+{
+  "id": "workshop",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "workshop.umn.edu",
+      "ServerAlias": "www.workshop.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 68
+    }
+  }
+}

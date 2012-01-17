@@ -1,0 +1,12 @@
+{
+	"id": "adam", 
+	"server_roles": ["all_unix"],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Adam Mielke",
+	"password_hash": "*",
+ 	"groups": [ "sysadmin" ],
+	"ssh_keys": [
+	
+	]
+}

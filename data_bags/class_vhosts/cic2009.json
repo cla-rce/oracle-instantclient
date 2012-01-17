@@ -1,0 +1,11 @@
+{
+  "id": "cic2009",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "cic2009.cla.umn.edu",
+      "DocumentRoot": "/data/www/cic2009/",
+      "Alias": { "/crimson/": "/data/www/htdocs/crimson/" }
+    }
+  }
+}

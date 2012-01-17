@@ -1,0 +1,83 @@
+{
+  "id": "class",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "default_site": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "www.class.umn.edu",
+      "ServerAlias": "class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10,
+      "Redirect": {
+        "/home.php": "https://www.class.umn.edu/crimsonAdmin/home.php",
+        "/mentor/": "https://www.class.umn.edu/mentor/",
+        "/alumni/": "https://www.class.umn.edu/alumni/",
+        "/docs/": "https://www.class.umn.edu/docs/",
+        "/moria/": "https://www.class.umn.edu/moria/"
+      },
+      "Directory": {
+        "/data/www/htdocs/crimson/keynote": {
+          "ErrorDocument": "404 /crimson/keynote/dead_screen.png"
+        }      
+      }
+    },
+    "*:10443": {
+      "ServerName": "www.class.umn.edu",
+      "ServerAlias": "class.umn.edu",
+      "SSLCertificate": "class_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10,
+      "Redirect": {
+        "/home.php": "https://www.class.umn.edu/crimsonAdmin/home.php"
+      },
+      "Alias": {
+        "/moria/": "/data/www/moria/htdocs/",
+        "/alumni/": "/data/www/alumni/",
+        "/docs/": "/data/www/docs/",
+        "/mentor/": "/data/www/alumni/",
+        "/secure/": "/data/www/secure/",
+        "/git/": "/usr/local/gitpublic/",
+        "/test/": "/data/www/test/",
+        "/test_two/": "/data/www/test_two/"
+      },
+      "Location": {
+        "/moria/": {
+          "AuthType": "basic",
+          "AuthName": "dbReplication",
+          "AuthUserFile": "/data/www/moria/webpasswd",
+          "Require": "valid-user",
+          "SetHandler": "None"
+        }
+      },
+      "Directory": {
+        "/data/www/moria/": {
+          "Order": "deny,allow",
+          "Deny": "from all"
+        },
+        "/data/www/moria/htdocs/": {
+          "AllowOverride": "None",
+          "Order": "allow,deny",
+          "Allow": "from all",
+          "Options": "Indexes MultiViews"
+        },
+        "/usr/local/gitpublic/": {
+          "AuthType": "Basic",
+          "AuthName": "CLASS Git Repository",
+          "AuthUserFile": "/data/www/gitpasswd",
+          "Require": "valid-user",
+          "Options": "-Indexes"
+        },
+        "/data/www/secure/cla_open_house": {
+          "AllowOverride": "all"
+        },
+        "/data/www/secure/code": {
+          "AllowOverride": "all"
+        },
+        "/data/www/htdocs/crimson/keynote": {
+          "ErrorDocument": "404 /crimson/keynote/dead_screen.png"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+	"id": "pnw",
+        "server_roles": ["all_unix"],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Peter Walz",
+        "groups": [ "sysadmin" ],
+	"password_hash": "*",
+	"ssh_keys": [
+
+	]
+}

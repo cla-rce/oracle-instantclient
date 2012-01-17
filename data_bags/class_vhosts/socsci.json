@@ -1,0 +1,10 @@
+{
+  "id": "socsci",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "socsci.class.umn.edu",
+      "CommID": 13
+    }
+  }
+}

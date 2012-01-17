@@ -1,0 +1,11 @@
+{
+  "id": "adfab",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "adfab.class.umn.edu",
+      "ServerAlias": "www.adfab.class.umn.edu adfab.cla.umn.edu www.adfab.cla.umn.edu www.adfab.umn.edu adfab.umn.edu",
+      "Redirect": { "/": "http://asstdean.class.umn.edu/adfab/" }
+    }
+  }
+}

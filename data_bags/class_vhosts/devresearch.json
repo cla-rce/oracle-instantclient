@@ -1,0 +1,15 @@
+{
+  "id": "devresearch",
+  "server_roles": ["class_appserver_dev"],
+  "vhosts": {
+    "*:80": {
+      "ServerName": "dev.research.class.umn.edu",
+      "DocumentRoot": "/data/www/dev.research.class.umn.edu/",
+      "Directory": {
+        "/data/www/dev.research.class.umn.edu/": {
+          "AllowOverride": "all"
+        }
+      }
+    }
+  }
+}

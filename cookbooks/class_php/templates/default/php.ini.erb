@@ -1,0 +1,1228 @@
+[PHP]
+
+;;;;;;;;;;;;;;;;;;;
+; About php.ini   ;
+;;;;;;;;;;;;;;;;;;;
+; This file controls many aspects of PHP's behavior_  In order for PHP to
+; read it, it must be named 'php_ini'_  PHP looks for it in the current
+; working directory, in the path designated by the environment variable
+; PHPRC, and in the path that was defined in compile time (in that order).
+; Under Windows, the compile-time path is the Windows directory.  The
+; path in which the php.ini file is looked for can be overridden using
+; the -c argument in command line mode.
+;
+; The syntax of the file is extremely simple.  Whitespace and Lines
+; beginning with a semicolon are silently ignored (as you probably guessed).
+; Section headers (e.g. [Foo]) are also silently ignored, even though
+; they might mean something in the future.
+;
+; Directives are specified using the following syntax:
+; directive = value
+; Directive names are *case sensitive* - foo=bar is different from FOO=bar.
+;
+; The value can be a string, a number, a PHP constant (e.g. E_ALL or M_PI), one
+; of the INI constants (On, Off, True, False, Yes, No and None) or an expression
+; (e.g. E_ALL & ~E_NOTICE), or a quoted string ("foo").
+;
+; Expressions in the INI file are limited to bitwise operators and parentheses:
+; |        bitwise OR
+; &        bitwise AND
+; ~        bitwise NOT
+; !        boolean NOT
+;
+; Boolean flags can be turned on using the values 1, On, True or Yes.
+; They can be turned off using the values 0, Off, False or No.
+;
+; An empty string can be denoted by simply not writing anything after the equal
+; sign, or by using the None keyword:
+;
+;  foo =         ; sets foo to an empty string
+;  foo = none    ; sets foo to an empty string
+;  foo = "none"  ; sets foo to the string 'none'
+;
+; If you use constants in your value, and these constants belong to a
+; dynamically loaded extension (either a PHP extension or a Zend extension),
+; you may only use these constants *after* the line that loads the extension.
+; 
+;
+;;;;;;;;;;;;;;;;;;;
+; About this file ;
+;;;;;;;;;;;;;;;;;;;
+; This is the recommended, PHP 5-style version of the php.ini-dist file.  It
+; sets some non standard settings, that make PHP more efficient, more secure,
+; and encourage cleaner coding.
+;
+; The price is that with these settings, PHP may be incompatible with some
+; applications, and sometimes, more difficult to develop with.  Using this
+; file is warmly recommended for production sites.  As all of the changes from
+; the standard settings are thoroughly documented, you can go over each one,
+; and decide whether you want to use it or not.
+;
+; For general information about the php.ini file, please consult the php.ini-dist
+; file, included in your PHP distribution.
+;
+; This file is different from the php.ini-dist file in the fact that it features
+; different values for several directives, in order to improve performance, while
+; possibly breaking compatibility with the standard out-of-the-box behavior of
+; PHP.  Please make sure you read what's different, and modify your scripts
+; accordingly, if you decide to use this file instead.
+;
+; - register_globals = Off         [Security, Performance]
+;     Global variables are no longer registered for input data (POST, GET, cookies,
+;     environment and other server variables).  Instead of using $foo, you must use
+;     you can use $_REQUEST["foo"] (includes any variable that arrives through the
+;     request, namely, POST, GET and cookie variables), or use one of the specific
+;     $_GET["foo"], $_POST["foo"], $_COOKIE["foo"] or $_FILES["foo"], depending
+;     on where the input originates.  Also, you can look at the
+;     import_request_variables() function.
+;     Note that register_globals is going to be depracated (i.e., turned off by
+;     default) in the next version of PHP, because it often leads to security bugs.
+;     Read http://php.net/manual/en/security.registerglobals.php for further
+;     information.
+; - register_long_arrays = Off     [Performance]
+;     Disables registration of the older (and deprecated) long predefined array
+;     variables ($HTTP_*_VARS).  Instead, use the superglobals that were
+;     introduced in PHP 4.1.0
+; - display_errors = Off           [Security]
+;     With this directive set to off, errors that occur during the execution of
+;     scripts will no longer be displayed as a part of the script output, and thus,
+;     will no longer be exposed to remote users.  With some errors, the error message
+;     content may expose information about your script, web server, or database
+;     server that may be exploitable for hacking.  Production sites should have this
+;     directive set to off.
+; - log_errors = On                [Security]
+;     This directive complements the above one.  Any errors that occur during the
+;     execution of your script will be logged (typically, to your server's error log,
+;     but can be configured in several ways).  Along with setting display_errors to off,
+;     this setup gives you the ability to fully understand what may have gone wrong,
+;     without exposing any sensitive information to remote users.
+; - output_buffering = 4096        [Performance]
+;     Set a 4KB output buffer.  Enabling output buffering typically results in less
+;     writes, and sometimes less packets sent on the wire, which can often lead to
+;     better performance.  The gain this directive actually yields greatly depends
+;     on which Web server you're working with, and what kind of scripts you're using.
+; - register_argc_argv = Off       [Performance]
+;     Disables registration of the somewhat redundant $argv and $argc global
+;     variables.
+; - magic_quotes_gpc = Off         [Performance]
+;     Input data is no longer escaped with slashes so that it can be sent into
+;     SQL databases without further manipulation.  Instead, you should use the
+;     function addslashes() on each input element you wish to send to a database.
+; - variables_order = "GPCS"       [Performance]
+;     The environment variables are not hashed into the $_ENV.  To access
+;     environment variables, you can use getenv() instead.
+; - error_reporting = E_ALL        [Code Cleanliness, Security(?)]
+;     By default, PHP surpresses errors of type E_NOTICE.  These error messages
+;     are emitted for non-critical errors, but that could be a symptom of a bigger
+;     problem.  Most notably, this will cause error messages about the use
+;     of uninitialized variables to be displayed.
+; - allow_call_time_pass_reference = Off     [Code cleanliness]
+;     It's not possible to decide to force a variable to be passed by reference
+;     when calling a function.  The PHP 4 style to do this is by making the
+;     function require the relevant argument by reference.
+
+
+;;;;;;;;;;;;;;;;;;;;
+; Language Options ;
+;;;;;;;;;;;;;;;;;;;;
+
+; Enable the PHP scripting language engine under Apache.
+engine = <%= node['class_php']['engine'] %>
+
+; Enable compatibility mode with Zend Engine 1 (PHP 4.x)
+zend.ze1_compatibility_mode = <%= node['class_php']['ze1_compatibility_mode'] %>
+
+; Allow the <? tag.  Otherwise, only <?php and <script> tags are recognized.
+; NOTE: Using short tags should be avoided when developing applications or
+; libraries that are meant for redistribution, or deployment on PHP
+; servers which are not under your control, because short tags may not
+; be supported on the target server. For portable, redistributable code,
+; be sure not to use short tags.
+short_open_tag = <%= node['class_php']['short_open_tag'] %>
+
+; Allow ASP-style <% %> tags.
+asp_tags = <%= node['class_php']['asp_tags'] %>
+
+; The number of significant digits displayed in floating point numbers.
+precision = <%= node['class_php']['precision'] %>
+
+; Enforce year 2000 compliance (will cause problems with non-compliant browsers)
+y2k_compliance = <%= node['class_php']['y2k_compliance'] %>
+
+; Output buffering allows you to send header lines (including cookies) even
+; after you send body content, at the price of slowing PHP's output layer a
+; bit.  You can enable output buffering during runtime by calling the output
+; buffering functions.  You can also enable output buffering for all files by
+; setting this directive to On.  If you wish to limit the size of the buffer
+; to a certain size - you can use a maximum number of bytes instead of 'On', as
+; a value for this directive (e.g., output_buffering=4096).
+output_buffering = <%= node['class_php']['output_buffering'] %>
+
+; You can redirect all of the output of your scripts to a function.  For
+; example, if you set output_handler to "mb_output_handler", character
+; encoding will be transparently converted to the specified encoding.
+; Setting any output handler automatically turns on output buffering.
+; Note: People who wrote portable scripts should not depend on this ini
+;       directive. Instead, explicitly set the output handler using ob_start().
+;       Using this ini directive may cause problems unless you know what script
+;       is doing.
+; Note: You cannot use both "mb_output_handler" with "ob_iconv_handler"
+;       and you cannot use both "ob_gzhandler" and "zlib.output_compression".
+; Note: output_handler must be empty if this is set 'On' !!!!
+;       Instead you must use zlib.output_handler.
+;output_handler = <%= node['class_php']['output_handler'] %>
+
+; Transparent output compression using the zlib library
+; Valid values for this option are 'off', 'on', or a specific buffer size
+; to be used for compression (default is 4KB)
+; Note: Resulting chunk size may vary due to nature of compression. PHP
+;       outputs chunks that are few hundreds bytes each as a result of
+;       compression. If you prefer a larger chunk size for better
+;       performance, enable output_buffering in addition.
+; Note: You need to use zlib.output_handler instead of the standard
+;       output_handler, or otherwise the output will be corrupted.
+zlib.output_compression = <%= node['class_php']['zlib_output_compression'] %>
+
+; You cannot specify additional output handlers if zlib.output_compression
+; is activated here. This setting does the same as output_handler but in
+; a different order.
+;zlib.output_handler = <%= node['class_php']['zlib_output_handler'] %>
+
+; Implicit flush tells PHP to tell the output layer to flush itself
+; automatically after every output block.  This is equivalent to calling the
+; PHP function flush() after each and every call to print() or echo() and each
+; and every HTML block.  Turning this option on has serious performance
+; implications and is generally recommended for debugging purposes only.
+implicit_flush = <%= node['class_php']['implicit_flush'] %>
+
+; The unserialize callback function will be called (with the undefined class'
+; name as parameter), if the unserializer finds an undefined class
+; which should be instantiated.
+; A warning appears if the specified function is not defined, or if the
+; function doesn't include/implement the missing class.
+; So only set this entry, if you really want to implement such a
+; callback-function.
+unserialize_callback_func = <%= node['class_php']['unserialize_callback_func'] %>
+
+; When floats & doubles are serialized store serialize_precision significant
+; digits after the floating point. The default value ensures that when floats
+; are decoded with unserialize, the data will remain the same.
+serialize_precision = <%= node['class_php']['serialize_precision'] %>
+
+; Whether to enable the ability to force arguments to be passed by reference
+; at function call time.  This method is deprecated and is likely to be
+; unsupported in future versions of PHP/Zend.  The encouraged method of
+; specifying which arguments should be passed by reference is in the function
+; declaration.  You're encouraged to try and turn this option Off and make
+; sure your scripts work properly with it in order to ensure they will work
+; with future versions of the language (you will receive a warning each time
+; you use this feature, and the argument will be passed by value instead of by
+; reference).
+allow_call_time_pass_reference = <%= node['class_php']['allow_call_time_pass_reference'] %>
+
+;
+; Safe Mode
+;
+safe_mode = <%= node['class_php']['safe_mode'] %>
+
+; By default, Safe Mode does a UID compare check when
+; opening files. If you want to relax this to a GID compare,
+; then turn on safe_mode_gid.
+safe_mode_gid = <%= node['class_php']['safe_mode_gid'] %>
+
+; When safe_mode is on, UID/GID checks are bypassed when
+; including files from this directory and its subdirectories.
+; (directory must also be in include_path or full path must
+; be used when including)
+safe_mode_include_dir = "<%= node['class_php']['safe_mode_include_dir'] %>"
+
+; When safe_mode is on, only executables located in the safe_mode_exec_dir
+; will be allowed to be executed via the exec family of functions.
+safe_mode_exec_dir = "<%= node['class_php']['safe_mode_exec_dir'] %>"
+
+; Setting certain environment variables may be a potential security breach.
+; This directive contains a comma-delimited list of prefixes.  In Safe Mode,
+; the user may only alter environment variables whose names begin with the
+; prefixes supplied here.  By default, users will only be able to set
+; environment variables that begin with PHP_ (e.g. PHP_FOO=BAR).
+;
+; Note:  If this directive is empty, PHP will let the user modify ANY
+; environment variable!
+safe_mode_allowed_env_vars = <%= node['class_php']['safe_mode_allowed_env_vars'] %>
+
+; This directive contains a comma-delimited list of environment variables that
+; the end user won't be able to change using putenv()_  These variables will be
+; protected even if safe_mode_allowed_env_vars is set to allow to change them.
+safe_mode_protected_env_vars = <%= node['class_php']['safe_mode_protected_env_vars'] %>
+
+; open_basedir, if set, limits all file operations to the defined directory
+; and below.  This directive makes most sense if used in a per-directory
+; or per-virtualhost web server configuration file. This directive is
+; *NOT* affected by whether Safe Mode is turned On or Off.
+;open_basedir = <%= node['class_php']['open_basedir'] %>
+
+; This directive allows you to disable certain functions for security reasons.
+; It receives a comma-delimited list of function names. This directive is
+; *NOT* affected by whether Safe Mode is turned On or Off.
+disable_functions = <%= node['class_php']['disable_functions'] %>
+
+; This directive allows you to disable certain classes for security reasons.
+; It receives a comma-delimited list of class names. This directive is
+; *NOT* affected by whether Safe Mode is turned On or Off.
+disable_classes = <%= node['class_php']['disable_classes'] %>
+
+; Colors for Syntax Highlighting mode.  Anything that's acceptable in
+; <span style="color: ???????"> would work.
+;highlight.string = <%= node['class_php']['highlight_string'] %>
+;highlight.comment = <%= node['class_php']['highlight_comment'] %>
+;highlight.keyword = <%= node['class_php']['highlight_keyword'] %>
+;highlight.bg = <%= node['class_php']['highlight_bg'] %>
+;highlight.default = <%= node['class_php']['highlight_default'] %>
+;highlight.html = <%= node['class_php']['highlight_html'] %>
+
+; If enabled, the request will be allowed to complete even if the user aborts
+; the request. Consider enabling it if executing long request, which may end up
+; being interrupted by the user or a browser timing out.
+; ignore_user_abort = On
+
+; Determines the size of the realpath cache to be used by PHP. This value should
+; be increased on systems where PHP opens many files to reflect the quantity of
+; the file operations performed.
+; realpath_cache_size=16k
+
+; Duration of time, in seconds for which to cache realpath information for a given
+; file or directory. For systems with rarely changing files, consider increasing this
+; value.
+; realpath_cache_ttl=120
+
+;
+; Misc
+;
+; Decides whether PHP may expose the fact that it is installed on the server
+; (e.g. by adding its signature to the Web server header).  It is no security
+; threat in any way, but it makes it possible to determine whether you use PHP
+; on your server or not.
+expose_php = <%= node['class_php']['expose_php'] %>
+
+
+;;;;;;;;;;;;;;;;;;;
+; Resource Limits ;
+;;;;;;;;;;;;;;;;;;;
+
+max_execution_time = <%= node['class_php']['max_execution_time'] %>     ; Maximum execution time of each script, in seconds
+max_input_time = <%= node['class_php']['max_input_time'] %>	; Maximum amount of time each script may spend parsing request data
+memory_limit = <%= node['class_php']['memory_limit'] %>      ; Maximum amount of memory a script may consume
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Error handling and logging ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; error_reporting is a bit-field.  Or each number up to get desired error
+; reporting level
+; E_ALL             - All errors and warnings (doesn't include E_STRICT)
+; E_ERROR           - fatal run-time errors
+; E_WARNING         - run-time warnings (non-fatal errors)
+; E_PARSE           - compile-time parse errors
+; E_NOTICE          - run-time notices (these are warnings which often result
+;                     from a bug in your code, but it's possible that it was
+;                     intentional (e.g., using an uninitialized variable and
+;                     relying on the fact it's automatically initialized to an
+;                     empty string)
+; E_STRICT          - run-time notices, enable to have PHP suggest changes
+;                     to your code which will ensure the best interoperability
+;                     and forward compatibility of your code
+; E_CORE_ERROR      - fatal errors that occur during PHP's initial startup
+; E_CORE_WARNING    - warnings (non-fatal errors) that occur during PHP's
+;                     initial startup
+; E_COMPILE_ERROR   - fatal compile-time errors
+; E_COMPILE_WARNING - compile-time warnings (non-fatal errors)
+; E_USER_ERROR      - user-generated error message
+; E_USER_WARNING    - user-generated warning message
+; E_USER_NOTICE     - user-generated notice message
+;
+; Examples:
+;
+;   - Show all errors, except for notices and coding standards warnings
+;
+;error_reporting = E_ALL & ~E_NOTICE
+;
+;   - Show all errors, except for notices
+;
+;error_reporting = E_ALL & ~E_NOTICE | E_STRICT
+;
+;   - Show only errors
+;
+;error_reporting = E_COMPILE_ERROR|E_ERROR|E_CORE_ERROR
+;
+;   - Show all errors, except coding standards warnings
+;
+;error_reporting = E_ALL
+
+error_reporting = <%= node['class_php']['error_reporting'] %>
+
+; Print out errors (as a part of the output).  For production web sites,
+; you're strongly encouraged to turn this feature off, and use error logging
+; instead (see below).  Keeping display_errors enabled on a production web site
+; may reveal security information to end users, such as file paths on your Web
+; server, your database schema or other information.
+display_errors = <%= node['class_php']['display_errors'] %>
+
+; Even when display_errors is on, errors that occur during PHP's startup
+; sequence are not displayed.  It's strongly recommended to keep
+; display_startup_errors off, except for when debugging.
+display_startup_errors = <%= node['class_php']['display_startup_errors'] %>
+
+; Log errors into a log file (server-specific log, stderr, or error_log (below))
+; As stated above, you're strongly advised to use error logging in place of
+; error displaying on production web sites.
+log_errors = <%= node['class_php']['log_errors'] %>
+
+; Set maximum length of log_errors. In error_log information about the source is
+; added. The default is 1024 and 0 allows to not apply any maximum length at all.
+log_errors_max_len = <%= node['class_php']['log_errors_max_len'] %>
+
+; Do not log repeated messages. Repeated errors must occur in same file on same
+; line until ignore_repeated_source is set true.
+ignore_repeated_errors = <%= node['class_php']['ignore_repeated_errors'] %>
+
+; Ignore source of message when ignoring repeated messages. When this setting
+; is On you will not log errors with repeated messages from different files or
+; sourcelines.
+ignore_repeated_source = <%= node['class_php']['ignore_repeated_source'] %>
+
+; If this parameter is set to Off, then memory leaks will not be shown (on
+; stdout or in the log). This has only effect in a debug compile, and if
+; error reporting includes E_WARNING in the allowed list
+report_memleaks = <%= node['class_php']['report_memleaks'] %>
+
+; Store the last error/warning message in $php_errormsg (boolean).
+track_errors = <%= node['class_php']['track_errors'] %>
+
+; Disable the inclusion of HTML tags in error messages.
+; Note: Never use this feature for production boxes.
+;html_errors = <%= node['class_php']['html_errors'] %>
+
+; If html_errors is set On PHP produces clickable error messages that direct
+; to a page describing the error or function causing the error in detail.
+; You can download a copy of the PHP manual from http://www.php.net/docs.php
+; and change docref_root to the base URL of your local copy including the
+; leading '/'_ You must also specify the file extension being used including
+; the dot.
+; Note: Never use this feature for production boxes.
+;docref_root = "<%= node['class_php']['docref_root'] %>"
+;docref_ext = <%= node['class_php']['docref_ext'] %>
+
+; String to output before an error message.
+;error_prepend_string = "<%= node['class_php']['error_prepend_string'] %>"
+
+; String to output after an error message.
+;error_append_string = "<%= node['class_php']['error_append_string'] %>"
+
+; Log errors to specified file.
+;error_log = filename
+
+; Log errors to syslog (Event Log on NT, not valid in Windows 95).
+;error_log = syslog
+
+<% if not node['class_php']['error_log'].empty? -%>
+error_log = <%= node['class_php']['error_log'] %>
+<% end -%>
+
+;;;;;;;;;;;;;;;;;
+; Data Handling ;
+;;;;;;;;;;;;;;;;;
+;
+; Note - track_vars is ALWAYS enabled as of PHP 4.0.3
+
+; The separator used in PHP generated URLs to separate arguments.
+; Default is "&".
+;arg_separator.output = "<%= node['class_php']['arg_separator_output'] %>"
+
+; List of separator(s) used by PHP to parse input URLs into variables.
+; Default is "&".
+; NOTE: Every character in this directive is considered as separator!
+;arg_separator.input = "<%= node['class_php']['arg_separator_input'] %>"
+
+; This directive describes the order in which PHP registers GET, POST, Cookie,
+; Environment and Built-in variables (G, P, C, E & S respectively, often
+; referred to as EGPCS or GPC).  Registration is done from left to right, newer
+; values override older values.
+variables_order = "<%= node['class_php']['variables_order'] %>"
+
+; Whether or not to register the EGPCS variables as global variables.  You may
+; want to turn this off if you don't want to clutter your scripts' global scope
+; with user data.  This makes most sense when coupled with track_vars - in which
+; case you can access all of the GPC variables through the $HTTP_*_VARS[],
+; variables.
+;
+; You should do your best to write your scripts so that they do not require
+; register_globals to be on;  Using form variables as globals can easily lead
+; to possible security problems, if the code is not very well thought of.
+register_globals = <%= node['class_php']['register_globals'] %>
+
+; Whether or not to register the old-style input arrays, HTTP_GET_VARS
+; and friends.  If you're not using them, it's recommended to turn them off,
+; for performance reasons.
+register_long_arrays = <%= node['class_php']['register_long_arrays'] %>
+
+; This directive tells PHP whether to declare the argv&argc variables (that
+; would contain the GET information).  If you don't use these variables, you
+; should turn it off for increased performance.
+register_argc_argv = <%= node['class_php']['register_argc_argv'] %>
+
+; When enabled, the SERVER and ENV variables are created when they're first
+; used (Just In Time) instead of when the script starts. If these variables
+; are not used within a script, having this directive on will result in a
+; performance gain. The PHP directives register_globals, register_long_arrays,
+; and register_argc_argv must be disabled for this directive to have any affect.
+auto_globals_jit = <%= node['class_php']['auto_globals_jit'] %>
+
+; Maximum size of POST data that PHP will accept.
+post_max_size = <%= node['class_php']['post_max_size'] %>
+
+; Magic quotes
+;
+
+; Magic quotes for incoming GET/POST/Cookie data.
+magic_quotes_gpc = <%= node['class_php']['magic_quotes_gpc'] %>
+
+; Magic quotes for runtime-generated data, e.g. data from SQL, from exec(), etc.
+magic_quotes_runtime = <%= node['class_php']['magic_quotes_runtime'] %>
+
+; Use Sybase-style magic quotes (escape ' with '' instead of \').
+magic_quotes_sybase = <%= node['class_php']['magic_quotes_sybase'] %>
+
+; Automatically add files before or after any PHP document.
+auto_prepend_file = <%= node['class_php']['auto_prepend_file'] %>
+auto_append_file = <%= node['class_php']['auto_append_file'] %>
+
+; As of 4.0b4, PHP always outputs a character encoding by default in
+; the Content-type: header.  To disable sending of the charset, simply
+; set it to be empty.
+;
+; PHP's built-in default is text/html
+default_mimetype = "<%= node['class_php']['default_mimetype'] %>"
+;default_charset = "<%= node['class_php']['default_charset'] %>"
+
+; Always populate the $HTTP_RAW_POST_DATA variable.
+;always_populate_raw_post_data = <%= node['class_php']['always_populate_raw_post_data'] %>
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+; Paths and Directories ;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; UNIX: "/path1:/path2"
+;include_path = "<%= node['class_php']['include_path'] %>"
+;
+; Windows: "\path1;\path2"
+;include_path = "<%= node['class_php']['include_path'] %>"
+
+; The root of the PHP pages, used only if nonempty.
+; if PHP was not compiled with FORCE_REDIRECT, you SHOULD set doc_root
+; if you are running php as a CGI under any web server (other than IIS)
+; see documentation for security issues.  The alternate is to use the
+; cgi.force_redirect configuration below
+doc_root = "<%= node['class_php']['doc_root'] %>"
+
+; The directory under which PHP opens the script using /~username used only
+; if nonempty.
+user_dir = "<%= node['class_php']['user_dir'] %>"
+
+; Directory in which the loadable extensions (modules) reside.
+extension_dir = "<%= node['class_php']['extension_dir'] %>"
+
+; Whether or not to enable the dl() function.  The dl() function does NOT work
+; properly in multithreaded servers, such as IIS or Zeus, and is automatically
+; disabled on them.
+enable_dl = <%= node['class_php']['enable_dl'] %>
+
+; cgi.force_redirect is necessary to provide security running PHP as a CGI under
+; most web servers.  Left undefined, PHP turns this on by default.  You can
+; turn it off here AT YOUR OWN RISK
+; **You CAN safely turn this off for IIS, in fact, you MUST.**
+; cgi.force_redirect = 1
+
+; if cgi.nph is enabled it will force cgi to always sent Status: 200 with
+; every request.
+; cgi.nph = 1
+
+; if cgi.force_redirect is turned on, and you are not running under Apache or Netscape
+; (iPlanet) web servers, you MAY need to set an environment variable name that PHP
+; will look for to know it is OK to continue execution.  Setting this variable MAY
+; cause security issues, KNOW WHAT YOU ARE DOING FIRST.
+; cgi.redirect_status_env = ;
+
+; FastCGI under IIS (on WINNT based OS) supports the ability to impersonate
+; security tokens of the calling client.  This allows IIS to define the
+; security context that the request runs under.  mod_fastcgi under Apache
+; does not currently support this feature (03/17/2002)
+; Set to 1 if running under IIS.  Default is zero.
+; fastcgi.impersonate = 1;
+
+; Disable logging through FastCGI connection
+; fastcgi.log = 0
+
+; cgi.rfc2616_headers configuration option tells PHP what type of headers to
+; use when sending HTTP response code. If it's set 0 PHP sends Status: header that
+; is supported by Apache. When this option is set to 1 PHP will send
+; RFC2616 compliant header.
+; Default is zero.
+;cgi.rfc2616_headers = <%= node['class_php']['cgi_rfc2616_headers'] %>
+
+
+;;;;;;;;;;;;;;;;
+; File Uploads ;
+;;;;;;;;;;;;;;;;
+
+; Whether to allow HTTP file uploads.
+file_uploads = <%= node['class_php']['file_uploads'] %>
+
+; Temporary directory for HTTP uploaded files (will use system default if not
+; specified).
+;upload_tmp_dir = "<%= node['class_php']['upload_tmp_dir'] %>"
+
+; Maximum allowed size for uploaded files.
+upload_max_filesize = <%= node['class_php']['upload_max_filesize'] %>
+
+
+;;;;;;;;;;;;;;;;;;
+; Fopen wrappers ;
+;;;;;;;;;;;;;;;;;;
+
+; Whether to allow the treatment of URLs (like http:// or ftp://) as files.
+allow_url_fopen = <%= node['class_php']['allow_url_fopen'] %>
+
+; Define the anonymous ftp password (your email address)
+;from = "<%= node['class_php']['from'] %>"
+
+; Define the User-Agent string
+;user_agent = "<%= node['class_php']['user_agent'] %>"
+
+; Default timeout for socket based streams (seconds)
+default_socket_timeout = <%= node['class_php']['default_socket_timeout'] %>
+
+; If your scripts have to deal with files from Macintosh systems,
+; or you are running on a Mac and need to deal with files from
+; unix or win32 systems, setting this flag will cause PHP to
+; automatically detect the EOL character in those files so that
+; fgets() and file() will work regardless of the source of the file.
+; auto_detect_line_endings = Off
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+; Dynamic Extensions ;
+;;;;;;;;;;;;;;;;;;;;;;
+;
+; If you wish to have an extension loaded automatically, use the following
+; syntax:
+;
+;   extension=modulename.extension
+;
+; For example:
+;
+;   extension=msql.so
+;
+; Note that it should be the name of the module only; no directory information
+; needs to go here.  Specify the location of the extension with the
+; extension_dir directive above.
+
+  
+;;;;
+; Note: packaged extension modules are now loaded via the .ini files
+; found in the directory /etc/php.d; these are loaded by default.
+;;;;
+
+
+;;;;;;;;;;;;;;;;;;;
+; Module Settings ;
+;;;;;;;;;;;;;;;;;;;
+
+[Date]
+; Defines the default timezone used by the date functions
+date.timezone = <%= node['class_php']['date_timezone'] %>
+date.default_latitude = <%= node['class_php']['date_default_latitude'] %>
+date.default_longitude = <%= node['class_php']['date_default_longitude'] %>
+
+[Syslog]
+; Whether or not to define the various syslog variables (e.g. $LOG_PID,
+; $LOG_CRON, etc.).  Turning it off is a good idea performance-wise.  In
+; runtime, you can define these variables by calling define_syslog_variables().
+define_syslog_variables = <%= node['class_php']['define_syslog_variables'] %>
+
+[mail function]
+; For Win32 only.
+SMTP = <%= node['class_php']['SMTP'] %>
+smtp_port = <%= node['class_php']['smtp_port'] %>
+
+; For Win32 only.
+;sendmail_from = <%= node['class_php']['sendmail_from'] %>
+
+; For Unix only.  You may supply arguments as well (default: "sendmail -t -i").
+sendmail_path = <%= node['class_php']['sendmail_path'] %>
+
+; Force the addition of the specified parameters to be passed as extra parameters
+; to the sendmail binary. These parameters will always replace the value of
+; the 5th parameter to mail(), even in safe mode.
+;mail.force_extra_parameters = <%= node['class_php']['mail_force_extra_parameters'] %>
+
+[SQL]
+sql.safe_mode = <%= node['class_php']['sql_safe_mode'] %>
+
+[ODBC]
+;odbc.default_db = <%= node['class_php']['odbc_default_db'] %>
+;odbc.default_user = <%= node['class_php']['odbc_default_user'] %>
+;odbc.default_pw = <%= node['class_php']['odbc_default_pw'] %>
+
+; Allow or prevent persistent links.
+odbc.allow_persistent = <%= node['class_php']['odbc_allow_persistent'] %>
+
+; Check that a connection is still valid before reuse.
+odbc.check_persistent = <%= node['class_php']['odbc_check_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+odbc.max_persistent = <%= node['class_php']['odbc_max_persistent'] %>
+
+; Maximum number of links (persistent + non-persistent).  -1 means no limit.
+odbc.max_links = <%= node['class_php']['odbc_max_links'] %>
+
+; Handling of LONG fields.  Returns number of bytes to variables.  0 means
+; passthru.
+odbc.defaultlrl = <%= node['class_php']['odbc_defaultlrl'] %>
+
+; Handling of binary data.  0 means passthru, 1 return as is, 2 convert to char.
+; See the documentation on odbc_binmode and odbc_longreadlen for an explanation
+; of uodbc.defaultlrl and uodbc.defaultbinmode
+odbc.defaultbinmode = <%= node['class_php']['odbc_defaultbinmode'] %>
+
+[MySQL]
+; Allow or prevent persistent links.
+mysql.allow_persistent = <%= node['class_php']['mysql_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+mysql.max_persistent = <%= node['class_php']['mysql_max_persistent'] %>
+
+; Maximum number of links (persistent + non-persistent).  -1 means no limit.
+mysql.max_links = <%= node['class_php']['mysql_max_links'] %>
+
+; Default port number for mysql_connect().  If unset, mysql_connect() will use
+; the $MYSQL_TCP_PORT or the mysql-tcp entry in /etc/services or the
+; compile-time value defined MYSQL_PORT (in that order).  Win32 will only look
+; at MYSQL_PORT.
+mysql.default_port = <%= node['class_php']['mysql_default_port'] %>
+
+; Default socket name for local MySQL connects.  If empty, uses the built-in
+; MySQL defaults.
+mysql.default_socket = <%= node['class_php']['mysql_default_socket'] %>
+
+; Default host for mysql_connect() (doesn't apply in safe mode).
+mysql.default_host = <%= node['class_php']['mysql_default_host'] %>
+
+; Default user for mysql_connect() (doesn't apply in safe mode).
+mysql.default_user = <%= node['class_php']['mysql_default_user'] %>
+
+; Default password for mysql_connect() (doesn't apply in safe mode).
+; Note that this is generally a *bad* idea to store passwords in this file.
+; *Any* user with PHP access can run 'echo get_cfg_var("mysql_default_password")
+; and reveal this password!  And of course, any users with read access to this
+; file will be able to reveal the password as well.
+mysql.default_password = <%= node['class_php']['mysql_default_password'] %>
+
+; Maximum time (in secondes) for connect timeout. -1 means no limit
+mysql.connect_timeout = <%= node['class_php']['mysql_connect_timeout'] %>
+
+; Trace mode. When trace_mode is active (=On), warnings for table/index scans and
+; SQL-Errors will be displayed.
+mysql.trace_mode = <%= node['class_php']['mysql_trace_mode'] %>
+
+[MySQLi]
+
+; Maximum number of links.  -1 means no limit.
+mysqli.max_links = <%= node['class_php']['mysqli_max_links'] %>
+
+; Default port number for mysqli_connect().  If unset, mysqli_connect() will use
+; the $MYSQL_TCP_PORT or the mysql-tcp entry in /etc/services or the
+; compile-time value defined MYSQL_PORT (in that order).  Win32 will only look
+; at MYSQL_PORT.
+mysqli.default_port = <%= node['class_php']['mysqli_default_port'] %>
+
+; Default socket name for local MySQL connects.  If empty, uses the built-in
+; MySQL defaults.
+mysqli.default_socket = <%= node['class_php']['mysqli_default_socket'] %>
+
+; Default host for mysql_connect() (doesn't apply in safe mode).
+mysqli.default_host = <%= node['class_php']['mysqli_default_host'] %>
+
+; Default user for mysql_connect() (doesn't apply in safe mode).
+mysqli.default_user = <%= node['class_php']['mysqli_default_user'] %>
+
+; Default password for mysqli_connect() (doesn't apply in safe mode).
+; Note that this is generally a *bad* idea to store passwords in this file.
+; *Any* user with PHP access can run 'echo get_cfg_var("mysqli_default_pw")
+; and reveal this password!  And of course, any users with read access to this
+; file will be able to reveal the password as well.
+mysqli.default_pw = <%= node['class_php']['mysqli_default_pw'] %>
+
+; Allow or prevent reconnect
+mysqli.reconnect = <%= node['class_php']['mysqli_reconnect'] %>
+
+[mSQL]
+; Allow or prevent persistent links.
+msql.allow_persistent = <%= node['class_php']['msql_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+msql.max_persistent = <%= node['class_php']['msql_max_persistent'] %>
+
+; Maximum number of links (persistent+non persistent).  -1 means no limit.
+msql.max_links = <%= node['class_php']['msql_max_links'] %>
+
+[PostgresSQL]
+; Allow or prevent persistent links.
+pgsql.allow_persistent = <%= node['class_php']['pgsql_allow_persistent'] %>
+
+; Detect broken persistent links always with pg_pconnect().
+; Auto reset feature requires a little overheads.
+pgsql.auto_reset_persistent = <%= node['class_php']['pgsql_auto_reset_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+pgsql.max_persistent = <%= node['class_php']['pgsql_max_persistent'] %>
+
+; Maximum number of links (persistent+non persistent).  -1 means no limit.
+pgsql.max_links = <%= node['class_php']['pgsql_max_links'] %>
+
+; Ignore PostgreSQL backends Notice message or not.
+; Notice message logging require a little overheads.
+pgsql.ignore_notice = <%= node['class_php']['pgsql_ignore_notice'] %>
+
+; Log PostgreSQL backends Noitce message or not.
+; Unless pgsql.ignore_notice=0, module cannot log notice message.
+pgsql.log_notice = <%= node['class_php']['pgsql_log_notice'] %>
+
+[Sybase]
+; Allow or prevent persistent links.
+sybase.allow_persistent = <%= node['class_php']['sybase_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+sybase.max_persistent = <%= node['class_php']['sybase_max_persistent'] %>
+
+; Maximum number of links (persistent + non-persistent).  -1 means no limit.
+sybase.max_links = <%= node['class_php']['sybase_max_links'] %>
+
+;sybase.interface_file = "<%= node['class_php']['sybase_interface_file'] %>"
+
+; Minimum error severity to display.
+sybase.min_error_severity = <%= node['class_php']['sybase_min_error_severity'] %>
+
+; Minimum message severity to display.
+sybase.min_message_severity = <%= node['class_php']['sybase_min_message_severity'] %>
+
+; Compatability mode with old versions of PHP 3.0.
+; If on, this will cause PHP to automatically assign types to results according
+; to their Sybase type, instead of treating them all as strings.  This
+; compatability mode will probably not stay around forever, so try applying
+; whatever necessary changes to your code, and turn it off.
+sybase.compatability_mode = <%= node['class_php']['sybase_compatability_mode'] %>
+
+[Sybase-CT]
+; Allow or prevent persistent links.
+sybct.allow_persistent = <%= node['class_php']['sybct_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+sybct.max_persistent = <%= node['class_php']['sybct_max_persistent'] %>
+
+; Maximum number of links (persistent + non-persistent).  -1 means no limit.
+sybct.max_links = <%= node['class_php']['sybct_max_links'] %>
+
+; Minimum server message severity to display.
+sybct.min_server_severity = <%= node['class_php']['sybct_min_server_severity'] %>
+
+; Minimum client message severity to display.
+sybct.min_client_severity = <%= node['class_php']['sybct_min_client_severity'] %>
+
+[bcmath]
+; Number of decimal digits for all bcmath functions.
+bcmath.scale = <%= node['class_php']['bcmath_scale'] %>
+
+[browscap]
+;browscap = <%= node['class_php']['browscap'] %>
+
+[Informix]
+; Default host for ifx_connect() (doesn't apply in safe mode).
+ifx.default_host = <%= node['class_php']['ifx_default_host'] %>
+
+; Default user for ifx_connect() (doesn't apply in safe mode).
+ifx.default_user = <%= node['class_php']['ifx_default_user'] %>
+
+; Default password for ifx_connect() (doesn't apply in safe mode).
+ifx.default_password = <%= node['class_php']['ifx_default_password'] %>
+
+; Allow or prevent persistent links.
+ifx.allow_persistent = <%= node['class_php']['ifx_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+ifx.max_persistent = <%= node['class_php']['ifx_max_persistent'] %>
+
+; Maximum number of links (persistent + non-persistent).  -1 means no limit.
+ifx.max_links = <%= node['class_php']['ifx_max_links'] %>
+
+; If on, select statements return the contents of a text blob instead of its id.
+ifx.textasvarchar = <%= node['class_php']['ifx_textasvarchar'] %>
+
+; If on, select statements return the contents of a byte blob instead of its id.
+ifx.byteasvarchar = <%= node['class_php']['ifx_byteasvarchar'] %>
+
+; Trailing blanks are stripped from fixed-length char columns.  May help the
+; life of Informix SE users.
+ifx.charasvarchar = <%= node['class_php']['ifx_charasvarchar'] %>
+
+; If on, the contents of text and byte blobs are dumped to a file instead of
+; keeping them in memory.
+ifx.blobinfile = <%= node['class_php']['ifx_blobinfile'] %>
+
+; NULL's are returned as empty strings, unless this is set to 1.  In that case,
+; NULL's are returned as string 'NULL'.
+ifx.nullformat = <%= node['class_php']['ifx_nullformat'] %>
+
+[Session]
+; Handler used to store/retrieve data.
+session.save_handler = <%= node['class_php']['session_save_handler'] %>
+
+; Argument passed to save_handler.  In the case of files, this is the path
+; where data files are stored. Note: Windows users have to change this
+; variable in order to use PHP's session functions.
+;
+; As of PHP 4.0.1, you can define the path as:
+;
+;     session.save_path = "N;/path"
+;
+; where N is an integer.  Instead of storing all the session files in
+; /path, what this will do is use subdirectories N-levels deep, and
+; store the session data in those directories.  This is useful if you
+; or your OS have problems with lots of files in one directory, and is
+; a more efficient layout for servers that handle lots of sessions.
+;
+; NOTE 1: PHP will not create this directory structure automatically.
+;         You can use the script in the ext/session dir for that purpose.
+; NOTE 2: See the section on garbage collection below if you choose to
+;         use subdirectories for session storage
+;
+; The file storage module creates files using mode 600 by default.
+; You can change that by using
+;
+;     session.save_path = "N;MODE;/path"
+;
+; where MODE is the octal representation of the mode. Note that this
+; does not overwrite the process's umask.
+session.save_path = "<%= node['class_php']['session_save_path'] %>"
+
+; Whether to use cookies.
+session.use_cookies = <%= node['class_php']['session_use_cookies'] %>
+
+; This option enables administrators to make their users invulnerable to
+; attacks which involve passing session ids in URLs; defaults to 0.
+; session.use_only_cookies = 1
+
+; Name of the session (used as cookie name).
+session.name = <%= node['class_php']['session_name'] %>
+
+; Initialize session on request startup.
+session.auto_start = <%= node['class_php']['session_auto_start'] %>
+
+; Lifetime in seconds of cookie or, if 0, until browser is restarted.
+session.cookie_lifetime = <%= node['class_php']['session_cookie_lifetime'] %>
+
+; The path for which the cookie is valid.
+session.cookie_path = <%= node['class_php']['session_cookie_path'] %>
+
+; The domain for which the cookie is valid.
+session.cookie_domain = <%= node['class_php']['session_cookie_domain'] %>
+
+; Handler used to serialize data.  php is the standard serializer of PHP.
+session.serialize_handler = <%= node['class_php']['session_serialize_handler'] %>
+
+; Define the probability that the 'garbage collection' process is started
+; on every session initialization.
+; The probability is calculated by using gc_probability/gc_divisor,
+; e.g. 1/100 means there is a 1% chance that the GC process starts
+; on each request.
+
+session.gc_probability = <%= node['class_php']['session_gc_probability'] %>
+session.gc_divisor = <%= node['class_php']['session_gc_divisor'] %>
+
+; After this number of seconds, stored data will be seen as 'garbage' and
+; cleaned up by the garbage collection process.
+session.gc_maxlifetime = <%= node['class_php']['session_gc_maxlifetime'] %>
+
+; NOTE: If you are using the subdirectory option for storing session files
+;       (see session.save_path above), then garbage collection does *not*
+;       happen automatically.  You will need to do your own garbage
+;       collection through a shell script, cron entry, or some other method.
+;       For example, the following script would is the equivalent of
+;       setting session.gc_maxlifetime to 1440 (1440 seconds = 24 minutes):
+;          cd /path/to/sessions; find -cmin +24 | xargs rm
+
+; PHP 4.2 and less have an undocumented feature/bug that allows you to
+; to initialize a session variable in the global scope, albeit register_globals
+; is disabled.  PHP 4.3 and later will warn you, if this feature is used.
+; You can disable the feature and the warning separately. At this time,
+; the warning is only displayed, if bug_compat_42 is enabled.
+
+session.bug_compat_42 = <%= node['class_php']['session_bug_compat_42'] %>
+session.bug_compat_warn = <%= node['class_php']['session_bug_compat_warn'] %>
+
+; Check HTTP Referer to invalidate externally stored URLs containing ids.
+; HTTP_REFERER has to contain this substring for the session to be
+; considered as valid.
+session.referer_check = <%= node['class_php']['session_referer_check'] %>
+
+; How many bytes to read from the file.
+session.entropy_length = <%= node['class_php']['session_entropy_length'] %>
+
+; Specified here to create the session id.
+session.entropy_file = <%= node['class_php']['session_entropy_file'] %>
+
+;session.entropy_length = <%= node['class_php']['session_entropy_length'] %>
+
+;session.entropy_file = <%= node['class_php']['session_entropy_file'] %>
+
+; Set to {nocache,private,public,} to determine HTTP caching aspects
+; or leave this empty to avoid sending anti-caching headers.
+session.cache_limiter = <%= node['class_php']['session_cache_limiter'] %>
+
+; Document expires after n minutes.
+session.cache_expire = <%= node['class_php']['session_cache_expire'] %>
+
+; trans sid support is disabled by default.
+; Use of trans sid may risk your users security.
+; Use this option with caution.
+; - User may send URL contains active session ID
+;   to other person via. email/irc/etc.
+; - URL that contains active session ID may be stored
+;   in publically accessible computer.
+; - User may access your site with the same session ID
+;   always using URL stored in browser's history or bookmarks.
+session.use_trans_sid = <%= node['class_php']['session_use_trans_sid'] %>
+
+; Select a hash function
+; 0: MD5   (128 bits)
+; 1: SHA-1 (160 bits)
+session.hash_function = <%= node['class_php']['session_hash_function'] %>
+
+; Define how many bits are stored in each character when converting
+; the binary hash data to something readable.
+;
+; 4 bits: 0-9, a-f
+; 5 bits: 0-9, a-v
+; 6 bits: 0-9, a-z, A-Z, "-", ","
+session.hash_bits_per_character = <%= node['class_php']['session_hash_bits_per_character'] %>
+
+; The URL rewriter will look for URLs in a defined set of HTML tags.
+; form/fieldset are special; if you include them here, the rewriter will
+; add a hidden <input> field with the info which is otherwise appended
+; to URLs.  If you want XHTML conformity, remove the form entry.
+; Note that all valid entries require a "=", even if no value follows.
+url_rewriter.tags = "<%= node['class_php']['url_rewriter_tags'] %>"
+
+[MSSQL]
+; Allow or prevent persistent links.
+mssql.allow_persistent = <%= node['class_php']['mssql_allow_persistent'] %>
+
+; Maximum number of persistent links.  -1 means no limit.
+mssql.max_persistent = <%= node['class_php']['mssql_max_persistent'] %>
+
+; Maximum number of links (persistent+non persistent).  -1 means no limit.
+mssql.max_links = <%= node['class_php']['mssql_max_links'] %>
+
+; Minimum error severity to display.
+mssql.min_error_severity = <%= node['class_php']['mssql_min_error_severity'] %>
+
+; Minimum message severity to display.
+mssql.min_message_severity = <%= node['class_php']['mssql_min_message_severity'] %>
+
+; Compatability mode with old versions of PHP 3.0.
+mssql.compatability_mode = <%= node['class_php']['mssql_compatability_mode'] %>
+
+; Connect timeout
+;mssql.connect_timeout = <%= node['class_php']['mssql_connect_timeout'] %>
+
+; Query timeout
+;mssql.timeout = <%= node['class_php']['mssql_timeout'] %>
+
+; Valid range 0 - 2147483647.  Default = 4096.
+;mssql.textlimit = <%= node['class_php']['mssql_textlimit'] %>
+
+; Valid range 0 - 2147483647.  Default = 4096.
+;mssql.textsize = <%= node['class_php']['mssql_textsize'] %>
+
+; Limits the number of records in each batch.  0 = all records in one batch.
+;mssql.batchsize = <%= node['class_php']['mssql_batchsize'] %>
+
+; Specify how datetime and datetim4 columns are returned
+; On => Returns data converted to SQL server settings
+; Off => Returns values as YYYY-MM-DD hh:mm:ss
+;mssql.datetimeconvert = <%= node['class_php']['mssql_datetimeconvert'] %>
+
+; Use NT authentication when connecting to the server
+mssql.secure_connection = <%= node['class_php']['mssql_secure_connection'] %>
+
+; Specify max number of processes. -1 = library default
+; msdlib defaults to 25
+; FreeTDS defaults to 4096
+;mssql.max_procs = <%= node['class_php']['mssql_max_procs'] %>
+
+; Specify client character set. 
+; If empty or not set the client charset from freetds.comf is used
+; This is only used when compiled with FreeTDS
+;mssql.charset = "<%= node['class_php']['mssql_charset'] %>"
+
+[Assertion]
+; Assert(expr); active by default.
+;assert.active = <%= node['class_php']['assert_active'] %>
+
+; Issue a PHP warning for each failed assertion.
+;assert.warning = <%= node['class_php']['assert_warning'] %>
+
+; Don't bail out by default.
+;assert.bail = <%= node['class_php']['assert_bail'] %>
+
+; User-function to be called if an assertion fails.
+;assert.callback = <%= node['class_php']['assert_callback'] %>
+
+; Eval the expression with current error_reporting().  Set to true if you want
+; error_reporting(0) around the eval().
+;assert.quiet_eval = <%= node['class_php']['assert_quiet_eval'] %>
+
+[Verisign Payflow Pro]
+; Default Payflow Pro server.
+pfpro.defaulthost = "<%= node['class_php']['pfpro_defaulthost'] %>"
+
+; Default port to connect to.
+pfpro.defaultport = <%= node['class_php']['pfpro_defaultport'] %>
+
+; Default timeout in seconds.
+pfpro.defaulttimeout = <%= node['class_php']['pfpro_defaulttimeout'] %>
+
+; Default proxy IP address (if required).
+;pfpro.proxyaddress = <%= node['class_php']['pfpro_proxyaddress'] %>
+
+; Default proxy port.
+;pfpro.proxyport = <%= node['class_php']['pfpro_proxyport'] %>
+
+; Default proxy logon.
+;pfpro.proxylogon = <%= node['class_php']['pfpro_proxylogon'] %>
+
+; Default proxy password.
+;pfpro.proxypassword = <%= node['class_php']['pfpro_proxypassword'] %>
+
+[COM]
+; path to a file containing GUIDs, IIDs or filenames of files with TypeLibs
+;com.typelib_file = <%= node['class_php']['com_typelib_file'] %>
+; allow Distributed-COM calls
+;com.allow_dcom = <%= node['class_php']['com_allow_dcom'] %>
+; autoregister constants of a components typlib on com_load()
+;com.autoregister_typelib = <%= node['class_php']['com_autoregister_typelib'] %>
+; register constants casesensitive
+;com.autoregister_casesensitive = <%= node['class_php']['com_autoregister_casesensitive'] %>
+; show warnings on duplicate constat registrations
+;com.autoregister_verbose = <%= node['class_php']['com_autoregister_verbose'] %>
+
+[mbstring]
+; language for internal character representation.
+;mbstring.language = <%= node['class_php']['mbstring_language'] %>
+
+; internal/script encoding.
+; Some encoding cannot work as internal encoding.
+; (e.g. SJIS, BIG5, ISO-2022-*)
+;mbstring.internal_encoding = <%= node['class_php']['mbstring_internal_encoding'] %>
+
+; http input encoding.
+;mbstring.http_input = <%= node['class_php']['mbstring_http_input'] %>
+
+; http output encoding. mb_output_handler must be
+; registered as output buffer to function
+;mbstring.http_output = <%= node['class_php']['mbstring_http_output'] %>
+
+; enable automatic encoding translation according to
+; mbstring.internal_encoding setting. Input chars are
+; converted to internal encoding by setting this to On.
+; Note: Do _not_ use automatic encoding translation for
+;       portable libs/applications.
+;mbstring.encoding_translation = <%= node['class_php']['mbstring_encoding_translation'] %>
+
+; automatic encoding detection order.
+; auto means
+;mbstring.detect_order = <%= node['class_php']['mbstring_detect_order'] %>
+
+; substitute_character used when character cannot be converted
+; one from another
+;mbstring.substitute_character = <%= node['class_php']['mbstring_substitute_character'] %>
+
+; overload(replace) single byte functions by mbstring functions.
+; mail(), ereg(), etc are overloaded by mb_send_mail(), mb_ereg(),
+; etc. Possible values are 0,1,2,4 or combination of them.
+; For example, 7 for overload everything.
+; 0: No overload
+; 1: Overload mail() function
+; 2: Overload str*() functions
+; 4: Overload ereg*() functions
+;mbstring.func_overload = <%= node['class_php']['mbstring_func_overload'] %>
+
+; enable strict encoding detection.
+;mbstring.strict_encoding = <%= node['class_php']['mbstring_strict_encoding'] %>
+
+[FrontBase]
+;fbsql.allow_persistent = <%= node['class_php']['fbsql_allow_persistent'] %>
+;fbsql.autocommit = <%= node['class_php']['fbsql_autocommit'] %>
+;fbsql.default_database = <%= node['class_php']['fbsql_default_database'] %>
+;fbsql.default_database_password = <%= node['class_php']['fbsql_default_database_password'] %>
+;fbsql.default_host = <%= node['class_php']['fbsql_default_host'] %>
+;fbsql.default_password = <%= node['class_php']['fbsql_default_password'] %>
+;fbsql.default_user = "<%= node['class_php']['fbsql_default_user'] %>"
+;fbsql.generate_warnings = <%= node['class_php']['fbsql_generate_warnings'] %>
+;fbsql.max_connections = <%= node['class_php']['fbsql_max_connections'] %>
+;fbsql.max_links = <%= node['class_php']['fbsql_max_links'] %>
+;fbsql.max_persistent = <%= node['class_php']['fbsql_max_persistent'] %>
+;fbsql.max_results = <%= node['class_php']['fbsql_max_results'] %>
+;fbsql.batchSize = <%= node['class_php']['fbsql_batchSize'] %>
+
+[gd]
+; Tell the jpeg decode to libjpeg warnings and try to create
+; a gd image. The warning will then be displayed as notices
+; disabled by default
+;gd.jpeg_ignore_warning = <%= node['class_php']['gd_jpeg_ignore_warning'] %>
+
+[exif]
+; Exif UNICODE user comments are handled as UCS-2BE/UCS-2LE and JIS as JIS.
+; With mbstring support this will automatically be converted into the encoding
+; given by corresponding encode setting. When empty mbstring.internal_encoding
+; is used. For the decode settings you can distinguish between motorola and
+; intel byte order. A decode setting cannot be empty.
+;exif.encode_unicode = <%= node['class_php']['exif_encode_unicode'] %>
+;exif.decode_unicode_motorola = <%= node['class_php']['exif_decode_unicode_motorola'] %>
+;exif.decode_unicode_intel = <%= node['class_php']['exif_decode_unicode_intel'] %>
+;exif.encode_jis = <%= node['class_php']['exif_encode_jis'] %>
+;exif.decode_jis_motorola = <%= node['class_php']['exif_decode_jis_motorola'] %>
+;exif.decode_jis_intel = <%= node['class_php']['exif_decode_jis_intel'] %>
+
+[Tidy]
+; The path to a default tidy configuration file to use when using tidy
+;tidy.default_config = <%= node['class_php']['tidy_default_config'] %>
+
+; Should tidy clean and repair output automatically?
+; WARNING: Do not use this option if you are generating non-html content
+; such as dynamic images
+tidy.clean_output = <%= node['class_php']['tidy_clean_output'] %>
+
+[soap]
+; Enables or disables WSDL caching feature.
+soap.wsdl_cache_enabled = <%= node['class_php']['soap_wsdl_cache_enabled'] %>
+; Sets the directory name where SOAP extension will put cache files.
+soap.wsdl_cache_dir = "<%= node['class_php']['soap_wsdl_cache_dir'] %>"
+; (time to live) Sets the number of second while cached file will be used 
+; instead of original one.
+soap.wsdl_cache_ttl = <%= node['class_php']['soap_wsdl_cache_ttl'] %>
+
+; Local Variables:
+; tab-width: 4
+; End:

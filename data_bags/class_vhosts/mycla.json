@@ -1,0 +1,32 @@
+{
+  "id": "mycla",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:14080": {
+      "ServerName": "mycla.umn.edu",
+      "ServerAlias": "www.mycla.umn.edu",
+      "Redirect": {
+        "/": "https://mycla.umn.edu/"
+      }
+    },
+    "*:14443": {
+      "ServerName": "mycla.umn.edu",
+      "ServerAlias": "www.mycla.umn.edu",
+      "DocumentRoot": "/data/www/mycla/",
+      "SSLCertificate": "mycla_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "UseServerName": true,
+      "Location": {
+        "/four_year_planning/print.pdf": {
+          "SetHandler": "application/x-http-php"
+        },
+        "/cron/": {
+          "Require": "valid-user",
+          "AuthType": "Basic",
+          "AuthName": "MyCLA",
+          "AuthUserFile": "/data/www/mycla/cron/.htpasswd"
+        }
+      }
+    }
+  }
+}

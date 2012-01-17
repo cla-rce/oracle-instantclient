@@ -1,0 +1,350 @@
+# sudoers file.
+#
+# ****************************
+# *
+# * THIS FILE WILL BE OVERWRITTEN IF YOU'RE DIRECTLY CHANGING IT.
+# * 
+# * Changes must be made within the CHEF configuration repository
+# * 
+# *
+# ****************************
+#
+#
+
+Defaults@scruffy	!authenticate
+Defaults@scruffy.socsci.umn.edu	!authenticate
+
+# this is a simplification, but if you're root (or can run arbitrary commands
+# as root), you can do this without sudo and with less logging.  
+root	ALL=(ALL) NOPASSWD: ALL
+
+# Set some notification and logging defaults to override
+# Redhat/Solaris differences.
+
+Defaults	mail_badpass
+Defaults	mail_no_user
+Defaults	mail_no_host
+Defaults	mail_no_perms
+
+Defaults	insults
+Defaults	log_host
+Defaults	log_year
+
+#Defaults	requiretty
+
+Defaults	tty_tickets
+Defaults	loglinelen=0
+Defaults	syslog=auth
+Defaults	logfile=/var/log/sudo.log
+Defaults	mailto="sysadmin@cla.umn.edu"
+
+# temporary -- workaround for changes in 1.6.9.
+# this restores previous behaviour.  Changing the config
+# to explicitly set env_keep+=... would be better.
+Defaults !env_reset
+
+
+### system administrators
+User_Alias 	SYSTEM_ADMINS=buysse,pnw,esser,adam,wunde005,kerzn002
+SYSTEM_ADMINS	ALL=(ALL) ALL
+
+# allow local admins on the box in with sudo
+%local_admins	ALL=(ALL) ALL
+
+
+# Remove DISPLAY from the environment.  With root squashed to homedir access,
+# it's not useful
+
+Defaults		env_delete+="DISPLAY"
+Defaults		env_keep+="ORACLE_HOME"
+Defaults		env_keep+="ORACLE_BASE"
+Defaults		env_keep+="ORACLE_SID"
+
+### Support for Tomcat restarting and umask
+#Defaults>jsrv-mpc       umask=0002
+#Defaults>railsmpc       umask=0002
+#Defaults>railscla       umask=0002
+#Defaults>raillang       umask=0002
+#Defaults>jsrv-gis       umask=0002
+#Defaults>srv-cctl       umask=0002
+
+Defaults		umask=0002
+Defaults>root		umask=0022
+Defaults>plonebak	umask=0077
+
+### want bash_history for users allowed to run shells
+Defaults>root		always_set_home
+Defaults>jsrv-mpc	always_set_home
+Defaults>_mpcbuilds	always_set_home
+Defaults>railsmpc	always_set_home
+Defaults>railscla	always_set_home
+
+# for the extract engine user
+Defaults>ipumsusa	umask=0002
+
+Cmnd_Alias	LSOF=/usr/sbin/lsof,/opt/csw/bin/lsof
+
+Cmnd_Alias	SYSBIN=/sbin/*,/usr/sbin/*
+
+Cmnd_Alias	SHELLS=/bin/tcsh,/bin/sh,/bin/bash,/bin/ksh,/bin/zsh,/bin/ash,/bin/csh,/bin/ash.static,/bin/su,/bin/jsh,/bin/pfksh,/bin/pfsh,/bin/pfcsh,/sbin/tcsh,/sbin/sh,/sbin/bash,/sbin/ksh,/sbin/zsh,/sbin/ash,/sbin/csh,/sbin/ash.static,/sbin/su,/sbin/jsh,/sbin/pfksh,/sbin/pfsh,/sbin/pfcsh,/usr/bin/tcsh,/sbin/sh,/sbin/bash,/sbin/ksh,/sbin/zsh,/sbin/ash,/sbin/csh,/sbin/ash.static,/sbin/su,/usr/bin/jsh,/usr/bin/pfksh,/usr/bin/pfsh,/usr/bin/pfcsh,/usr/sbin/tcsh,/usr/sbin/sh,/usr/sbin/bash,/usr/sbin/ksh,/usr/sbin/zsh,/usr/sbin/ash,/usr/sbin/csh,/usr/sbin/ash.static,/usr/sbin/su,/usr/sbin/jsh,/usr/sbin/pfksh,/usr/sbin/pfsh,/usr/sbin/pfcsh,/usr/local/bin/tcsh,/usr/local/bin/sh,/usr/local/bin/bash,/usr/local/bin/ksh,/usr/local/bin/zsh,/usr/local/bin/ash,/usr/local/bin/csh,/usr/local/bin/ash.static,/usr/local/bin/su,/usr/local/sbin/tcsh,/sbin/sh,/sbin/bash,/sbin/ksh,/sbin/zsh,/sbin/ash,/sbin/csh,/sbin/ash.static,/sbin/su,/opt/csw/sbin/tcsh,/opt/csw/sbin/sh,/opt/csw/sbin/bash,/opt/csw/sbin/ksh,/opt/csw/sbin/zsh,/opt/csw/sbin/ash,/opt/csw/sbin/csh,/opt/csw/sbin/ash.static,/opt/csw/sbin/su,/opt/csw/bin/tcsh,/opt/csw/bin/sh,/opt/csw/bin/bash,/opt/csw/bin/ksh,/opt/csw/bin/zsh,/opt/csw/bin/ash,/opt/csw/bin/csh,/opt/csw/bin/ash.static,/opt/csw/bin/su,/usr/sbin/visudo,/usr/local/sbin/visudo,/opt/csw/sbin/visudo
+
+Cmnd_Alias	PRIMARY_SHELLS=/bin/tcsh,/bin/csh,/bin/bash,/bin/sh,/bin/ksh,/bin/zsh
+
+Cmnd_Alias	HTTPD_ADMIN=/etc/init.d/httpd, /sbin/service httpd *, /etc/init.d/apache2, /sbin/service apache2 *, /usr/sbin/apachectl, /usr/sbin/svcadm enable cswapache2, /usr/sbin/svcadm disable cswapache2, /usr/sbin/svcadm restart cswapache2, /usr/sbin/svcadm refresh cswapache2, /usr/sbin/svcadm clear cswapache2
+
+Host_Alias	MPC_RAILS_HOSTS=ssha-conference,ssha-conference.socsci.umn.edu,atusdata-web,atusdata-web.socsci.umn.edu,morbo,morbo.socsci.umn.edu,calculon,calculon.socsci.umn.edu,mpcapps,mpcapps.socsci.umn.edu,farnsworth,farnsworth.socsci.umn.edu,farnsworth.cla.umn.edu,cubert,cubert.socsci.umn.edu,dwight,dwight.cla.umn.edu,thedonald,thedonald.cla.umn.edu
+
+Host_Alias	CLA_RAILS_HOSTS=infotechfees2,infotechfees2.socsci.umn.edu,dcl2,dcl2.socsci.umn.edu,apps,apps.socsci.umn.edu,railsdev,railsdev.socsci.umn.edu,engine,engine.cla.umn.edu,roundabout.cla.umn.edu,roundabout
+
+Host_Alias	CLA_DEV_RAILS_HOSTS=railsdev,railsdev.socsci.umn.edu
+
+Host_Alias	LANG_RAILS_HOSTS=lang-center,lang-center.cla.umn.edu
+
+Host_Alias      MPC_SERVLET_HOSTS=nhgis-prod.socsci.umn.edu,nhgis-prod,sda,sda.socsci.umn.edu,bitsy,bitsy.socsci.umn.edu,scruffy,scruffy.socsci.umn.edu,hypnotoad,hypnotoad.cla.umn.edu,bender,bender.cla.umn.edu,lrrr,lrrr.socsci.umn.edu,sda2.cla.umn.edu,sda2,dwight,dwight.cla.umn.edu,thedonald,thedonald.cla.umn.edu
+
+Cmnd_Alias      TOMCAT_CMND=/opt/tomcat5/current/bin/shutdown.sh,/opt/tomcat5/current/bin/startup.sh
+
+Host_Alias	MPC_ACTIVEMQ_HOSTS=bitsy,bitsy.socsci.umn.edu,scruffy,scruffy.socsci.umn.edu
+
+Cmnd_Alias	ACTIVEMQ_CMND=/opt/activemq/current/bin/*
+
+Cmnd_Alias      KILLER=/usr/bin/kill,/usr/bin/pkill
+
+Cmnd_Alias      CRONTAB=/usr/bin/crontab
+
+# for now, we need to be able to run all.  We can work around later 
+# with some wrapper scripts that call script/server in the appropriate
+# location
+#root		MPC_RAILS_HOSTS=(railsmpc)NOPASSWD:ALL
+
+# allow Peter Clark and Jeff Kerzner su access to ipums, nhgis and training
+Host_Alias      MAIL_SERVER=mail,mail.socsci.umn.edu
+User_Alias      MPC_MAIL_MIGRATION_ADMINS=pclark,kerzn002
+MPC_MAIL_MIGRATION_ADMINS       MAIL_SERVER=(ipums,nhgis,training,ihis) SHELLS
+
+Host_Alias	MPC_DELEGATED_ADMIN=sda2.cla.umn.edu,sda2,lrrr.socsci.umn.edu,lrrr,ndnd.cla.umn.edu,ndnd,dwight.cla.umn.edu,dwight
+kerzn002	MPC_DELEGATED_ADMIN=(root) ALL,!SHELLS
+
+# allows root to run tomcat as another user without a password
+root            MPC_SERVLET_HOSTS=(jsrv-mpc)NOPASSWD:TOMCAT_CMND
+root            MPC_ACTIVEMQ_HOSTS=(jsrv-mpc)NOPASSWD:ACTIVEMQ_CMND
+#root            MPC_SERVLET_HOSTS=(srv-cctl)NOPASSWD:TOMCAT_CMND
+
+Cmnd_Alias	RSYNC=/usr/bin/rsync,/usr/local/bin/rsync,/opt/csw/bin/rsync
+Cmnd_Alias	TAR=/bin/tar,/usr/bin/tar,/usr/local/bin/tar,/opt/csw/bin/tar
+Cmnd_Alias	FILE_PERMS=/usr/bin/getfacl,/usr/bin/setfacl,/usr/bin/chown,/usr/bin/chmod,/usr/bin/find,/bin/chown,/bin/chmod
+
+Host_Alias	PLONE_HOSTS=plone-beta,plone-beta.socsci.umn.edu,plone0,plone0.socsci.umn.edu
+root		PLONE_HOSTS=(plonebak)NOPASSWD:ALL
+
+Cmnd_Alias	RAILS_PASSENGER_STATUS=/usr/bin/passenger-status,/usr/bin/passenger-memory-stats
+
+# allow members of the group to kill processes or start the server
+%railsmpc       MPC_RAILS_HOSTS=(railsmpc)KILLER
+%railsmpc       MPC_RAILS_HOSTS=LSOF
+%railsmpc       MPC_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails2
+%railsmpc       MPC_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails
+%railsmpc       MPC_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla_rails
+%railsmpc       MPC_RAILS_HOSTS=NOPASSWD: /etc/init.d/httpd
+%railsmpc	MPC_RAILS_HOSTS=RAILS_PASSENGER_STATUS
+
+%railscla       CLA_RAILS_HOSTS=(railscla)KILLER
+%railscla       CLA_RAILS_HOSTS=(railscla)FILE_PERMS
+%railscla       CLA_RAILS_HOSTS=LSOF
+%railscla       CLA_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails2
+%railscla       CLA_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails
+%railscla       CLA_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla_rails
+%railscla       CLA_RAILS_HOSTS=NOPASSWD: /etc/init.d/httpd
+%railscla	CLA_DEV_RAILS_HOSTS=(railscla)ALL,!SHELLS,!SYSBIN
+%railscla	CLA_RAILS_HOSTS=RAILS_PASSENGER_STATUS
+
+%raillang       LANG_RAILS_HOSTS=(raillang)KILLER
+%raillang       LANG_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails2
+%raillang       LANG_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla-rails
+%raillang       LANG_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla_rails
+
+%jsrv-mpc       MPC_SERVLET_HOSTS=(jsrv-mpc)KILLER
+%jsrv-mpc       MPC_SERVLET_HOSTS=/etc/init.d/ssrf-tomcat5
+%jsrv-mpc       MPC_SERVLET_HOSTS=/etc/init.d/cla_tomcat
+%jsrv-mpc	MPC_SERVLET_HOSTS=HTTPD_ADMIN
+%jsrv-mpc       MPC_SERVLET_HOSTS=(jsrv-mpc)PRIMARY_SHELLS
+%jsrv-mpc       MPC_ACTIVEMQ_HOSTS=/etc/init.d/cla_activemq
+%jsrv-mpc       MPC_ACTIVEMQ_HOSTS=(jsrv-mpc)PRIMARY_SHELLS
+
+#%srv-cctl       MPC_SERVLET_HOSTS=(srv-cctl)KILLER
+#%srv-cctl       MPC_SERVLET_HOSTS=/etc/init.d/ssrf-tomcat5
+#%srv-cctl       MPC_SERVLET_HOSTS=(srv-cctl)CRONTAB
+
+### support for MPC needs, ticket #34055
+%jsrv-mpc	MPC_SERVLET_HOSTS=(jsrv-mpc)LSOF
+%jsrv-mpc	MPC_ACTIVEMQ_HOSTS=(jsrv-mpc)LSOF
+
+### RT Development support
+Cmnd_Alias	RTDEV_CMDS=/etc/init.d/httpd,/usr/bin/tail
+Host_Alias	RTDEV_HOSTS=rtdevcla,rtdevcla.socsci.umn.edu,servicedesk,servicedesk.cla.umn.edu
+
+%rtdevcla	RTDEV_HOSTS=RTDEV_CMDS
+
+Cmnd_Alias	RTDEV_SWITCHENV=/opt/rt3/local/bin/switch_to_production.sh,/opt/rt3/local/bin/switch_to_development.sh
+#Host_Alias	RT38DEV_HOSTS=devrt,devrt.socsci.umn.edu,devrt.cla.umn.edu
+### temporary escalation
+Host_Alias	RT38DEV_HOSTS=devrt,devrt.socsci.umn.edu,devrt.cla.umn.edu,prodrt,prodrt.cla.umn.edu,prodrt.socsci.umn.edu,asrrt,asrrt.socsci.umn.edu
+%_rt3		RT38DEV_HOSTS=RTDEV_CMDS,RTDEV_SWITCHENV
+
+### DCL Development support
+Cmnd_Alias      DCLDEV_CMDS=/etc/init.d/httpd,/usr/bin/less,/usr/bin/tail
+Host_Alias      DCLDEV_HOSTS=ibank,ibank.cla.umn.edu
+%dcladmin       DCLDEV_HOSTS=DCLDEV_CMDS
+
+Cmnd_Alias	ACCOUNT_CREATE=/home/system/custom/usergen/Wrap-GenAccount,/opt/dpasswd/bin/dpasswd
+Cmnd_Alias	RAW_PASSWORD=/opt/dpasswd/bin/dpasswd,/usr/bin/passwd,/usr/sfw/bin/smbpasswd,/opt/csw/bin/smbpasswd
+Cmnd_Alias	PSYCH_ACCOUNT=/opt/account-gen/bin/genaccount-psych,/opt/dpasswd/bin/dpasswd
+Cmnd_Alias	DPASSWD=/opt/dpasswd/bin/dpasswd
+Cmnd_Alias	SMBPASSWD=/usr/sfw/bin/smbpasswd,/opt/csw/bin/smbpasswd
+
+User_Alias	ECON_ADMINS=doh
+User_Alias	MPC_ADMINS=pclark
+User_Alias	CSOM_SVCDESK=marti149,smelk003,cnoyed
+User_Alias	PSYCH_ADMINS=cbates,stee0152
+## allowing smbpasswd for mayotte as well, 2012-01-09
+User_Alias	SMBPASSWD_ALL=smelk003,cbates,doh,mayotte
+
+ECON_ADMINS	valhalla=DPASSWD
+MPC_ADMINS	valhalla=DPASSWD
+CSOM_SVCDESK	valhalla=DPASSWD
+PSYCH_ADMINS	valhalla=PSYCH_ACCOUNT
+SMBPASSWD_ALL	thalia=SMBPASSWD
+
+# Support for automatic home directory creation in GenAccount
+Host_Alias	HOMEFS_HOSTS=zeus,zeus.socsci.umn.edu,trickster,trickster.socsci.umn.edu,chronos,chronos.socsci.umn.edu
+Cmnd_Alias	GEN_HOME=/home/system/custom/usergen/GenHome
+genhome		HOMEFS_HOSTS=NOPASSWD:GEN_HOME
+
+Cmnd_Alias	MAILMAN_CMDS=/usr/lib/mailman/bin/*, !/usr/lib/mailman/bin/mmsitepass, !/usr/lib/mailman/bin/withlist, !/usr/lib/mailman/bin/qrunner, !/usr/lib/mailman/bin/mailmanctl, !/usr/lib/mailman/bin/genaliases
+
+User_Alias	COMM_MAILMAN_ADMINS=kwilson
+Host_Alias	COMM_MAILMAN_HOSTS=comm-lists, comm-lists.socsci.umn.edu
+COMM_MAILMAN_ADMINS	COMM_MAILMAN_HOSTS=MAILMAN_CMDS
+
+Host_Alias	CLA_WEB_HOSTS=arachnid,arachnid.socsci.umn.edu,probe,probe.cla.umn.edu,probe.socsci.umn.edu,recluse,recluse.cla.umn.edu,hobo,hobo.socsci.umn.edu,tarantula,tarantula.socsci.umn.edu
+
+%claweb		CLA_WEB_HOSTS=(root)HTTPD_ADMIN
+
+Host_Alias      CLA_MYSQL_HOSTS=db-srv,db-srv.cla.umn.edu,db-srv.socsci.umn.edu,megaera,megaera.socsci.umn.edu,alecto,alecto.socsci.umn.edu,copper,copper.socsci.umn.edu,servicedesk,servicedesk.cla.umn.edu
+Cmnd_Alias      MYSQL_ADMIN=/sbin/service mysqld *
+%cla-dba        CLA_MYSQL_HOSTS=(root)MYSQL_ADMIN
+
+# able to kill and restart SPSS
+User_Alias 	MPC_SPSS_ADMINS=pclark,sobek,hindman
+Cmnd_Alias 	SPSS_KILLER=/usr/local/bin/spss-restart,/usr/local/bin/spss-restart-test
+Host_Alias 	MPC_SPSS_HOSTS=fenris,fenris.socsci.umn.edu
+MPC_SPSS_ADMINS	MPC_SPSS_HOSTS=SPSS_KILLER
+
+Host_Alias	DCL_HOSTS=ibank,ibank.cla.umn.edu,ibank.socsci.umn.edu,new-dcl,new-dcl.socsci.umn.edu,mediabank.cla.umn.edu,mediabank
+
+%dcladmin	DCL_HOSTS=HTTPD_ADMIN
+%dcladmin	DCL_HOSTS=(dclcrawl) PRIMARY_SHELLS
+
+Host_Alias	COPPER_HOSTS=copper,copper.cla.umn.edu,copper.socsci.umn.edu
+copper		COPPER_HOSTS=HTTPD_ADMIN,MYSQL_ADMIN
+
+## configuration for nhgis snapshot rotation
+Cmnd_Alias	NHGIS_ROTATION=/opt/cla/bin/rotate-nhgis-data,/opt/cla/bin/rotate-nhgis-gis
+%mpcnhgis	nhgis-prod=NHGIS_ROTATION
+
+# per #38271
+%hegis		hegis=HTTPD_ADMIN
+%hegis		prehegis=HTTPD_ADMIN
+
+# allow creation of zfs snapshots
+User_Alias      MPC_SNAPSHOT_ADMINS=pclark,mpcarchive
+Cmnd_Alias      CREATE_SNAPSHOT=/opt/cla/snapshot_mpc
+Host_Alias      MPC_SNAPSHOT_HOSTS=mpc-thumper
+MPC_SNAPSHOT_ADMINS    MPC_SNAPSHOT_HOSTS=NOPASSWD: CREATE_SNAPSHOT
+
+## Temporary addition
+eriax001	prehegis=(root) PRIMARY_SHELLS
+
+# support for local CruiseControl.rb install on Bob
+Host_Alias	MPC_BUILD_HOSTS=lrrr,lrrr.socsci.umn.edu
+%jsrv-mpc	MPC_BUILD_HOSTS=(_mpcbuilds) ALL,!SHELLS,/bin/bash
+
+# for Sami to access ArcGIS files
+%miim_gis	prehegis=(miim_gis) PRIMARY_SHELLS
+
+## allow Jon to mess with httpd on trapdoor
+Host_Alias	CONTEXTS_HOSTS=trapdoor,trapdoor.socsci.umn.edu
+%cntxtswb	CONTEXTS_HOSTS=HTTPD_ADMIN,KILLER
+
+## Allow Joe to run anything as git on hooligan (gitorious staging)
+Host_Alias	GITORIOUS_STAGING=hooligan,hooligan.cla.umn.edu
+goggins		GITORIOUS_STAGING=(git) ALL
+
+# RT #77402
+Host_Alias	CSOM_GNOAMS_HOSTS=csom-gnoams,csom-gnoams.cla.umn.edu
+hakal035	CSOM_GNOAMS_HOSTS=HTTPD_ADMIN,KILLER
+
+# allow any sudo for Jeff on ibright
+Host_Alias	INFOBRIGHT_SANDBOX=ibright,ibright.cla.umn.edu
+kerzn002	INFOBRIGHT_SANDBOX=(ALL) ALL
+
+# allow any sudo for Jeff on ndnd
+Host_Alias      NDND_SANDBOX=ndnd,ndnd.cla.umn.edu
+kerzn002        NDND_SANDBOX=(ALL) ALL
+
+# allow any sudo for Jeff on mpc-redmine
+Host_Alias      MPC_REDMINE_SANDBOX=mpc-redmine,mpc-redmine.cla.umn.edu
+kerzn002        MPC_REDMINE_SANDBOX=(ALL) ALL
+
+# Checkout application used by CLA Studios
+User_Alias	WEBCHECKOUT_ADMINS=local_onshored
+Host_Alias	WEBCHECKOUT=webcheckout,webcheckout.cla.umn.edu
+WEBCHECKOUT_ADMINS	WEBCHECKOUT=(root) ALL,!SHELLS,!/sbin/*
+
+# Allow CSOM Oracle users to sudo to admit9 account
+Host_Alias	CSOM_ORACLE=perseus64,perseus64.csom.umn.edu
+User_Alias	CSOM_ORACLE_ADMIT9=thomp223,lixxx477
+CSOM_ORACLE_ADMIT9	CSOM_ORACLE=(admit9) SHELLS
+
+# CLA Perseus (survey software) hosts
+Host_Alias	CLA_PERSEUS_DB=survey-db,survey-db.cla.umn.edu
+Host_Alias	CLA_PERSEUS_WEB=survey-web,survey-web.cla.umn.edu
+lindsayt	CLA_PERSEUS_DB=(ALL) ALL
+%surveyor	CLA_PERSEUS_WEB=(ALL) ALL
+
+### vincent, allow specific users to restart idmapping and NFS
+Host_Alias	LUCIANA_FILE_SERVER=cla-vincent,cla-vincent.cla.umn.edu
+Cmnd_Alias	NFS_RESTARTER=/etc/init.d/idmapd,/etc/init.d/nfs-kernel-server,/usr/local/bin/restart-nfs-server
+User_Alias	LUCIANA_NFS_RESTARTERS=porterj,colli103,muet0005
+LUCIANA_NFS_RESTARTERS	LUCIANA_FILE_SERVER=NFS_RESTARTER
+
+# CLASS test VMs
+User_Alias	CLASS_TESTING_ADMINS=perr0273,kendrick
+Host_Alias	CLASS_TESTING=class-rhel6-a,class-rhel6-a.cla.umn.edu,class-rhel6-b,class-rhel6-b.cla.umn.edu,class-web,class-web.cla.umn.edu
+CLASS_TESTING_ADMINS	CLASS_TESTING=(ALL) ALL
+
+# CLASS DB server testing
+User_Alias	CLASS_DB_SERVER_ADMINS=perr0273,kendrick
+Host_Alias	CLASS_DB_SERVERS=isengard,isengard.cla.umn.edu,orthanc,orthanc.cla.umn.edu
+CLASS_DB_SERVER_ADMINS	CLASS_DB_SERVERS=(ALL) ALL
+
+# Allow Brian Larson administrative privs on cehd-wordpress server
+Host_Alias	CEHD_WORDPRESS_SERVER=cehd-wordpress,cehd-wordpress.cla.umn.edu
+lars0954	CEHD_WORDPRESS_SERVER=(root) ALL,!SHELLS
+
+# Allow Wally and Scott administrative privs on their sandbox vm ganesha
+User_Alias	GANESHA_ADMINS=sdierks,swans290
+Host_Alias	GANESHA_VM=ganesha,ganesha.cla.umn.edu
+GANESHA_ADMINS	GANESHA_VM=(root) ALL,!SHELLS
+
+## RT94705 allow c4writi members to sudo to shared tasks user
+## -jjb
+Host_Alias	C4W_WEB=scrawl,scrawl.cla.umn.edu,c4w-dev,c4w-dev.cla.umn.edu
+%c4writi	C4W_WEB=(c4w-tasks) ALL
+
+#### this needs to be at the end, for now.  Other bits will move here once the LWRP is
+#### completed and working, currently in flux
+#### Note: this is *not* a comment, the leading # is needed for it to work
+#### ugly-ass syntax bullsh*t
+#includedir /etc/sudoers.d
+

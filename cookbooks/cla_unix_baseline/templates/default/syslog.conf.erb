@@ -26,6 +26,6 @@ uucp,news.crit                                          /var/log/spooler
 # Save boot messages also to boot.log
 local7.*                                                /var/log/boot.log
 
-<% node[:cla_baseline][:syslog_servers].each do |server| %>
+<% node[:cla_unix_baseline][:syslog_servers].each do |server| %>
 *.info							@<%= server %>
 <% end %>

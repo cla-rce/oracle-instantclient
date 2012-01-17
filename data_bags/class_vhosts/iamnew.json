@@ -1,0 +1,11 @@
+{
+  "id": "iamnew",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:10080": {
+      "ServerName": "iamnew.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 20
+    }
+  }
+}

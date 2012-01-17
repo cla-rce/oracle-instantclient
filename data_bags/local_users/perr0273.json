@@ -1,0 +1,9 @@
+{
+  "id": "perr0273",
+  "comment": "Eric Perrino",
+  "groups": ["classdev"],
+  "server_roles": ["class_base"],
+  "classadm": true,
+  "password_hash": "*",
+  "ssh_keys": [ ]
+}
