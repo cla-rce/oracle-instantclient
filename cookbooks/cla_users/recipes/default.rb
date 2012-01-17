@@ -42,7 +42,7 @@ if not node['cla_users']['ignore_local_users'] then
   search(:local_users) do |u|
     if not(u['server_roles'] & node['roles'])
       # append user's additional groups to additional_groups
-      if not u['groups'].nil? and not u['groups'].empty?
+      if u['groups']
         u['groups'].each do |g|
           if not additional_groups.has_key?(g)
             additional_groups[g] = Array.new
