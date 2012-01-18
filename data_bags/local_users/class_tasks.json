@@ -1,0 +1,10 @@
+{
+  "id": "class_tasks",
+  "comment": "CLASS cron task user",
+  "server_roles": ["class_base"],
+  "shell": "/bin/bash",
+  "groups": [ "www-data" ],
+  "class": "system",
+  "password_hash": "*",
+  "ssh_keys": [  ]
+}
