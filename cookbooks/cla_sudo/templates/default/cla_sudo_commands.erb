@@ -1,0 +1,7 @@
+# <%= @params[:name] %> administration commands
+
+# allowed commands
+<% @params[:commands].each do |cmd| -%>
+%<%= @params[:allowed_group] %> ALL = <%= "(#{@params['target_user']})' %> <%= cmd %>
+<% end -%>
+

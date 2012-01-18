@@ -17,6 +17,16 @@
 # limitations under the License.
 #
 
+# make sure this exists -- dont' know if sudoers will blow up if it's
+# missing, but it will throw a wrench in other cookbooks using sudo
+
+directory "/etc/sudoers.d" do 
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
 cookbook_file "/etc/sudoers" do
   source "sudoers.default"
   owner "root"

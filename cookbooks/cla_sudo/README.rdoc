@@ -1,0 +1,2 @@
+
+Some code stolen from class_classadm and modified (sudo command tiny LWRP)
