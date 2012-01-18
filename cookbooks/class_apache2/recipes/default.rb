@@ -1,4 +1,4 @@
-include_recipe "samba::default"
+include_recipe "apache2::default"
 
 # remove vendor default sites
 %w{ default default-ssl }.each do |f|
