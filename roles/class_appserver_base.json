@@ -23,7 +23,6 @@
       "group": "www-data",
       "contact": "classoad@umn.edu",
       "limitrequestbody": 1093941836,
-      "acceptpathinfo": "On",
       "serversignature": "Off",
       "directoryindex": ["index.php", "index.html"],
       "prefork": {
@@ -34,7 +33,7 @@
         "maxrequestsperchild": 0
       }
     },
-    "php": {
+    "class_php": {
       "short_open_tag": "On",
       "expose_php": "Off",
       "max_execution_time": 10000,
