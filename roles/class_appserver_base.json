@@ -75,6 +75,9 @@
       "groups": ["www-data","classadm"],
       "admin_group": "classadm"
     },
+    "class_classadm": {
+      "dirs": ["/data/www/"]
+    },
     "postfix": {
       "masquerade_domains": ["mordor.class.umn.edu"]
     }
