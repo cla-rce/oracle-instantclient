@@ -1,0 +1,9 @@
+{
+  "id": "tasks-daily-0000",
+  "server_roles": ["appmaster"],
+  "user": "tasks",
+  "hour": "0",
+  "minute": "0",
+  "mailto": "classoad@umn.edu",
+  "command": "run-parts /data/www/tasks/daily.0000"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "tasks-every-5-mins",
+  "server_roles": ["appmaster"],
+  "user": "tasks",
+  "minute": "*/5",
+  "mailto": "classoad@umn.edu",
+  "command": "run-parts /data/www/tasks/every_5_mins"
+}
+>>>>>>> b5af2bc... added cronjobs cookbook
