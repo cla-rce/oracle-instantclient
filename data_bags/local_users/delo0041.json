@@ -1,8 +1,8 @@
 {
   "id": "delo0041",
   "comment": "Colin DeLong",
-  "groups": ["classdev"],
-  "server_roles": ["class_dev"],
+  "groups": ["classdev", "classadm"],
+  "server_roles": ["class_base"],
   "password_hash": "*",
   "shell": "/bin/bash",
   "classadm": true,

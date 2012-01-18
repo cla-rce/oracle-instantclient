@@ -1,7 +1,7 @@
 {
   "id": "perr0273",
   "comment": "Eric Perrino",
-  "groups": ["classdev"],
+  "groups": ["classdev", "classadm"],
   "server_roles": ["class_base"],
   "classadm": true,
   "password_hash": "*",
