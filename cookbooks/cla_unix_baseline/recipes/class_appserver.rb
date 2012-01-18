@@ -74,10 +74,14 @@ end
 include_recipe "perl"
 
 include_recipe "mysql::client"
+
 include_recipe "apache2::default"
+include_recipe "class_apache2::default"
+include_recipe "apache2::mod_cgi"
 include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_rewrite"
-include_recipe "apache2::mod_ssl"
+include_recipe "class_apache2::mod_dir"
+include_recipe "class_apache2::mod_ssl"
 
 ## need a bunch of php stuff
 include_recipe "php::default"
