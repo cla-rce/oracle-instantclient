@@ -1,0 +1,8 @@
+#This file generated via template by Chef.
+<% @ports.each do |port| -%>
+Listen <%= port %>
+<% end -%>
+
+<% @addrs.each do |port| -%>
+NameVirtualHost *:<%= port %>
+<% end -%>

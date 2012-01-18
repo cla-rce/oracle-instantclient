@@ -1,7 +1,9 @@
-include_recipe "apache2"
+include_recipe "apache2::default"
 
 current_vhosts = Array.new
-enabled_vhosts = Array.new
+enabled_vhosts = Hash.new
+enabled_addrs = Array.new
+enabled_ports = Array.new
 ssl_certs = Hash.new
 
 class_data_bag_secret = File.open(node['class_vhosts']['secret_path']).read
@@ -34,8 +36,8 @@ search(:class_vhosts).each do |vhost|
       vhost_name = vhost['id']
     end
 
-    # generate ssl certificate/key files
     vhost['vhosts'].each do |p,vh|
+      # generate ssl certificate/key files
       %w{ SSLCertificate SSLCertificateChain }.each do |type|
         if vh.has_key?(type)
           cert = Chef::EncryptedDataBagItem.load("certs", vh[type], class_data_bag_secret).to_hash
@@ -59,26 +61,44 @@ search(:class_vhosts).each do |vhost|
           ssl_certs[vh[type]] = cert['name']
         end
       end
+      
+      # add the vhost addr to the enabled_addrs array
+      enabled_addrs << p
+      
+      # add the vhost port to the enabled_ports array
+      enabled_ports << p.gsub(/^.*?:/, '')
     end
 
-    # generate sites-available file
-    template "#{node[:apache][:dir]}/sites-available/#{vhost_name}" do
-      source "vhost.erb"
-      owner "root"
-      group "root"
-      mode 0644
-      variables(:vhost => vhost, :ssl_certs => ssl_certs)
-    end
-    
-    # enable the vhost
-    apache_site vhost_name
-
-    enabled_vhosts << vhost_name
+    # add to enabled_vhosts hash
+    enabled_vhosts[vhost_name] = vhost
   end
 end
 
+# generate class_vhosts_ports file
+template "#{node[:apache][:dir]}/conf.d/class_vhosts_ports.conf" do
+  source "ports.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables(:addrs => enabled_addrs.uniq, :ports => enabled_ports.uniq)
+end
+
+# generate sites-available files for each vhost
+enabled_vhosts.each do |vhost_name,vhost|
+  template "#{node[:apache][:dir]}/sites-available/#{vhost_name}" do
+    source "vhost.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    variables(:vhost => vhost, :ssl_certs => ssl_certs)
+  end
+
+  # enable the vhost
+  apache_site vhost_name
+end
+
 # disable any vhosts that are no longer enabled
-(current_vhosts - enabled_vhosts).each do |site|
+(current_vhosts - enabled_vhosts.keys).each do |site|
   apache_site site do
     enable false
   end
