@@ -3,6 +3,6 @@
 Listen <%= port %>
 <% end -%>
 
-<% @addrs.each do |port| -%>
-NameVirtualHost *:<%= port %>
+<% @addrs.each do |addr| -%>
+NameVirtualHost <%= addr %>
 <% end -%>
