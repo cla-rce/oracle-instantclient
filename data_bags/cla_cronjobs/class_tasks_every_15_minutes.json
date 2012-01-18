@@ -1,8 +1,8 @@
 {
-  "id": "tasks-every-15-mins",
+  "id": "class_tasks_every_15_minutes",
   "server_roles": ["class_appserver_master"],
   "user": "class_tasks",
-  "minute": "*/15",
+  "minute": "0,15,30,45",
   "mailto": "classoad@umn.edu",
   "command": "test -d /data/www/tasks/every_15_min && run-parts /data/www/tasks/every_15_mins"
 }

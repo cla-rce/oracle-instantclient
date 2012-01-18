@@ -1,9 +1,9 @@
 {
-  "id": "tasks-daily-0700",
-  "server_roles": ["appmaster"],
-  "user": "tasks",
+  "id": "class_tasks_daily_0700",
+  "server_roles": ["class_appserver_master"],
+  "user": "class_tasks",
   "hour": "7",
   "minute": "0",
   "mailto": "classoad@umn.edu",
-  "command": "run-parts /data/www/tasks/daily.0700"
+  "command": "test -d /data/www/tasks/daily.0700 && run-parts /data/www/tasks/daily.0700"
 }
