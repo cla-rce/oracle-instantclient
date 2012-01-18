@@ -1,0 +1,25 @@
+#
+# The LimitRequestBody directive allows the user to set a limit on the allowed
+# size of an HTTP request message body within the context in which the directive
+# is given (server, per-directory, per-file or per-location).
+#
+LimitRequestBody 1093941836
+
+#
+# Prevent access to php files if the php module hasn't been loaded
+#
+<IfModule !mod_php5.c>
+  <FilesMatch "\.php$">
+    Order allow,deny
+    Deny from all
+    Allow from none
+  </FilesMatch>
+</IfModule>
+
+#
+# Prevent access to git repositories
+#
+<DirectoryMatch "^/.*/\.git/">
+  Order deny,allow
+  Deny from all
+</DirectoryMatch>
