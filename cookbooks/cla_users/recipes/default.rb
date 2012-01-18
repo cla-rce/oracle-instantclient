@@ -64,7 +64,8 @@ if not node['cla_users']['ignore_local_users'] then
         uid u['uid'] if u['uid']
         gid u['gid'] if u['gid']
         shell u['shell'] if u['shell']
-        comment u['comment'] if u['comment']
+        cmt = u['comment'] ? u['comment'] : ""
+        comment "#{cmt}, managed by Opscode Chef"
         if (node[:cla_users][:local_users_use_password] and u['password_hash']) then
           password u['password_hash']
         end
