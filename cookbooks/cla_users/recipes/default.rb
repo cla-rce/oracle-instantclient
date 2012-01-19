@@ -76,7 +76,7 @@ if not node['cla_users']['ignore_local_users'] then
       end
 
       # add authorized_keys file (if any)
-      if (node[:cla_users][:local_users_add_ssh_keys] and u.has_key?('authorized_keys')) then
+      if (node[:cla_users][:local_users_add_ssh_keys] and u.has_key?('ssh_keys')) then
         directory "/home/#{u['id']}/.ssh" do
           owner u['id']
           mode 0700
@@ -85,7 +85,7 @@ if not node['cla_users']['ignore_local_users'] then
           source "authorized_keys.erb"
           owner u['id']
           mode 0600
-          variables(:authorized_keys => secret['authorized_keys'])
+          variables(:ssh_keys => u['ssh_kesy'])
           action :create_if_missing
         end
       end
