@@ -85,7 +85,7 @@ if not node['cla_users']['ignore_local_users'] then
           source "authorized_keys.erb"
           owner u['id']
           mode 0600
-          variables(:ssh_keys => u['ssh_kesy'])
+          variables(:ssh_keys => u['ssh_keys'])
           action :create_if_missing
         end
       end
