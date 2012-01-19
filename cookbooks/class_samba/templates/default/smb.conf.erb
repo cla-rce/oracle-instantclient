@@ -25,10 +25,10 @@
   disable spoolss = <%= node["class_samba"]["disable_spoolss"] %>
 
 #============================ Share Definitions ==============================
-<% @shares.each do |share,option| -%>
-[<%= share %>]
-  <% option.each do |o,v| -%>
-  <%= o %> = <%= v.respond_to?(:join) ? v.join(',') : v %>
-  <% end -%>
-
-<% end -%>
+[homes]
+  comment = Home Directories
+  browseable = no
+  writeable = yes
+  valid users = @classdev
+  create mask = 644
+  directory mask = 755
