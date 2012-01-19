@@ -93,24 +93,59 @@ if not node['cla_users']['ignore_local_users'] then
   end
 
   # assign users to additional groups
+  # this starts to get ugly, with multiple ways to assign groups and roles
   additional_groups.each do |g,u|
-    group g do
-      ginfo = Hash.new
-      # data bag item is optional, catch the exception
-      begin
-        ginfo = data_bag_item(:local_groups, g)
-      rescue Exception => e
-        nil
+    ginfo = Hash.new
+    # data bag item is optional, catch the exception
+    begin
+      ginfo = data_bag_item(:local_groups, g)
+    rescue Exception => e
+      nil
+    end
+    #### We'll either open the existing resource, or create a new one 
+    #### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
+    begin
+      gres = resources(:group => g)
+    rescue Chef::Exceptions::ResourceNotFound
+      gres = group g do
+        append false
+        action [:create, :modify, :manage]
       end
-      if ginfo['users'] then
-        ginfo['users'].each do |adduser| 
-          u << adduser
+    end
+    if g['gid']
+      gres.gid = g['gid']
+    end
+    if ginfo['users'] then
+      ginfo['users'].each do |adduser| 
+        u << adduser
+      end
+    end
+    gid ginfo['gid'] if ginfo['gid']
+    gres.members = gres.members | u
+    #members u
+    #append false
+    #action [:create, :modify, :manage]
+  end
+
+  # Now, pull in local groups that apply to this node
+  search(:local_groups) do |g|
+    match_roles = g['server_roles'] & node['roles']
+    if match_roles and not match_roles.nil? and not match_roles.empty?
+      #### We'll either open the existing resource, or create a new one and modify programatically
+      #### The DSL for groups becomes less useful when it may need to be defined more than once.
+      #### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
+      begin
+        gres = resources(:group => g['id'])
+      rescue Chef::Exceptions::ResourceNotFound
+        gres = group g['id'] do
+          append false
+          action [:create, :modify, :manage]
         end
       end
-      gid ginfo['gid'] if ginfo['gid']
-      members u
-      append false
-      action [:create, :modify, :manage]
+      if g['gid']
+        gres.gid = g['gid']
+      end
+      gres.members = gres.members | g['users']
     end
   end
 
