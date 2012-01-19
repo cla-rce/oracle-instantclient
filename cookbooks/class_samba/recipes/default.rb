@@ -1,24 +1,15 @@
 include_recipe "samba::server"
 
-# gather shares from data bag
-shares = data_bag_item('samba', 'shares')
+# declare the samba service
+service "smbd" do
+  action :nothing
+end
 
-# update samba config file with additional directives
-template node['samba']['config'] do
+# replace samba config with CLASS-specific config
+template node['class_samba']['config'] do
   source "smb.conf.erb"
   owner "root"
   group "root"
   mode "0644"
-  variables :shares => shares['shares']
-  notifies :restart, resources(:service => svcs)
-end
-
-# add samba accounts for class users
-unless node['samba']['passdb_backend'] =~ /^ldapsam/
-  search('local_users').each do |u|
-  if not (u['server_roles'] & node['roles']).empty?
-    samba_user u['id'] do
-      action [:create, :enable]
-    end
-  end
+  notifies :restart, resources(:service => "smbd")
 end
