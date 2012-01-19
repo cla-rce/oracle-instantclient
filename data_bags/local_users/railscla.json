@@ -1,0 +1,10 @@
+{
+	"id": "railscla",
+	"roles": [ "cla_web_dev" ],
+	"groups": [ "railscla" ],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Service Account, railscla",
+	"password_hash": "*",
+	"ssh_keys": [ ]
+}

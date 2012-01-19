@@ -1,0 +1,10 @@
+{
+	"id": "andersen",
+	"roles": [ "cla_web_dev", "cla_web_prod" ],
+	"groups": [ "railscla" ],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Ryan Andersen",
+	"password_hash": "*",
+	"ssh_keys": [ ]
+}

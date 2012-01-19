@@ -1,0 +1,10 @@
+{
+	"id": "wozniak",
+	"roles": [ "cla_web_dev", "cla_web_prod" ],
+	"groups": [ "railscla" ],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Robert Wozniak",
+	"password_hash": "*",
+	"ssh_keys": [ ]
+}

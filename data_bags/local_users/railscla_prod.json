@@ -1,0 +1,9 @@
+{
+	"id": "railscla_prod",
+	"roles": [ "cla_web_prod" ],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Service Account, railscla production",
+	"password_hash": "*",
+	"ssh_keys": [ ]
+}
