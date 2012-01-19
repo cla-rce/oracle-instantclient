@@ -1,6 +1,6 @@
 {
 	"id": "railscla_prod",
-	"roles": [ "cla_web_prod" ],
+	"server_roles": [ "cla_web_prod" ],
 	"class": "normal",
 	"shell": "/bin/bash",
 	"comment": "Service Account, railscla production",

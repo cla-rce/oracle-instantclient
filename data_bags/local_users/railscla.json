@@ -1,6 +1,6 @@
 {
 	"id": "railscla",
-	"roles": [ "cla_web_dev" ],
+	"server_roles": [ "cla_web_dev" ],
 	"groups": [ "railscla" ],
 	"class": "normal",
 	"shell": "/bin/bash",
