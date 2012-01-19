@@ -121,7 +121,7 @@ if not node['cla_users']['ignore_local_users'] then
       end
     end
     gid ginfo['gid'] if ginfo['gid']
-    gres.members = gres.members | u
+    gres.members(gres.members | u)
     #members u
     #append false
     #action [:create, :modify, :manage]
@@ -145,7 +145,7 @@ if not node['cla_users']['ignore_local_users'] then
       if g['gid']
         gres.gid = g['gid']
       end
-      gres.members = gres.members | g['users']
+      gres.members(gres.members | g['users'])
     end
   end
 
