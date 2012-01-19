@@ -1,5 +1,6 @@
 {
   "id": "railscla_prod",
+  "server_roles": [ "cla_web_prod" ],
   "users": [
     "buysse",
     "adam",
