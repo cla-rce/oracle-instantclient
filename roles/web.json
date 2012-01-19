@@ -1,15 +1,14 @@
 {
-  "name": "web_rails",
+  "name": "web",
   "default_attributes": {
   },
   "json_class": "Chef::Role",
   "env_run_lists": {
   },
   "run_list": [
-    "role[web]",
-    "recipe[cla_unix_baseline::web_rails_packages]"
+    "recipe[cla_unix_baseline::web_packages]"
   ],
-  "description": "",
+  "description": "Base web server role, installs apache and dependencies",
   "chef_type": "role",
   "override_attributes": {
   }
