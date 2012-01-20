@@ -6,7 +6,8 @@
   "env_run_lists": {
   },
   "run_list": [
-    "role[class_appserver_base]"
+    "role[class_appserver_base]",
+    "recipe[class_apache2::mod_userdir]"
   ],
   "description": "",
   "chef_type": "role",
