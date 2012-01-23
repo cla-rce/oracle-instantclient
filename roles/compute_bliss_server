@@ -1,0 +1,15 @@
+{
+  "env_run_lists": {
+  },
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "chef_type": "role",
+  "override_attributes": {
+  },
+  "name": "compute_bliss_server",
+  "run_list": [
+
+  ],
+  "description": ""
+}
