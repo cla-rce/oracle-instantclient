@@ -14,6 +14,9 @@
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "class_gituser": {
+      "live_dir": "/data/gitlive"
+    },
     "apache": {
       "listen_ports": [ "80", "443" ],
       "timeout": 300,
