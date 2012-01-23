@@ -54,6 +54,6 @@ end
 execute "add_pear_proxy" do 
   only_if "test -x /usr/bin/pear"
   proxy_without_http = node[:cla_unix_baseline][:system_proxy].sub("http://", "")
-  command "/usr/bin/pear set-config http_proxy #{proxy_without_http} system"
+  command "/usr/bin/pear config-set http_proxy #{proxy_without_http} system"
   action :run
 end
