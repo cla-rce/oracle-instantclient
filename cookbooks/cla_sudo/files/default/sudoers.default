@@ -48,6 +48,10 @@ Defaults !env_reset
 User_Alias 	SYSTEM_ADMINS=buysse,pnw,esser,adam,wunde005,kerzn002
 SYSTEM_ADMINS	ALL=(ALL) ALL
 
+### to simplify pushing new code when chef-client isn't syncing, or using knife ssh to initiate an
+### immediate convergence with chef-client
+SYSTEM_ADMINS	ALL=(root) NOPASSWD:/usr/bin/chef-client,/var/lib/gems/1.8/bin/chef-client
+
 # allow local admins on the box in with sudo
 %local_admins	ALL=(ALL) ALL
 
