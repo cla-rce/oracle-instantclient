@@ -7,6 +7,7 @@
   },
   "run_list": [
     "role[class_base]",
+    "recipe[oracle-instantclient::php]",
     "recipe[cla_unix_baseline::class_dbserver]"
   ],
   "description": "",

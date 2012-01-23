@@ -7,6 +7,8 @@
   },
   "run_list": [
     "recipe[cla_unix_baseline::class_base_extensions]",
+    "recipe[oracle-instantclient::default]",
+    "recipe[oracle-instantclient::sqlplus]",
     "recipe[class_classadm::default]"
   ],
   "description": "",
