@@ -15,7 +15,7 @@ directory "#{node['class_gituser']['home_dir']}/packages" do
   mode "0700"
 end
 
-%w{ git_home git_scripts minion-git-userdir-live }.each do |name|
+%w{ git_home git_scripts minion-git-userdir }.each do |name|
   cookbook_file "#{node['class_gituser']['home_dir']}/packages/#{name}.tar.gz" do
     source "#{name}.tar.gz"
     owner node['class_gituser']['user']
@@ -46,7 +46,7 @@ execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/git_scripts.tar.
 end
 
 # ensure correct permissions
-%w{ git-create-repo git-sign git-transfer git-verify-tagger }.each do |script|
+%w{ git-create-repo git-micro git-sign git-transfer git-verify-tagger }.each do |script|
   file "#{node['class_gituser']['scripts_dir']}/#{script}" do
     mode "0755"
   end
@@ -70,13 +70,6 @@ if not node['class_gituser']['origin_dir'].empty?
     mode "0755"
     recursive true
   end
-
-  execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/minion-git-userdir-live.tar.gz" do
-    cwd node['class_gituser']['origin_dir']
-    user node['class_gituser']['user']
-    group node['class_gituser']['group']
-    not_if { File.directory?("#{node['class_gituser']['origin_dir']}/minion-git-userdir-live.git") }
-  end
 end
 
 # create the git test directory (if path specified)
@@ -95,4 +88,12 @@ directory node['class_gituser']['live_dir'] do
   group node['class_gituser']['group']
   mode "0755"
   recursive true
+end
+
+# create the git userdir repo
+execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/minion-git-userdir.tar.gz" do
+  cwd node['class_gituser']['live_dir']
+  user node['class_gituser']['user']
+  group node['class_gituser']['group']
+  not_if { File.directory?("#{node['class_gituser']['live_dir']}/minion-git-userdir.git") }
 end
