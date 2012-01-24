@@ -27,19 +27,19 @@ gnuplot-x11 gobjc gpc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils l
 lynx m4 mailutils memstat multitail mysql-client ncftp newbiedoc nfs4-acl-tools ntp ntpdate
 numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
 openssl-blacklist-extra openssl openssl-doc p7zip perl-doc perl-tk pkgsync psutils pv
-python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen
+python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen tmux
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
 libcompress-zlib-perl libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
 libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-ldap
 python-libxml2 intelcompilers-libstdc++5-compat autofs5 ruby-dev xinetd ia32-libs 
-cvs )
+cvs mercurial mercurial-git )
 
 rh_5_plist = %w( python python-devel perl perl-devel perl-Tk ruby ruby-devel ruby-rdoc ruby-ri ruby-irb 
 gcc-gfortran gcc-c++ gcc-objc aspell aspell-en tcl tcl-devel tclx tclx-devel tk tk-devel tix expect expectk 
 git-all subversion vim emacs ctags nano psacct acl bzip2 cadaver cpio curl dialog enscript file 
 fortune-mod gdb gnupg gnuplot graphviz graphviz-devel graphviz-gd indent ksh openldap openldap-devel
 lftp elinks lynx m4 mailx mysql mysql-devel ncftp ntp OpenIPMI screen sudo sysstat tcsh wget xinetd 
-cvs)
+cvs mercurial tmux )
 
 case node[:platform]
 when "ubuntu"
