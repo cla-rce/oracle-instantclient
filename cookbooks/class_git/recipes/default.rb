@@ -13,10 +13,14 @@ when "debian", "ubuntu"
 
   # install git and git manpages
   %w{ git-core git-doc }.each do |pkg|
-    package pkg
+    package pkg do 
+      action [:install, :upgrade]
+    end
   end
 else
-  package "git"
+  package "git" do
+    action [:install, :upgrade]
+  end
 end
 
 # install git bash completion
