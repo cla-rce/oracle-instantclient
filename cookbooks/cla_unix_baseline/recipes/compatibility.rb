@@ -31,7 +31,7 @@ end
 ### SRSLAB
 link "/srslab" do 
   to "/labs/srslab/srslab.userfiles"
-  type :symbolic
+  link_type :symbolic
   action :create
 end
 
@@ -46,7 +46,7 @@ end
 ["faculty", "grads", "other", "staff"].each do |d| 
   link "/HOME/#{d}" do
     to "/home"
-    type :symbolic
+    link_type :symbolic
     action :create
   end
 end
@@ -54,7 +54,7 @@ end
 ## preserve compat for old /APPS mount
 link "/APPS" do 
   to "/pkg/stat-apps"
-  type :symbolic
+  link_type :symbolic
   action :create
 end
 
