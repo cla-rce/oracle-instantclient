@@ -32,7 +32,7 @@ python-numpy-ext python-scientific python-scientific-doc python-scitools python-
 r-base-core r-doc-html r-doc-pdf r-mathlib r-recommended samtools seaview slicer slicer-data texlive-full
 texlive-lang-all texpower tkdiff tkinfo tkman ttf-freefont mathematica-fonts tulip tulip-doc ugene-data ugene velvet
 velvet-example wise wise-doc xaw3dg xfig xfig-libs transfig xgrep xmaxima xmldiff xpdf firefox libgdome2-0
-libgdome2-dev libdcmtk1-dev libnetcdf-dev libxslt-dev )
+libgdome2-dev libdcmtk1-dev libnetcdf-dev libxslt-dev medcon xmedcon )
 
 ## this is not complete, relying on kickstart right now for this to work.
 rh_5_plist = %w( )
