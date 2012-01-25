@@ -1,4 +1,4 @@
-include_recipe "apache2::default"
+include_recipe "class_apache2::default"
 
 current_vhosts = Array.new
 enabled_vhosts = Hash.new
@@ -6,7 +6,7 @@ enabled_addrs = Array.new
 enabled_ports = Array.new
 ssl_certs = Hash.new
 
-class_data_bag_secret = File.open(node['class_vhosts']['secret_path']).read
+class_data_bag_secret = File.open(node[:class_apache][:secret_path]).read
 
 # get the currently enabled vhosts
 if File.directory?("#{node[:apache][:dir]}/sites-enabled/")
@@ -17,19 +17,11 @@ if File.directory?("#{node[:apache][:dir]}/sites-enabled/")
   end
 end
 
-# create ssl directories (if they don't already exist)
-%w{ crt key }.each do |dir|
-  directory "#{node[:apache][:dir]}/ssl/#{dir}" do
-    owner "root"
-    group "root"
-    mode 0644
-    recursive true
-  end
-end
-
 # generate vhosts from data bags
-search(:class_vhosts).each do |vhost|
-  if not (vhost['server_roles'] & node['roles']).empty?
+search(:class_vhosts).each do |class_vhost|
+  if not (class_vhost['server_roles'] & node['roles']).empty?
+    vhost = class_vhost.clone
+
     if vhost.has_key?('default_site') and not (vhost['default_site'] & node['roles']).empty?
       vhost_name = "default"
     else
@@ -53,13 +45,59 @@ search(:class_vhosts).each do |vhost|
             file "#{node[:apache][:dir]}/ssl/key/#{cert['name']}.key" do
               owner "root"
               group "root"
-              mode 0644
+              mode 0600
               content cert['key']
             end
           end
         
           ssl_certs[vh[type]] = cert['name']
         end
+      end
+      
+      # UseServerName: Rewrites/redirects requests from a ServerAlias URL to the main ServerName URL.
+      if vh.has_key?("UseServerName")
+        usn = Array.new
+
+        usn << "RewriteEngine on"
+        usn << "RewriteCond %{HTTP_HOST} !^#{Regexp.quote(vh['ServerName'])} [NC]"
+        usn << "RewriteRule ^(.*)$ #{vh.has_key?("SSLCertificate") ? "https" : "http"}://#{vh['ServerName']}$1 [L,R=301]"
+
+        vhost['vhosts'][p]['RewriteUSN'] = usn
+        vhost['vhosts'][p].delete("UseServerName")
+      end
+
+      # Crimson CommID: Rewrites all requests to /index.php?comm_id=x
+      if vh.has_key?("CommID")
+        crimson = Array.new
+
+        crimson << "RewriteEngine on"
+        crimson << "Alias /crimson/ /data/www/htdocs/crimson/"
+        crimson << "RewriteCond %{REQUEST_URI} !^/crimson/"
+        
+        # exclude home directories if UserDir is set
+        if vh.has_key?("UserDir")
+          crimson << "RewriteCond %{REQUEST_URI} !^/~"
+        end
+        
+        # exclude crimson admin urls if using SSL
+        if vh.has_key?("SSLCertificate")
+          crimson << "Alias /crimsonAdmin/ /data/www/crimson/"
+          crimson << "RewriteCond %{REQUEST_URI} !^/crimsonAdmin/"
+        end
+
+        # exclude aliases and redirects from being pointed to crimson
+        %w{ Alias Redirect }.each do |cfg|
+          if vh.has_key?(cfg)
+            vh[cfg].each do |k,v|
+              crimson << "RewriteCond %{REQUEST_URI} !^#{Regexp.quote(k)}"
+            end
+          end
+        end
+
+        crimson << "RewriteRule ^(.+) /index.php?comm_id=#{vh['CommID']}&req=$1 [L,QSA]"
+
+        vhost['vhosts'][p]['RewriteCommID'] = crimson
+        vhost['vhosts'][p].delete("CommID")
       end
       
       # add additional listen ports to the enabled_ports and enabled_addrs arrays

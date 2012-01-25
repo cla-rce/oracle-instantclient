@@ -9,7 +9,7 @@
     "role[class_base]",
     "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_gituser::default]",
-    "recipe[class_vhosts::default]"
+    "recipe[class_apache2::vhosts]"
   ],
   "description": "",
   "chef_type": "role",
@@ -77,9 +77,6 @@
       "user": "class_tasks",
       "groups": ["www-data","classadm"],
       "admin_group": "classadm"
-    },
-    "class_classadm": {
-      "dirs": ["/data/www/"]
     },
     "postfix": {
       "masquerade_domains": ["mordor.class.umn.edu"]

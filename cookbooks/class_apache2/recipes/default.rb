@@ -15,3 +15,31 @@ template "#{node[:apache][:dir]}/conf.d/class_security" do
   notifies :restart, resources(:service => "apache2")
   mode 0644
 end
+
+# create ssl directories (if they don't already exist)
+%w{ crt key }.each do |dir|
+  directory "#{node[:apache][:dir]}/ssl/#{dir}" do
+    owner "root"
+    group "root"
+    mode 0755
+    recursive true
+  end
+end
+
+# ensure web root exists and has correct permissions
+directory "#{node[:class_apache][:web_root][:dir]}" do
+  group node[:class_apache][:web_root][:admin_group]
+  mode "2775"
+  recursive true
+end
+
+# ensure web logs are readable by users
+directory node[:apache][:log_dir] do
+  mode "0755"
+end
+
+%w{ access.log error.log }.each do |log|
+  file "#{node[:apache][:log_dir]}/#{log}" do
+    mode "0644"
+  end
+end

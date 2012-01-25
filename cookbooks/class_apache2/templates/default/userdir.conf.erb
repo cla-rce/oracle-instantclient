@@ -1,11 +1,3 @@
 <IfModule mod_userdir.c>
-    UserDir disabled <%= node['class_apache']['userdir']['disabled'].join(" ") %>
-    UserDir <%= node['class_apache']['userdir']['dir'] %>
-
-    <Directory /home/*/<%= node['class_apache']['userdir']['dir'] %>>
-        Options Indexes Includes FollowSymLinks
-        AllowOverride All
-        Allow from all
-        Order deny,allow
-    </Directory>
+    UserDir disabled root adm news uucp operator gopher ftp mailnull smmsp gdm pegasus nagios mysql pcap postfix clamav
 </IfModule>
