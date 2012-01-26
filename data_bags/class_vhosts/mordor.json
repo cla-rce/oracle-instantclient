@@ -1,0 +1,51 @@
+{
+  "id": "mordor",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "default_site": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:80": {
+      "ServerName": "mordor.class.umn.edu",
+      "ServerAlias": "mordor1.class.umn.edu mordor2.class.umn.edu mordor3.class.umn.edu mordor4.class.umn.edu mordor5.class.umn.edu mordor6.class.umn.edu mordor7.class.umn.edu mordor8.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10,
+      "Redirect": {
+        "/home.php": "https://www.class.umn.edu/crimsonAdmin/home.php"
+      }
+    },
+    "*:443": {
+      "ServerName": "mordor.class.umn.edu",
+      "ServerAlias": "mordor1.class.umn.edu mordor2.class.umn.edu mordor3.class.umn.edu mordor4.class.umn.edu mordor5.class.umn.edu mordor6.class.umn.edu mordor7.class.umn.edu mordor8.class.umn.edu",
+      "SSLCertificate": "class_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10,
+      "Redirect": {
+        "/home.php": "https://www.class.umn.edu/crimsonAdmin/home.php"
+      },
+      "Alias": {
+        "/alumni/": "/data/www/alumni/",
+        "/docs/": "/data/www/docs/",
+        "/mentor/": "/data/www/alumni/",
+        "/secure/": "/data/www/secure/",
+        "/test/": "/data/www/test/",
+        "/test_two/": "/data/www/test_two/"
+      },
+      "Location": {
+        "/secure/": {
+          "DirectoryIndex": "index.html index.php"
+        }
+      },
+      "Directory": {
+        "/data/www/secure/cla_open_house": {
+          "AllowOverride": "all"
+        },
+        "/data/www/secure/": {
+          "AllowOverride": "all"
+        },
+        "/data/www/htdocs/crimson/keynote": {
+          "ErrorDocument": "404 /crimson/keynote/dead_screen.png"
+        }
+      }
+    }
+  }
+}
