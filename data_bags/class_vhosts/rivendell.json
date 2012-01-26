@@ -7,10 +7,9 @@
       "ServerName": "dev.class.umn.edu",
       "DocumentRoot": "/data/www/htdocs/",
       "Redirect": {
+        "/devwiki/": "https://dev.class.umn.edu/devwiki/",
         "/home.php": "https://dev.class.umn.edu/crimsonAdmin/home.php",
-        "/mysqladmin/": "https://dev.class.umn.edu/mysqladmin/",
-        "/mysqladmin2/": "https://dev.class.umn.edu/mysqladmin2/",
-        "/devwiki/": "https://dev.class.umn.edu/devwiki/"
+        "/mysqladmin/": "https://dev.class.umn.edu/mysqladmin/"
       }
     },
     "*:443": {
@@ -18,14 +17,43 @@
       "SSLCertificate": "dev_class_umn_edu",
       "SSLCertificateChain": "incommon",
       "DocumentRoot": "/data/www/htdocs/",
+      "UserDir": "www",
+      "CommID": 10,
       "Redirect": {
-        "/bugzilla/": "https://dev.class.umn.edu/mantis/"
+        "/bugzilla/": "https://dev.class.umn.edu/mantis/",
+        "/mantis/": "https://dev.class.umn.edu/mantis/"
       },
       "Alias": {
         "/crimson/": "/data/www/htdocs/crimson/",
-        "/devwiki": "/data/www/htdocs/wiki/index.php"
+        "/devwiki": "/data/www/htdocs/wiki/index.php",
+        "/moria/": "/data/www/moria/htdocs/"
+      },
+      "Location": {
+        "/moria/": {
+          "AuthType": "basic",
+          "AuthName": "dbReplication",
+          "AuthUserFile": "/data/www/moria/webpasswd",
+          "Require": "valid-user",
+          "SetHandler": "None"
+        }
       },
       "Directory": {
+        "/home/*/www": {
+          "Options": "Indexes Includes FollowSymLinks",
+          "AllowOverride": "All",
+          "Allow": "from all",
+          "Order": "deny,allow"
+        },
+        "/data/www/moria/": {
+          "Order": "deny,allow",
+          "Deny": "from all"
+        },
+        "/data/www/moria/htdocs/": {
+          "AllowOverride": "None",
+          "Order": "allow,deny",
+          "Allow": "from all",
+          "Options": "Indexes MultiViews"
+        },
         "/data/www/htdocs/mantis": {
           "AllowOverride": "all",
           "Order": "allow,deny",
