@@ -1,38 +1,21 @@
 {
   "id": "git",
-  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "server_roles": ["class_appserver_dev"],
   "vhosts": {
-    "*:15080": {
+    "*:80": {
       "ServerName": "git.minions.umn.edu",
       "ServerAlias": "git.class.umn.edu",
-      "Redirect": {
-        "/": "https://git.minions.umn.edu/"
+      "RedirectMatch": {
+        "/(.*)": "https://git.minions.umn.edu/$1"
       }
     },
-    "*:15443": {
+    "*:443": {
       "ServerName": "git.minions.umn.edu",
       "ServerAlias": "git.class.umn.edu",
-      "DocumentRoot": "/usr/local/gitpublic/",
+      "DocumentRoot": "/data/www/macro/",
       "SSLCertificate": "git_class_umn_edu",
       "SSLCertificateChain": "incommon",
-      "RedirectMatch": {
-        "/viewvc/$": "https://git.minions.umn.edu/viewvc/cgi-bin/viewvc.cgi/"
-      },
-      "ScriptAlias": {
-        "/viewvc/cgi-bin/": "/usr/local/viewvc-1.0.1/bin/cgi/"
-      },
-      "Location": {
-        "/viewvc/": {
-          "DirectoryIndex": "/viewvc/cgi-bin/viewvc.cgi"
-        }
-      },
       "Directory": {
-        "/usr/local/viewvc-1.0.1/bin/cgi": {
-          "AuthType": "Basic",
-          "AuthName": "CLASS CVS Repository",
-          "AuthUserFile": "/data/www/cvspasswd",
-          "Require": "valid-user"
-        },
         "/data/www/macro": {
           "AllowOverride": "All"
         }
