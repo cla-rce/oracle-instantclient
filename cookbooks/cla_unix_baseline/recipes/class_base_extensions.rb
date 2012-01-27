@@ -43,7 +43,20 @@ end
 # class users?  Need to refactor
 
 include_recipe "class_git::default"
+
 # in base
 #include_recipe "postfix::default"
 # refactor
 #include_recipe "class_classadm::default"
+
+
+# sudo commands for managing class_tasks cron jobs
+cla_sudo_commands "class_tasks" do
+  allowed_group "classadm"
+  target_user "class_tasks"
+  commands [
+    "/usr/bin/crontab *",
+    "/bin/kill *",
+    "/usr/bin/pkill *"
+  ]
+end
