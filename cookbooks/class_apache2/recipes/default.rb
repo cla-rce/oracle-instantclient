@@ -28,9 +28,29 @@ end
 
 # ensure web root exists and has correct permissions
 directory "#{node[:class_apache][:web_root][:dir]}" do
+  owner node['class_gituser']['user'] if node.has_key?('class_gituser')
   group node[:class_apache][:web_root][:admin_group]
   mode "2775"
   recursive true
+end
+
+# ensure apache has write access to apache writable directories
+%w{ photos ssdb_files user_files }.each do |dir|
+  directory "#{node[:class_apache][:web_root][:dir]}/#{dir}" do
+    owner node[:apache][:user]
+    group node[:class_apache][:web_root][:admin_group]
+    mode "2775"
+  end
+end
+
+# ensure apache has write access to crimson dependency directories
+%w{ archive modules editorTmp content page multimedia }.each do |dir|
+  directory "#{node[:class_apache][:web_root][:dir]}/htdocs/crimson/dependancies/#{dir}" do
+    owner node[:apache][:user]
+    group node[:class_apache][:web_root][:admin_group]
+    mode "2775"
+    recursive true
+  end
 end
 
 # ensure web logs are readable by users
