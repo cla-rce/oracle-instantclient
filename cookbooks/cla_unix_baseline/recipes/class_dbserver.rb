@@ -39,16 +39,13 @@
 
 # merged from many of their cookbooks.
 ubuntu_lucid_plist = %w{ unison wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  imagemagick gsfonts freetds-bin liblasso3 php5-lasso php5-eaccelerator 
+  imagemagick gsfonts freetds-bin liblasso3 php5-lasso php5-eaccelerator php5-sqlite
   libjansson-dev libjansson4 }
-#####
-## Failed package: PhpDocumentor
-#####
 
 ### not implemented for rhel: lasso eaccelerator jansson, no nodes expected on rhel
 ###   but maintaining as much as possible in case of future use
 rh_5_plist = %w{ unison227 wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  ImageMagick ghostscript-fonts freetds phpdoc }
+  ImageMagick ghostscript-fonts freetds }
 
 case node[:platform]
 when "ubuntu"
