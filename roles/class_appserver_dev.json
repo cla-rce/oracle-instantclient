@@ -15,7 +15,8 @@
     "class_gituser": {
       "origin_dir": "/data/gitorigin",
       "live_dir": "/data/gitlive",
-      "test_dir": "/data/gittest"
+      "test_dir": "/data/gittest",
+      "macro_dir": "/data/gitmacro"
     }
   }
 }

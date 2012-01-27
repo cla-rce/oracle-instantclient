@@ -9,6 +9,7 @@ user node['class_gituser']['user'] do
   supports :manage_home => true
 end
 
+# create the packages directory and copy the tarballs into it
 directory "#{node['class_gituser']['home_dir']}/packages" do
   owner node['class_gituser']['user']
   group node['class_gituser']['group']
@@ -21,11 +22,10 @@ end
     owner node['class_gituser']['user']
     group node['class_gituser']['group']
     mode "0600"
-    not_if { File.exists?("#{node['class_gituser']['home_dir']}/packages/#{name}.tar.gz") }
   end
 end
 
-# create the git home directory
+# extract the git home directory
 execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/git_home.tar.gz" do
   cwd node['class_gituser']['home_dir']
   user node['class_gituser']['user']
@@ -33,10 +33,16 @@ execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/git_home.tar.gz"
   not_if { File.exists?("#{node['class_gituser']['home_dir']}/gitserver") }
 end
 
-# create git scripts
-directory node['class_gituser']['scripts_dir'] do
-  mode "0755"
-  recursive true
+# create the git data directories
+%w{ origin_dir test_dir live_dir scripts_dir }.each do |dir|
+  if not node['class_gituser'][dir].empty?
+    directory node['class_gituser'][dir] do
+      owner node['class_gituser']['user']
+      group node['class_gituser']['group']
+      mode "0755"
+      recursive true
+    end
+  end
 end
 
 # extract the scripts from a tarball (skip if scripts already present)
@@ -62,38 +68,21 @@ end
   end
 end
 
-# create the git origin directory (if path specified)
-if not node['class_gituser']['origin_dir'].empty?
-  directory node['class_gituser']['origin_dir'] do
-    owner node['class_gituser']['user']
-    group node['class_gituser']['group']
-    mode "0755"
-    recursive true
-  end
-end
-
-# create the git test directory (if path specified)
-if not node['class_gituser']['test_dir'].empty?
-  directory node['class_gituser']['test_dir'] do
-    owner node['class_gituser']['user']
-    group node['class_gituser']['group']
-    mode "0755"
-    recursive true
-  end
-end
-
-# create the git live directory
-directory node['class_gituser']['live_dir'] do
-  owner node['class_gituser']['user']
-  group node['class_gituser']['group']
-  mode "0755"
-  recursive true
-end
-
 # create the git userdir repo
 execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/minion-git-userdir.tar.gz" do
   cwd node['class_gituser']['live_dir']
   user node['class_gituser']['user']
   group node['class_gituser']['group']
-  not_if { File.directory?("#{node['class_gituser']['live_dir']}/minion-git-userdir.git") }
+  only_if "test ! -d #{node['class_gituser']['live_dir']}/minion-git-userdir.git || grep mordor3 #{node['class_gituser']['live_dir']}/minion-git-userdir.git/config"
 end
+
+# create the git macro directory (if path specified)
+if not node['class_gituser']['macro_dir'].empty?
+  directory node['class_gituser']['macro_dir'] do
+    owner node['class_gituser']['user']
+    group node['class_gituser']['macro_group']
+    mode "2775"
+    recursive true
+  end
+end
+
