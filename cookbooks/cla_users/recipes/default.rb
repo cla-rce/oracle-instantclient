@@ -45,7 +45,7 @@ if not node['cla_users']['ignore_local_users'] then
       # append user's additional groups to additional_groups
       if not u['groups'].nil?
         u['groups'].each do |g|
-          log "Group found: #{g} for #{u['id']}"
+          #log "Group found: #{g} for #{u['id']}"
           if not additional_groups.has_key?(g)
             additional_groups[g] = Array.new
           end
