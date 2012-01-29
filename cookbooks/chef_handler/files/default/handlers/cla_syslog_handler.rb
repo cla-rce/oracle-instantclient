@@ -2,9 +2,15 @@ require 'syslog'
 
 class ClaSyslogHandler < Chef::Handler
   def initialize(options = {}) 
-    Syslog.open('chef-client', 
+    # This throws a RuntimeError if syslog is already open
+    # ignore the error, it's not useful
+    begin
+      Syslog.open('chef-client', 
                 Syslog::LOG_PID | Syslog::LOG_NDELAY, 
                 Syslog::LOG_DAEMON)
+    rescue RuntimeError => e
+      nil
+    end
   end
 
   def report
