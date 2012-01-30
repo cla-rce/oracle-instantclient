@@ -26,7 +26,9 @@
         "/alumni/": "/data/www/alumni/",
         "/docs/": "/data/www/docs/",
         "/mentor/": "/data/www/alumni/",
+        "/mycla/": "/data/www/mycla/",
         "/secure/": "/data/www/secure/",
+        "/slp/": "/data/www/slp/",
         "/test/": "/data/www/test/",
         "/test_two/": "/data/www/test_two/"
       },
