@@ -21,15 +21,9 @@
     },
     "class_samba": {
       "server_string": "%h",
-      "workgroup": "COLIN",
-      "interfaces": "",
-      "hosts_allow": "127.0.0.1 128.101.8.0/255.255.255.0",
-      "restrict_anonymous": 2,
-      "map_to_guest": "Bad User",
-      "local_master": "no",
-      "unix_password_sync": "no",
-      "pam_password_change": "no",
-      "wide_links": "no"
+      "workgroup": "MINIONS",
+      "interfaces": "127.0.0.1 128.101.8.0/255.255.255.0",
+      "hosts_allow": "127.0.0.1 128.101.8.0/255.255.255.0"
     }
   }
 }
