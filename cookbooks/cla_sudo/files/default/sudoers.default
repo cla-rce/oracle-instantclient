@@ -11,9 +11,6 @@
 #
 #
 
-Defaults@scruffy	!authenticate
-Defaults@scruffy.socsci.umn.edu	!authenticate
-
 # this is a simplification, but if you're root (or can run arbitrary commands
 # as root), you can do this without sudo and with less logging.  
 root	ALL=(ALL) NOPASSWD: ALL
