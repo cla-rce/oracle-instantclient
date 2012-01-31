@@ -132,7 +132,7 @@ cla_sudo_commands "class_dbserver" do
     "/etc/init.d/mysqld_dev *",
     "/sbin/service mysqld_prod *",
     "/sbin/service mysqld_test *",
-    "/sbin/service mysqld_dev *"
+    "/sbin/service mysqld_dev *",
     "/usr/bin/chef-client \"\"",
     "/var/lib/gems/1.8/bin/chef-client \"\""
   ]
