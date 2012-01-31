@@ -7,7 +7,8 @@
   },
   "run_list": [
     "role[class_appserver_base]",
-    "recipe[class_apache2::mod_userdir]"
+    "recipe[class_apache2::mod_userdir]",
+    "recipe[class_samba::default]"
   ],
   "description": "",
   "chef_type": "role",
@@ -17,6 +18,12 @@
       "live_dir": "/data/gitlive",
       "test_dir": "/data/gittest",
       "macro_dir": "/data/gitmacro"
+    },
+    "class_samba": {
+      "server_string": "%h",
+      "workgroup": "MINIONS",
+      "interfaces": "",
+      "hosts_allow": "127.0.0.1 128.101.8.0/255.255.255.0"
     }
   }
 }

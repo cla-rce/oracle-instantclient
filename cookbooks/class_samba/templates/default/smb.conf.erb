@@ -14,15 +14,23 @@
   load printers = <%= node["class_samba"]["load_printers"] %>
   passdb backend = <%= node["class_samba"]["passdb_backend"] %>
   dns proxy = <%= node["class_samba"]["dns_proxy"] %>
-  map to guest = <%= node["class_samba"]["map_to_guest"] %>
-  local master = <%= node["class_samba"]["local_master"] %>
-  unix password sync = <%= node["class_samba"]["unix_password_sync"] %>
-  pam password change = <%= node["class_samba"]["pam_password_change"] %>
-  wide links = <%= node["class_samba"]["wide_links"] %>
+
+  socket options = <%= node["class_samba"]["socket_options"] %>
+  name resolve order = <%= node["class_samba"]["name_resolve_order"] %>
+
+  client ntlmv2 auth = <%= node["class_samba"]["client_ntlmv2_auth"] %>
   restrict anonymous = <%= node["class_samba"]["restrict_anonymous"] %>
+  min protocol = <%= node["class_samba"]["min_protocol"] %>
+
   printing = <%= node["class_samba"]["printing"] %>
   printcap name = <%= node["class_samba"]["printcap_name"] %>
   disable spoolss = <%= node["class_samba"]["disable_spoolss"] %>
+
+  domain master = <%= node["class_samba"]["domain_master"] %> 
+  local master = <%= node["class_samba"]["local_master"] %>
+  preferred master = <%= node["class_samba"]["preferred_master"] %> 
+  lm announce = <%= node["class_samba"]["lm_announce"] %> 
+  disable netbios = <%= node["class_samba"]["disable_netbios"] %>
 
 #============================ Share Definitions ==============================
 [homes]
@@ -30,5 +38,5 @@
   browseable = no
   writeable = yes
   valid users = @classdev
-  create mask = 644
-  directory mask = 755
+  create mask = 0644
+  directory mask = 0755

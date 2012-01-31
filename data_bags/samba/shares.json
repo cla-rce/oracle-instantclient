@@ -1,0 +1,5 @@
+{
+  "id": "shares",
+  "dummy": "Dummy file to keep Opscode samba cookbook happy.",
+  "shares": {}
+}

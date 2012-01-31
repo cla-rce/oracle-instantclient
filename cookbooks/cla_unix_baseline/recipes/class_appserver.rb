@@ -131,3 +131,19 @@ end
 php_pear "PhpDocumentor" do
   action :install
 end
+
+# sudo commands for managing apache, memcached, clustersync, and chef
+cla_sudo_commands "class_appserver" do
+  allowed_group "classadm"
+  target_user "root"
+  commands [
+    "/etc/init.d/apache2 *",
+    "/sbin/service apache2 *",
+    "/usr/sbin/a2dismod, /usr/sbin/a2enmod, /usr/sbin/a2dissite, /usr/sbin/a2ensite",
+    "/etc/init.d/memcached *",
+    "/sbin/service memcached *",
+    "/data/scripts/push-files",
+    "/usr/bin/chef-client \"\"",
+    "/var/lib/gems/1.8/bin/chef-client \"\""
+  ]
+end

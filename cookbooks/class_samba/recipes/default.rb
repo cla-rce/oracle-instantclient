@@ -1,6 +1,11 @@
 include_recipe "samba::server"
 
-# declare the samba service
+# disable the nmbd service (not needed)
+service "nmbd" do
+  action [:disable, :stop]
+end
+
+# declare the smbd service
 service "smbd" do
   action :nothing
 end
