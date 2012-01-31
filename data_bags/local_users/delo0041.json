@@ -4,7 +4,5 @@
   "groups": ["classdev", "classadm"],
   "server_roles": ["class_base"],
   "password_hash": "*",
-  "shell": "/bin/bash",
-  "classadm": true,
-  "ssh_keys": [ ]
+  "shell": "/bin/bash"
 }

@@ -3,8 +3,6 @@
   "comment": "Eric Perrino",
   "groups": ["classdev", "classadm"],
   "server_roles": ["class_base"],
-  "classadm": true,
   "password_hash": "*",
-  "shell": "/bin/bash",
-  "ssh_keys": [ ]
+  "shell": "/bin/bash"
 }
