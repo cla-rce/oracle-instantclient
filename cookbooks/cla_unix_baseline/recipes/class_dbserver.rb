@@ -122,3 +122,18 @@ template "/etc/freetds.conf" do
   mode "0644"
 end
 
+# sudo commands for managing mysql and chef
+cla_sudo_commands "class_dbserver" do
+  allowed_group "classadm"
+  target_user "root"
+  commands [
+    "/etc/init.d/mysqld_prod *",
+    "/etc/init.d/mysqld_test *",
+    "/etc/init.d/mysqld_dev *",
+    "/sbin/service mysqld_prod *",
+    "/sbin/service mysqld_test *",
+    "/sbin/service mysqld_dev *"
+    "/usr/bin/chef-client \"\"",
+    "/var/lib/gems/1.8/bin/chef-client \"\""
+  ]
+end

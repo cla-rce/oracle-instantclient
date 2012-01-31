@@ -8,15 +8,8 @@
   "run_list": [
     "recipe[cla_unix_baseline::class_base_extensions]",
     "recipe[oracle-instantclient::default]",
-    "recipe[oracle-instantclient::sqlplus]",
-    "recipe[class_classadm::default]"
+    "recipe[oracle-instantclient::sqlplus]"
   ],
   "description": "",
-  "chef_type": "role",
-
-  "override_attributes": {
-    "class_classadm": {
-      "group": "classadm"
-    }
-  }
+  "chef_type": "role"
 }

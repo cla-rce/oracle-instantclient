@@ -46,9 +46,6 @@ include_recipe "class_git::default"
 
 # in base
 #include_recipe "postfix::default"
-# refactor
-#include_recipe "class_classadm::default"
-
 
 # sudo commands for managing class_tasks cron jobs
 cla_sudo_commands "class_tasks" do
