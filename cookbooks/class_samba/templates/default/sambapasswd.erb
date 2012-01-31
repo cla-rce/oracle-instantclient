@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ ! -z "${SUDO_USER}" ]; then
+  # set password and enable user
+  smbpasswd -a "${SUDO_USER}" && smbpasswd -e "${SUDO_USER}"
+else
+  # run script under sudo
+  sudo sambapasswd
+fi
