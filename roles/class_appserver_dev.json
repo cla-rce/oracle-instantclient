@@ -22,7 +22,7 @@
     "class_samba": {
       "server_string": "%h",
       "workgroup": "MINIONS",
-      "interfaces": "127.0.0.1 128.101.8.0/255.255.255.0",
+      "interfaces": "",
       "hosts_allow": "127.0.0.1 128.101.8.0/255.255.255.0"
     }
   }
