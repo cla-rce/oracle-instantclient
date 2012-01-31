@@ -86,7 +86,6 @@ if not node['cla_users']['ignore_local_users'] then
           owner u['id']
           mode 0600
           variables(:ssh_keys => u['ssh_keys'])
-          action :create_if_missing
         end
       end
     end
