@@ -107,6 +107,8 @@ include_recipe "class_php::module_xsl"
 
 #include_recipe "apache2::mod_php5"
 
+include_recipe "class_dbrep::default"
+
 # from perl::modules as modified by CLASS
 perl_modules.each do |pkg|
   package pkg do
