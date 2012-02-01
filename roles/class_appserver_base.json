@@ -74,8 +74,14 @@
       "groups": ["www-data","classadm"],
       "admin_group": "classadm"
     },
-    "postfix": {
-      "masquerade_domains": ["mordor.class.umn.edu"]
+    "class_clustersync": {
+      "sync_dirs": [ "/data/www/htdocs", "/data/www/ssdb_files", "/data/www/user_files" ],
+      "servers": [
+        "mordor5.class.umn.edu", 
+        "mordor6.class.umn.edu", 
+        "mordor7.class.umn.edu", 
+        "mordor8.class.umn.edu"
+      ]
     }
   }
 }
