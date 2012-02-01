@@ -43,7 +43,7 @@
         "/devwiki": "/data/www/wiki/index.php",
         "/mantis/": "/data/www/mantis/",
         "/moria/": "/data/www/moria/htdocs/",
-        "/mysqladmin/": "/data/www/mysqladmin/",
+        "/mysqladmin/": "/data/www/mysqladmin/"
       },
       "Location": {
         "/moria/": {
