@@ -5,28 +5,45 @@
   "vhosts": {
     "*:80": {
       "ServerName": "dev.class.umn.edu",
-      "DocumentRoot": "/data/www/htdocs/",
+      "DocumentRoot": "/data/www/crimson/",
+      "CommID": 10,
       "Redirect": {
-        "/devwiki/": "https://dev.class.umn.edu/devwiki/",
+        "/alumni/": "https://dev.class.umn.edu/alumni/",
+        "/docs/": "https://dev.class.umn.edu/docs/",
         "/home.php": "https://dev.class.umn.edu/crimsonAdmin/home.php",
+        "/mentor/": "https://dev.class.umn.edu/mentor/",
+        "/bugzilla/": "https://dev.class.umn.edu/mantis/",
+        "/devwiki/": "https://dev.class.umn.edu/devwiki/",
+        "/mantis/": "https://dev.class.umn.edu/mantis/",
         "/mysqladmin/": "https://dev.class.umn.edu/mysqladmin/"
+      },
+      "Directory": {
+        "/data/www/htdocs/crimson/keynote": {
+          "ErrorDocument": "404 /crimson/keynote/dead_screen.png"
+        }
       }
     },
     "*:443": {
       "ServerName": "dev.class.umn.edu",
       "SSLCertificate": "dev_class_umn_edu",
       "SSLCertificateChain": "incommon",
-      "DocumentRoot": "/data/www/htdocs/",
+      "DocumentRoot": "/data/www/crimson/",
       "UserDir": "www",
       "CommID": 10,
       "Redirect": {
-        "/bugzilla/": "https://dev.class.umn.edu/mantis/",
-        "/mantis/": "https://dev.class.umn.edu/mantis/"
+        "/bugzilla/": "https://dev.class.umn.edu/mantis/"
       },
       "Alias": {
-        "/crimson/": "/data/www/htdocs/crimson/",
-        "/devwiki": "/data/www/htdocs/wiki/index.php",
-        "/moria/": "/data/www/moria/htdocs/"
+        "/alumni/": "/data/www/alumni/",
+        "/docs/": "/data/www/docs/",
+        "/mentor/": "/data/www/alumni/",
+        "/mycla/": "/data/www/mycla/",
+        "/secure/": "/data/www/secure/",
+        "/slp/": "/data/www/slp/",
+        "/devwiki": "/data/www/wiki/index.php",
+        "/mantis/": "/data/www/mantis/",
+        "/moria/": "/data/www/moria/htdocs/",
+        "/mysqladmin/": "/data/www/mysqladmin/",
       },
       "Location": {
         "/moria/": {
@@ -44,6 +61,15 @@
           "Allow": "from all",
           "Order": "deny,allow"
         },
+        "/data/www/secure/cla_open_house": {
+          "AllowOverride": "all"
+        },
+        "/data/www/secure/code": {
+          "AllowOverride": "all"
+        },
+        "/data/www/htdocs/crimson/keynote": {
+          "ErrorDocument": "404 /crimson/keynote/dead_screen.png"
+        },
         "/data/www/moria/": {
           "Order": "deny,allow",
           "Deny": "from all"
@@ -54,12 +80,16 @@
           "Allow": "from all",
           "Options": "Indexes MultiViews"
         },
-        "/data/www/htdocs/mantis": {
+        "/data/www/mantis/": {
           "AllowOverride": "all",
           "Order": "allow,deny",
           "Allow": "from 128.101.8"
         },
-        "/data/www/htdocs/wiki": {
+        "/data/www/mysqladmin/": {
+          "Order": "allow,deny",
+          "Allow": "from 128.101.8"
+        },
+        "/data/www/wiki/": {
           "AllowOverride": "all"
         }
       }
