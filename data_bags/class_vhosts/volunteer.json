@@ -2,7 +2,7 @@
   "id": "volunteer",
   "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
-    "*:16080": {
+    "*:17080": {
       "ServerName": "volunteer.cla.umn.edu",
       "ServerAlias": "www.volunteer.cla.umn.edu",
       "DocumentRoot": "/data/www/volunteer/",
@@ -10,7 +10,7 @@
         "/crimson/": "/data/www/htdocs/crimson/"
       }
     },
-    "*:16443": {
+    "*:17443": {
       "ServerName": "volunteer.cla.umn.edu",
       "ServerAlias": "www.volunteer.cla.umn.edu",
       "DocumentRoot": "/data/www/volunteer/",
