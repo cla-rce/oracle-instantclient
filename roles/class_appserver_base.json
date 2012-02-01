@@ -7,16 +7,12 @@
   },
   "run_list": [
     "role[class_base]",
-    "recipe[class_gituser::default]",
     "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_apache2::vhosts]"
   ],
   "description": "",
   "chef_type": "role",
   "override_attributes": {
-    "class_gituser": {
-      "live_dir": "/data/gitlive"
-    },
     "apache": {
       "listen_ports": [ "80", "443" ],
       "timeout": 300,
