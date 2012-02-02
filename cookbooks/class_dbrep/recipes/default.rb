@@ -36,7 +36,7 @@ end
   # if the group didn't exist on the system, and won't be created by this chef run, 
   # don't create it now and keep moving.
   next if gres.nil?
-  gres.members(gres.members | 'dbrep')
+  gres.members(gres.members | ['dbrep'])
 end
 
 # add dbrep ssh config/keys
