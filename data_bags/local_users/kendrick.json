@@ -1,8 +1,8 @@
 {
   "id": "kendrick",
   "comment": "Kendrick Erickson",
-  "groups": ["classdev"],
-  "server_roles": ["class_appserver_base", "class_dev"],
+  "groups": ["classdev", "classadm"],
+  "server_roles": ["class_base"],
   "password_hash": "*",
   "shell": "/bin/bash"
 }
