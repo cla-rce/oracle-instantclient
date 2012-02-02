@@ -3,7 +3,7 @@
   "server_roles": ["class_appserver_dev"],
   "default_site": ["class_appserver_dev"],
   "vhosts": {
-    "*:80": {
+    "128.101.60.9:80": {
       "ServerName": "dev.class.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
       "CommID": 10,
@@ -23,7 +23,7 @@
         }
       }
     },
-    "*:443": {
+    "128.101.60.9:443": {
       "ServerName": "dev.class.umn.edu",
       "SSLCertificate": "dev_class_umn_edu",
       "SSLCertificateChain": "incommon",
