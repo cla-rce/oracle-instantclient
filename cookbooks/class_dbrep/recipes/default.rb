@@ -14,7 +14,7 @@ user "dbrep" do
 end
 
 # add user to mysql management groups so that dbrep can hot copy tables
-%w{ dev_mysql test_mysql prod_mysql }.each do |grp|
+%w{ dev_mysql test_mysql prod_mysql staging_mysql }.each do |grp|
   #### We'll either open the existing resource, or create a new one within chef
   #### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
   gres = nil
