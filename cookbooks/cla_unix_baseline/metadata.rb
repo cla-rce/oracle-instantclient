@@ -4,7 +4,7 @@ license          "Apache 2.0"
 description      "Installs/Configures cla_unix_baseline"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 
-version          "0.11.4"
+version          "0.11.5"
 
 supports "ubuntu", ">= 10.04"
 supports "redhat", ">= 5.0"
@@ -25,4 +25,5 @@ depends "class_php"
 depends "cla_cronjobs"
 depends "logrotate"
 depends "ntp"
+depends "class_dbrep"
 
