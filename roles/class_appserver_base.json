@@ -55,14 +55,7 @@
       "zlib_output_compression": "On",
       "eaccelerator_shm_size": 32,
       "session_save_handler": "user",
-      "auto_prepend_file": "/data/www/sessions/mysql_session_handler.php"
-    },
-    "class_phpmysqlsessions": {
-      "hostname": "moria",
-      "username": "php_sessions",
-      "password": "fz8b32hd91m",
-      "table": "php_sessions",
-      "path": "/data/www/sessions/"
+      "auto_prepend_file": "/data/www/environment/mysql_session_handler.php"
     },
     "memcached": {
       "user": "nobody",

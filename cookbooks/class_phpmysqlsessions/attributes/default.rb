@@ -1,6 +1,0 @@
-default['class_phpmysqlsessions']['hostname'] = "moria"
-default['class_phpmysqlsessions']['username'] = "php_sessions"
-default['class_phpmysqlsessions']['password'] = ""
-default['class_phpmysqlsessions']['database'] = "php_sessions"
-default['class_phpmysqlsessions']['table'] = "php_sessions"
-default['class_phpmysqlsessions']['path'] = "/data/www/sessions/"
