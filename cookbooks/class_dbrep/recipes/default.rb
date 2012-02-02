@@ -1,3 +1,5 @@
+# need Etc.getgrnam()
+require 'etc'
 #
 # Create the dbrep user's home environment
 #
@@ -13,10 +15,32 @@ end
 
 # add user to mysql management groups so that dbrep can hot copy tables
 %w{ dev_mysql test_mysql prod_mysql }.each do |grp|
-  group grp do
-    members ["dbrep"]
-    append true
+  #### We'll either open the existing resource, or create a new one within chef
+  #### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
+  gres = nil
+  begin
+    gres = resources(:group => grp)
+  rescue Chef::Exceptions::ResourceNotFound
+    # only go forward if group is on the local system, but hasn't been mentioned
+    # yet in a chef recipe
+    begin
+      Etc.getgrnam(grp)
+      gres = group grp do
+        append false
+        action [:create, :modify, :manage]
+      end
+    rescue ArgumentError => e
+      Chef::Log.warn("Tried to add dbrep to nonexistent group #{grp}")
+    end
   end
+  # if the group didn't exist on the system, and won't be created by this chef run, 
+  # don't create it now and keep moving.
+  next if gres.nil?
+  if g['gid']
+    gres.gid = g['gid']
+  end
+  gid ginfo['gid'] if ginfo['gid']
+  gres.members(gres.members | 'dbrep')
 end
 
 # add dbrep ssh config/keys
