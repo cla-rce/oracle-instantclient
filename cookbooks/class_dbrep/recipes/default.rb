@@ -26,7 +26,7 @@ end
     begin
       Etc.getgrnam(grp)
       gres = group grp do
-        append false
+        append true
         action [:create, :modify, :manage]
       end
     rescue ArgumentError => e
