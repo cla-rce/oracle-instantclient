@@ -108,8 +108,6 @@ include_recipe "class_php::module_tidy"
 include_recipe "class_php::module_xml"
 include_recipe "class_php::module_xsl"
 
-include_recipe "class_phpmysqlsessions::default"
-
 include_recipe "apache2::mod_php5"
 
 # from perl::modules as modified by CLASS

@@ -2,14 +2,14 @@
   "id": "git",
   "server_roles": ["class_appserver_dev"],
   "vhosts": {
-    "*:80": {
+    "128.101.60.11:80": {
       "ServerName": "git.minions.umn.edu",
       "ServerAlias": "git.class.umn.edu",
       "RedirectMatch": {
         "/(.*)": "https://git.minions.umn.edu/$1"
       }
     },
-    "*:443": {
+    "128.101.60.11:443": {
       "ServerName": "git.minions.umn.edu",
       "ServerAlias": "git.class.umn.edu",
       "DocumentRoot": "/data/www/macro/",

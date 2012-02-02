@@ -2,7 +2,7 @@
   "id": "devresearch",
   "server_roles": ["class_appserver_dev"],
   "vhosts": {
-    "*:80": {
+    "128.101.60.9:80": {
       "ServerName": "dev.research.class.umn.edu",
       "DocumentRoot": "/data/www/dev.research.class.umn.edu/",
       "Directory": {

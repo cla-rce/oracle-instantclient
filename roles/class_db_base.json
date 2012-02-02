@@ -7,11 +7,23 @@
   },
   "run_list": [
     "role[class_base]",
-    "recipe[oracle-instantclient::php]",
-    "recipe[cla_unix_baseline::class_dbserver]"
+    "recipe[cla_unix_baseline::class_dbserver]",
+    "recipe[oracle-instantclient::php]"
   ],
   "description": "",
   "chef_type": "role",
   "override_attributes": {
+    "class_php": {
+      "memory_limit": "512M",
+      "max_execution_time": 3000,
+      "error_reporting": "E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT",
+      "display_errors": "On",
+      "log_errors": "Off",
+      "html_errors": "Off",
+      "date_timezone": "America/Chicago",
+      "date_default_latitude": "44.975952",
+      "date_default_longitude": "-93.236699",
+      "mysql_allow_persistent": "Off"
+    }
   }
 }

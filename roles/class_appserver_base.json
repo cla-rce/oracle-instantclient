@@ -7,16 +7,12 @@
   },
   "run_list": [
     "role[class_base]",
-    "recipe[class_gituser::default]",
     "recipe[cla_unix_baseline::class_appserver]",
     "recipe[class_apache2::vhosts]"
   ],
   "description": "",
   "chef_type": "role",
   "override_attributes": {
-    "class_gituser": {
-      "live_dir": "/data/gitlive"
-    },
     "apache": {
       "listen_ports": [ "80", "443" ],
       "timeout": 300,
@@ -59,14 +55,7 @@
       "zlib_output_compression": "On",
       "eaccelerator_shm_size": 32,
       "session_save_handler": "user",
-      "auto_prepend_file": "/data/www/sessions/mysql_session_handler.php"
-    },
-    "class_phpmysqlsessions": {
-      "hostname": "moria",
-      "username": "php_sessions",
-      "password": "fz8b32hd91m",
-      "table": "php_sessions",
-      "path": "/data/www/sessions/"
+      "auto_prepend_file": "/data/www/environment/mysql_session_handler.php"
     },
     "memcached": {
       "user": "nobody",
@@ -78,8 +67,14 @@
       "groups": ["www-data","classadm"],
       "admin_group": "classadm"
     },
-    "postfix": {
-      "masquerade_domains": ["mordor.class.umn.edu"]
+    "class_clustersync": {
+      "sync_dirs": [ "/data/www/htdocs", "/data/www/ssdb_files", "/data/www/user_files" ],
+      "servers": [
+        "mordor5.class.umn.edu", 
+        "mordor6.class.umn.edu", 
+        "mordor7.class.umn.edu", 
+        "mordor8.class.umn.edu"
+      ]
     }
   }
 }

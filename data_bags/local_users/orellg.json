@@ -2,7 +2,7 @@
   "id": "orellg",
   "comment": "Gerardo Orellana",
   "groups": ["classdev"],
-  "server_roles": ["class_appserver_base","class_dev"],
+  "server_roles": ["class_appserver_base"],
   "password_hash": "*",
   "shell": "/bin/bash"
 }
