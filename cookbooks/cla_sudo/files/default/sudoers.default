@@ -60,6 +60,12 @@ Defaults		env_delete+="DISPLAY"
 Defaults		env_keep+="ORACLE_HOME"
 Defaults		env_keep+="ORACLE_BASE"
 Defaults		env_keep+="ORACLE_SID"
+### to make the tomcat startup scripts work right 
+Defaults>jsrv-mpc       env_keep+="CATALINA_BASE"
+Defaults>jsrv-mpc       env_keep+="CATALINA_HOME"
+Defaults>jsrv-mpc       env_keep+="JAVA_OPTS"
+Defaults>jsrv-mpc       env_keep+="JAVA_HOME"
+
 
 ### Support for Tomcat restarting and umask
 #Defaults>jsrv-mpc       umask=0002
