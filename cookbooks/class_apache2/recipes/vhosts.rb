@@ -101,13 +101,15 @@ search(:class_vhosts).each do |class_vhost|
       end
       
       # add additional listen ports to the enabled_ports and enabled_addrs arrays
-      vhost_port = p.gsub(/^.*?:/, '')
+      ( vhost_addr, vhost_port ) = p.split(/:/)
       
       if not node[:apache][:listen_ports].include? vhost_port
-        # add the vhost port to the enabled_ports array
+        # add the port to the enabled_ports array
         enabled_ports << vhost_port
-
-        # add the vhost addr to the enabled_addrs array
+      end
+      
+      if vhost_addr != "*" or not node[:apache][:listen_ports].include? vhost_port
+        # add the addr to the enabled_addrs array
         enabled_addrs << p
       end
     end
