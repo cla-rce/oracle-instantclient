@@ -36,10 +36,6 @@ end
   # if the group didn't exist on the system, and won't be created by this chef run, 
   # don't create it now and keep moving.
   next if gres.nil?
-  if g['gid']
-    gres.gid = g['gid']
-  end
-  gid ginfo['gid'] if ginfo['gid']
   gres.members(gres.members | 'dbrep')
 end
 
