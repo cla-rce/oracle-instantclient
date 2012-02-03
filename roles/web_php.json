@@ -1,0 +1,16 @@
+{
+  "name": "web_php",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "role[web]",
+    "recipe[cla_unix_baseline::web_php_packages]"
+  ],
+  "description": "PHP web server role, installs php and associated stuff",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
