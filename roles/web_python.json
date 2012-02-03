@@ -1,0 +1,16 @@
+{
+  "name": "web_python",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "role[web]",
+    "recipe[cla_unix_baseline::web_python_packages]"
+  ],
+  "description": "Configure basic web server for Python/Django",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
