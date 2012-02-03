@@ -22,10 +22,7 @@ case "${SSH_ORIGINAL_COMMAND}" in
   *\|*)
     echo "Rejected"
     ;;
-  rsync\ --server\ --sender\ -vlogDtprze.iLsf\ .\ /db/mysql/repstaging/*)
-    ${SSH_ORIGINAL_COMMAND}
-    ;;
-  rsync\ --server\ --sender\ -vlogDtprze.iLsf\ .\ /db/instances/prod/data/repstaging/*)
+  rsync\ --server\ --sender\ -vlogDtprze.iLsf\ .\ /db/instances/staging/data/repstaging/*)
     ${SSH_ORIGINAL_COMMAND}
     ;;
   *)
