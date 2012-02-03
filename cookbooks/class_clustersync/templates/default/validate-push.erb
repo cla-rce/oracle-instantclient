@@ -23,7 +23,7 @@ echo "Rejected"
 echo "Rejected"
 ;;
 <% node['class_clustersync']['sync_dirs'].each do |d| -%>
-rsync\ --server\ -logDtprCze.iLs\ .\ <%= d + (d[-1,1] == "/" ? "" : "/") %>)
+rsync\ --server\ -logDtprCze.iLsf\ .\ <%= d + (d[-1,1] == "/" ? "" : "/") %>)
 $SSH_ORIGINAL_COMMAND
 ;;
 <% end -%>
