@@ -41,6 +41,7 @@
         "/secure/": "/data/www/secure/",
         "/slp/": "/data/www/slp/",
         "/devwiki": "/data/www/wiki/index.php",
+        "/wiki/": "/data/www/wiki/",
         "/mantis/": "/data/www/mantis/",
         "/moria/": "/data/www/moria/htdocs/",
         "/mysqladmin/": "/data/www/mysqladmin/"
