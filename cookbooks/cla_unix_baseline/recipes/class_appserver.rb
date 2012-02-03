@@ -41,12 +41,12 @@
 # merged from many of their cookbooks.
 ubuntu_lucid_plist = %w{ unison wv xpdf poppler-utils html2ps tidy aspell aspell-en 
   imagemagick gsfonts freetds-bin liblasso3 php5-lasso php5-eaccelerator php5-sqlite
-  libjansson-dev libjansson4 }
+  libjansson-dev libjansson4 rssh }
 
 ### not implemented for rhel: lasso eaccelerator jansson, no nodes expected on rhel
 ###   but maintaining as much as possible in case of future use
 rh_5_plist = %w{ unison227 wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  ImageMagick ghostscript-fonts freetds }
+  ImageMagick ghostscript-fonts freetds rssh }
 
 case node[:platform]
 when "ubuntu"
@@ -120,6 +120,14 @@ end
 # from freetds::default
 template "/etc/freetds.conf" do
   source "freetds.conf.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+end
+
+# install rssh.conf with sftp/scp access
+template "/etc/rssh.conf" do
+  source "rssh.conf.erb"
   owner "root"
   group "root"
   mode "0644"
