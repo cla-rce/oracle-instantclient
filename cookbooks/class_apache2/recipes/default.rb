@@ -43,6 +43,14 @@ end
   end
 end
 
+# ensure git/classadm write access to crimson htdocs directory
+directory "#{node[:class_apache][:web_root][:dir]}/htdocs/crimson/" do
+  owner node['class_gituser']['user'] if node.has_key?('class_gituser')
+  group node[:class_apache][:web_root][:admin_group]
+  mode "2775"
+  recursive true
+end
+
 # ensure apache has write access to crimson dependency directories
 %w{ archive modules editorTmp content page multimedia }.each do |dir|
   directory "#{node[:class_apache][:web_root][:dir]}/htdocs/crimson/dependancies/#{dir}" do
