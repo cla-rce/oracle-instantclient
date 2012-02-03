@@ -1,5 +1,5 @@
 {
-  "name": "integrate_ad_rid",
+  "name": "integrate_ad_mctfr",
   "default_attributes": {
   },
   "json_class": "Chef::Role",
@@ -8,7 +8,7 @@
   "run_list": [
 
   ],
-  "description": "AD (RID-based UID assignment) integration tag",
+  "description": "AD (LDAP-based UID assignment) for MCTFR integration tag",
   "chef_type": "role",
   "override_attributes": {
     "cla_users": { 

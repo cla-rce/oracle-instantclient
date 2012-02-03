@@ -1,5 +1,5 @@
 {
-  "name": "auth_ldap_umn",
+  "name": "integrate_ldap_umn",
   "default_attributes": {
     "cla_auth": {
       "ldap_base": "ou=People,o=University of Minnesota,c=US",
