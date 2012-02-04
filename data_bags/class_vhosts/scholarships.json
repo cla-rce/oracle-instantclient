@@ -13,7 +13,11 @@
       "ServerAlias": "www.scholarships.cla.umn.edu",
       "DocumentRoot": "/data/www/scholarships/",
       "SSLCertificate": "scholarships_cla_umn_edu",
-      "SSLCertificateChain": "incommon"
+      "SSLCertificateChain": "incommon",
+      "Alias": {
+        "/transfer_application/": "/data/www/transfer_application/",
+        "/crimson/": "/data/www/htdocs/crimson/"
+      }
     }
   }
 }
