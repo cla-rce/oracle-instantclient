@@ -41,7 +41,7 @@
 # merged from many of their cookbooks.
 ubuntu_lucid_plist = %w{ unison wv xpdf poppler-utils html2ps tidy aspell aspell-en 
   imagemagick gsfonts freetds-bin liblasso3 php5-lasso php5-eaccelerator php5-sqlite
-  libjansson-dev libjansson4 rssh pkg-config libglib2.0-dev }
+  libjansson-dev libjansson4 rssh pkg-config libglib2.0-dev libmemcached-dev }
 
 ### not implemented for rhel: lasso eaccelerator jansson, no nodes expected on rhel
 ###   but maintaining as much as possible in case of future use
