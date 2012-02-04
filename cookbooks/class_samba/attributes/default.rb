@@ -7,7 +7,6 @@ default["class_samba"]["load_printers"] = "no"
 default["class_samba"]["passdb_backend"] = "tdbsam"
 default["class_samba"]["dns_proxy"] = "no"
 default["class_samba"]["security"] = "user"
-default["class_samba"]["socket_options"] = "TCP_NODELAY"
 
 case platform
 when "arch"
@@ -24,9 +23,6 @@ end
 #
 # CLASS-OAD additions
 #
-
-# socket buffer optimizations
-default["class_samba"]["socket_options"] = "TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192"
 
 # require NTLMv2 authentication
 default["class_samba"]["client_ntlmv2_auth"] = "yes"

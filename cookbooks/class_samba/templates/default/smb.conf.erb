@@ -15,7 +15,6 @@
   passdb backend = <%= node["class_samba"]["passdb_backend"] %>
   dns proxy = <%= node["class_samba"]["dns_proxy"] %>
 
-  socket options = <%= node["class_samba"]["socket_options"] %>
   name resolve order = <%= node["class_samba"]["name_resolve_order"] %>
 
   client ntlmv2 auth = <%= node["class_samba"]["client_ntlmv2_auth"] %>
