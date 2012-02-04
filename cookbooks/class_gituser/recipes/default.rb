@@ -16,7 +16,7 @@ directory "#{node['class_gituser']['home_dir']}/packages" do
   mode "0700"
 end
 
-%w{ git_home git_scripts minion-git-userdir }.each do |name|
+%w{ git_home git_scripts minion-git-userdir server_scripts }.each do |name|
   cookbook_file "#{node['class_gituser']['home_dir']}/packages/#{name}.tar.gz" do
     source "#{name}.tar.gz"
     owner node['class_gituser']['user']
@@ -34,7 +34,7 @@ execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/git_home.tar.gz"
 end
 
 # create the git data directories
-%w{ origin_dir test_dir live_dir scripts_dir }.each do |dir|
+%w{ origin_dir live_dir scripts_dir }.each do |dir|
   if not node['class_gituser'][dir].empty?
     directory node['class_gituser'][dir] do
       owner node['class_gituser']['user']
@@ -45,10 +45,26 @@ end
   end
 end
 
+# create the git test directory (if specified)
+if not node['class_gituser']['test_dir'].empty?
+  directory node['class_gituser']['test_dir'] do
+    owner node['class_gituser']['user']
+    group node['class_gituser']['test_group'] if not node['class_gituser']['test_group'].empty?
+    mode "2775"
+    recursive true
+  end
+end
+
 # extract the scripts from a tarball (skip if scripts already present)
 execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/git_scripts.tar.gz" do
   cwd node['class_gituser']['scripts_dir']
   not_if { File.exists?("#{node['class_gituser']['scripts_dir']}/git-sign") }
+end
+
+# extract the scripts repo from tarball (skip if present)
+execute "tar zxvf #{node['class_gituser']['home_dir']}/packages/server_scripts.tar.gz" do
+  cwd node['class_gituser']['live_dir']
+  not_if "test -d #{node['class_gituser']['live_dir']}/server_scripts.git"
 end
 
 # ensure correct permissions
