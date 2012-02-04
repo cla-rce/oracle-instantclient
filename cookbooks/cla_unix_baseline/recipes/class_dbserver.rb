@@ -130,6 +130,7 @@ cla_sudo_commands "class_dbserver" do
     "/etc/init.d/mysqld_prod *",
     "/etc/init.d/mysqld_test *",
     "/etc/init.d/mysqld_dev *",
+    "/etc/init.d/mysqld_staging *",
     "/sbin/service mysqld_prod *",
     "/sbin/service mysqld_test *",
     "/sbin/service mysqld_dev *",
