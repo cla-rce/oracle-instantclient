@@ -1,13 +1,44 @@
 #include_recipe "git"
+require 'etc'
 
 # add the git user
 user node['class_gituser']['user'] do
   home node['class_gituser']['home_dir']
-  comment "git user"
+  comment "Git Deployment System"
   shell "/bin/bash"
   system true
   supports :manage_home => true
 end
+
+# Add the git user to classdev group
+
+#### We'll either open the existing resource, or create a new one within chef
+#### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
+gres = nil
+
+begin
+  gres = resources(:group => node['class_gituser']['test_group'])
+rescue Chef::Exceptions::ResourceNotFound
+  # only go forward if group is on the local system, but hasn't been mentioned
+  # yet in a chef recipe
+  begin
+    Etc.getgrnam(node['class_gituser']['test_group'])
+    gres = group node['class_gituser']['test_group'] do
+      append true
+      action [:create, :modify, :manage]
+    end
+  rescue ArgumentError => e
+    Chef::Log.warn("Tried to add git to nonexistent group #{node['class_gituser']['test_group']}")
+  end
+end
+
+
+# if the group didn't exist on the system, and won't be created by this chef run, 
+# don't create it now and keep moving.
+next if gres.nil?
+gres.members(gres.members | ['git'])
+
+####
 
 # create the packages directory and copy the tarballs into it
 directory "#{node['class_gituser']['home_dir']}/packages" do
