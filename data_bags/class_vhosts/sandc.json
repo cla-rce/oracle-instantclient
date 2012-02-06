@@ -2,8 +2,9 @@
   "id": "sandc",
   "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
-    "*:80": {
+    "*:10080": {
       "ServerName": "sandc.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 8
     }
   }

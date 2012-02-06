@@ -4,6 +4,7 @@
   "vhosts": {
     "*:10080": {
       "ServerName": "idp.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 5
     }
   }

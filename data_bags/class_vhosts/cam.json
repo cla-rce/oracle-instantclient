@@ -4,6 +4,7 @@
   "vhosts": {
     "*:10080": {
       "ServerName": "cam.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 11
     }
   }

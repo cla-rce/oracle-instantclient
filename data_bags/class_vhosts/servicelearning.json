@@ -4,14 +4,14 @@
   "vhosts": {
     "*:19080": {
       "ServerName": "www.servicelearning.umn.edu",
-      "ServerAlias": "servicelearning.umn.edu csl.umn.edu www.csl.umn.edu",
+      "ServerAlias": "servicelearning.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
       "UseServerName": true,
       "CommID": 26
     },
     "*:19443": {
       "ServerName": "www.servicelearning.umn.edu",
-      "ServerAlias": "servicelearning.umn.edu csl.umn.edu www.csl.umn.edu",
+      "ServerAlias": "servicelearning.umn.edu",
       "DocumentRoot": "/data/www/slp/",
       "SSLCertificate": "servicelearning_umn_edu",
       "SSLCertificateChain": "incommon",

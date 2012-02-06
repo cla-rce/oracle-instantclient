@@ -4,6 +4,7 @@
   "vhosts": {
     "*:10080": {
       "ServerName": "psysci.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 9
     }
   }

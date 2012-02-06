@@ -1,0 +1,11 @@
+{
+  "id": "csl",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:19080": {
+      "ServerName": "csl.umn.edu",
+      "ServerAlias": "www.csl.umn.edu",
+      "Redirect": { "/": "https://www.servicelearning.umn.edu/" }
+    }
+  }
+}

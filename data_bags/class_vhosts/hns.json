@@ -5,6 +5,7 @@
     "*:10080": {
       "ServerName": "hns.class.umn.edu",
       "ServerAlias": "natsci.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 12
     }
   }

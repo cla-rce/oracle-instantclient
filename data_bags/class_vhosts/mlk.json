@@ -5,6 +5,7 @@
     "*:10080": {
       "ServerName": "mlk.class.umn.edu",
       "ServerAlias": "www.mlk.class.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 7
     }
   }

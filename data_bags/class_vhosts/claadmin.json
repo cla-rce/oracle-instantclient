@@ -4,6 +4,7 @@
   "vhosts": {
     "*:10080": {
       "ServerName": "www.cla-admin.umn.edu",
+      "DocumentRoot": "/data/www/crimson/",
       "CommID": 18
     }
   }
