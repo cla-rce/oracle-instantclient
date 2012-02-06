@@ -10,35 +10,33 @@ user node['class_gituser']['user'] do
   supports :manage_home => true
 end
 
-# Add the git user to classdev group
+# add the git user to the test_group if a test_dir is specified
+if not node['class_gituser']['test_dir'].empty? and not node['class_gituser']['test_group'].empty?
+  #### We'll either open the existing resource, or create a new one within chef
+  #### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
+  gres = nil
 
-#### We'll either open the existing resource, or create a new one within chef
-#### see http://wiki.opscode.com/display/chef/Definitions, search for "reopening resources"
-gres = nil
-
-begin
-  gres = resources(:group => node['class_gituser']['test_group'])
-rescue Chef::Exceptions::ResourceNotFound
-  # only go forward if group is on the local system, but hasn't been mentioned
-  # yet in a chef recipe
   begin
-    Etc.getgrnam(node['class_gituser']['test_group'])
-    gres = group node['class_gituser']['test_group'] do
-      append true
-      action [:create, :modify, :manage]
+    gres = resources(:group => node['class_gituser']['test_group'])
+  rescue Chef::Exceptions::ResourceNotFound
+    # only go forward if group is on the local system, but hasn't been mentioned
+    # yet in a chef recipe
+    begin
+      Etc.getgrnam(node['class_gituser']['test_group'])
+      gres = group node['class_gituser']['test_group'] do
+        append true
+        action [:create, :modify, :manage]
+      end
+    rescue ArgumentError => e
+      Chef::Log.warn("Tried to add git to nonexistent group #{node['class_gituser']['test_group']}")
     end
-  rescue ArgumentError => e
-    Chef::Log.warn("Tried to add git to nonexistent group #{node['class_gituser']['test_group']}")
   end
+
+  # if the group didn't exist on the system, and won't be created by this chef run, 
+  # don't create it now and keep moving.
+  next if gres.nil?
+  gres.members(gres.members | ['git'])
 end
-
-
-# if the group didn't exist on the system, and won't be created by this chef run, 
-# don't create it now and keep moving.
-next if gres.nil?
-gres.members(gres.members | ['git'])
-
-####
 
 # create the packages directory and copy the tarballs into it
 directory "#{node['class_gituser']['home_dir']}/packages" do
