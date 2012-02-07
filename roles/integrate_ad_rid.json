@@ -6,7 +6,7 @@
   "env_run_lists": {
   },
   "run_list": [
-
+    "recipe[cla_auth::ad_rid]"
   ],
   "description": "AD (RID-based UID assignment) integration tag",
   "chef_type": "role",
