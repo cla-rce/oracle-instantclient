@@ -6,6 +6,9 @@
 
 $ENV{'PATH'} = "/bin:/usr/bin:/usr/local/bin:/opt/csw/bin:/usr/sbin:/sbin:/opt/csw/sbin";
 
+# exclude options, built from node info
+my @EXCLUDE_PATHS = ( <%= node[:cla_clamav][:exclude_dirs].join(" ") %> );
+
 my $FACILITY = "local6";
 my $VERBOSELEVEL = "debug";
 my $ERRORLEVEL = "error";
@@ -119,7 +122,11 @@ while (<$mountfh>) {
 	push @{$mounts_by_type->{$ft}}, $mp;
 }
 
-#print Dumper($filesystems);
+
+my $exclude_options = "";
+foreach my $xpath (@exclude_paths) { 
+	$exclude_options .= " --exclude-dir=$xpath";
+}
 
 # Run a freshclam before we start
 system("$FRESHCLAM | $LOGGER -i -t freshclam -p $FACILITY.$VERBOSELEVEL");
@@ -129,7 +136,9 @@ foreach my $ftype (@fstypes) {
 	my $mounts = $mounts_by_type->{$ftype};
 	foreach my $mount (@$mounts) {
 		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
-		" --official-db-only=yes $mount | $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
+		" --official-db-only=yes --max-filesize=<%= node[:cla_clamav][:max_filesize] %> " . 
+		"$exclude_options $mount " . 
+		"| $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
 		### removed  --follow-file-symlinks=0 --follow-dir-symlinks=0 
 	}
 }
