@@ -6,8 +6,8 @@
   "env_run_lists": {
   },
   "run_list": [
-    "role[integrate_ad_rid]",
-    "recipe[cla_unix_baseline::mctfr_base]"
+    "recipe[cla_unix_baseline::mctfr_base]",
+    "recipe[cla_auth::ad_mctfr]"
   ],
   "description": "AD (LDAP-based UID assignment) for MCTFR integration tag",
   "chef_type": "role",
