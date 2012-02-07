@@ -1,0 +1,3 @@
+### managed by chef
++auto.shared
+*       -fstype=nfs4,rw         mctfr-fs4.psych.umn.edu:/export/share0/&

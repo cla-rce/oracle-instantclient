@@ -1,0 +1,4 @@
+## managed by Chef
+/home   /etc/auto.home
+/shared /etc/auto.shared
++auto.master

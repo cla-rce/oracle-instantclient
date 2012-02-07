@@ -1,0 +1,3 @@
+### managed by chef
++auto.home
+*       -rw,fstype=nfs4         mctfr-fs4.psych.umn.edu:/export/home0/&
