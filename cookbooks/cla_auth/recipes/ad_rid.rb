@@ -72,7 +72,14 @@ service "winbind" do
   action :enable
 end
 
+# ensure that nscd isn't running, since it's not working
+service "nscd" do 
+  action [:stop, :disable]
+end
 
-# need to add code to join domain or test join, not done by default.  Needs a user password.
+
+# need to add code to join domain or test join, not done by default.  Needs a user password.  
+# because of password requirement, not implementing at this time.  To get it to work, need
+# to do 'net ads join -U <admin account>' and auth after precreating computer object.
 
 
