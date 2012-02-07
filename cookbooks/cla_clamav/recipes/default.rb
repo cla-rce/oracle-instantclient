@@ -56,13 +56,13 @@ cron "clamav" do
   hour "2"
   minute "0"
   case node[:cla_clamav][:run_frequency]
-  when :weekly
+  when "weekly"
     weekday "0" 
-  when :monthly
+  when "monthly"
     # do in the first week
     weekday "0"
     day "1-7"
-  when :quarterly
+  when "quarterly"
     weekday "0" 
     day "1-7"
     month "1,4,7,10"
