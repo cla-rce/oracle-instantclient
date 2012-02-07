@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# ensure base packages needed to modify authentication are present.
+include_recipe "cla_auth::default"
+
 # generic for no OS
 required_packages = []
 
