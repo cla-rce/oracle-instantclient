@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include "perl::default"
+include_recipe "perl::default"
 
 if platform?("centos", "redhat", "fedora", "scientific", "suse")
   include_recipe "yum::epel"
@@ -55,6 +55,6 @@ end
 cron "clamav" do
   hour "1"
   minute "0"
-  mailto "#{node[:clamav][:email_to]}"
+  mailto "#{node[:cla_clamav][:email_to]}"
   command "/usr/local/bin/clamav_scan_local"
 end

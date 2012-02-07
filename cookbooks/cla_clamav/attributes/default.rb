@@ -1,0 +1,1 @@
+default[:cla_clamav][:email_to] = "servers@rt.cla.umn.edu"
