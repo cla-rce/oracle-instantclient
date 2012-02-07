@@ -1,0 +1,135 @@
+#!/usr/bin/perl 
+
+#use FileHandle;
+#use Data::Dumper qw(Dumper);
+#use strict;
+
+$ENV{'PATH'} = "/bin:/usr/bin:/usr/local/bin:/opt/csw/bin:/usr/sbin:/sbin:/opt/csw/sbin";
+
+my $FACILITY = "local6";
+my $VERBOSELEVEL = "debug";
+my $ERRORLEVEL = "error";
+my $CRITLEVEL = "crit";
+
+my $LOGGER = "/usr/bin/logger";
+
+if (not -x $LOGGER) {
+	# no logger found
+	print STDERR "Unable to find logger binary.\n";
+	exit 1;
+}
+
+my @mountpaths = qw( /bin/mount /usr/bin/mount /sbin/mount /usr/sbin/mount );
+my $MOUNT = undef;
+foreach $mpath @mountpaths { 
+	if ( -x $mpath ) {
+		$MOUNT = $mpath;
+		last;
+	}
+}
+
+if ( not defined $MOUNT ) {
+	print STDERR "Unable to find mount binary.\n";
+	exit 1;
+}
+
+# locate find, we need to have gnu find so search for that first
+
+my @try_finds = ("/opt/csw/bin/gfind", "/opt/local/bin/find", "/usr/local/bin/gfind", 
+	"/usr/sfw/bin/find", "/usr/local/bin/find", "/usr/bin/find");
+my $FIND = undef;
+
+foreach my $try (@try_finds) { 
+	if ( -x $try ) {
+		$FIND = $try;
+		last;
+	}
+}
+
+if ( not defined $FIND ) {
+	print STDERR "Unable to find GNU find binary.\n";
+	exit 1;
+}
+
+# find clamscan
+my @try_clams = ("/opt/csw/bin/clamscan", "/usr/local/bin/clamscan", "/usr/bin/clamscan", 
+	"/opt/local/bin/clamscan");
+my $CLAMSCAN = undef;
+
+foreach my $try (@try_clams) { 
+	if ( -x $try ) {
+		$CLAMSCAN = $try;
+		last;
+	}
+}
+
+# find freshclam
+my @try_freshclams = ("/opt/csw/bin/freshclam", "/usr/local/bin/freshclam", "/usr/bin/freshclam", 
+	"/opt/local/bin/freshclam");
+my $FRESHCLAM = undef;
+
+foreach my $try (@try_freshclams) { 
+	if ( -x $try ) {
+		$FRESHCLAM = $try;
+		last;
+	}
+}
+
+if ( not defined $FRESHCLAM ) {
+	print STDERR "WARNING: Unable to find freshclam binary.";
+}
+
+system("$LOGGER -t clamscan -p $FACILITY.$VERBOSELEVEL \"clam: $CLAMSCAN, find: $FIND, " . 
+	"mount: $MOUNT, logger: $LOGGER\"");
+
+# find my system name
+my $system_name = `uname -s`;
+chomp $system_name;
+
+#print "system: $system_name\n";
+
+my @fstypes = ();
+my $mount_re = "";  # $1 is mountpoint, $2 is fstype
+
+if ($system_name eq "SunOS") { 
+	# do the right thing for Solaris
+	push @fstypes, "ufs", "zfs";
+	$mount_re = '.* on (\/.*) type (\w+) \w+';
+} 
+elsif ($system_name eq "Linux") { 
+	push @fstypes, "ext2", "ext3", "ext4";
+	$mount_re = '.* on (\/.*) type (\w+) \(';
+}
+elsif ($system_name eq "Darwin") { 
+	push @fstypes, "hfs";
+	$mount_re = '.* on (\/.*) \((\w+), ';
+	
+}
+
+my $mounts_by_type = {}; #hashref
+
+open(my $mountfh, "-|", "$MOUNT -v") || die $@;
+while (<$mountfh>) {
+	#print;
+	chomp;
+	/$mount_re/;
+	my $ft = $2;
+	my $mp = $1;
+	ref $mounts_by_type->{$ft} or $mounts_by_type->{$ft} = []; #arrayref
+	push @{$mounts_by_type->{$ft}}, $mp;
+}
+
+#print Dumper($filesystems);
+
+# Run a freshclam before we start
+system("$FRESHCLAM | $LOGGER -i -t freshclam -p $FACILITY.$VERBOSELEVEL");
+# now, for each filesystem, run clamscan
+
+foreach my $ftype (@fstypes) { 
+	my $mounts = $mounts_by_type->{$ftype};
+	foreach my $mount (@$mounts) {
+		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
+		" --follow-file-symlinks=0 --follow-dir-symlinks=0 --official-db-only=yes " . 
+		 "$mount | $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
+	}
+}

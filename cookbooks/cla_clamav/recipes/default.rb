@@ -1,3 +1,24 @@
+#
+# Cookbook Name:: cla_clamav
+# Recipe:: default
+#
+# Copyright 2012, Joshua Buysse, (C) Regents of the University of Minnesota
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+include "perl::default"
+
 if platform?("centos", "redhat", "fedora", "scientific", "suse")
   include_recipe "yum::epel"
 end
@@ -16,7 +37,7 @@ package "clamav-db" do
   action :upgrade
 end
 
-directory "/usr/local/scripts" do
+directory "/usr/local/bin" do
   owner "root"
   group "root"
   mode "0755"
@@ -24,16 +45,16 @@ directory "/usr/local/scripts" do
   recursive true
 end
 
-template "/usr/local/scripts/clamav.cron" do
-  source "clamav.cron.erb"
+template "/usr/local/bin/clamav_scan_local" do
+  source "clamav_scan_local.erb"
   owner "root"
   group "root"
-  mode "0700"
+  mode "0711"
 end
 
 cron "clamav" do
   hour "1"
   minute "0"
   mailto "#{node[:clamav][:email_to]}"
-  command "/usr/local/scripts/clamav.cron"
+  command "/usr/local/bin/clamav_scan_local"
 end
