@@ -70,7 +70,7 @@ when "ubuntu"
     action :nothing
   end
 
-  cookbook_file "/etc/default/nfs-common"
+  cookbook_file "/etc/default/nfs-common" do 
     source "etc_default_nfs-common"
   end
 
