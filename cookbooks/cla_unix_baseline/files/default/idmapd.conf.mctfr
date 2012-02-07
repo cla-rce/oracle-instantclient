@@ -8,7 +8,7 @@ Domain = ad.umn.edu
 [Mapping]
 
 Nobody-User = nobody
-Nobody-Group = nobody
+Nobody-Group = nogroup
 
 [Translation]
 Method = nsswitch
