@@ -130,7 +130,7 @@
 engine = <%= node['class_php']['engine'] %>
 
 ; Enable compatibility mode with Zend Engine 1 (PHP 4.x)
-zend.ze1_compatibility_mode = <%= node['class_php']['ze1_compatibility_mode'] %>
+zend.ze1_compatibility_mode = <%= node['class_php']['zend_ze1_compatibility_mode'] %>
 
 ; Allow the <? tag.  Otherwise, only <?php and <script> tags are recognized.
 ; NOTE: Using short tags should be avoided when developing applications or
@@ -1061,7 +1061,7 @@ mssql.compatability_mode = <%= node['class_php']['mssql_compatability_mode'] %>
 ; Specify how datetime and datetim4 columns are returned
 ; On => Returns data converted to SQL server settings
 ; Off => Returns values as YYYY-MM-DD hh:mm:ss
-;mssql.datetimeconvert = <%= node['class_php']['mssql_datetimeconvert'] %>
+mssql.datetimeconvert = <%= node['class_php']['mssql_datetimeconvert'] %>
 
 ; Use NT authentication when connecting to the server
 mssql.secure_connection = <%= node['class_php']['mssql_secure_connection'] %>

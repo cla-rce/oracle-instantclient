@@ -23,7 +23,8 @@
       "date_timezone": "America/Chicago",
       "date_default_latitude": "44.975952",
       "date_default_longitude": "-93.236699",
-      "mysql_allow_persistent": "Off"
+      "mysql_allow_persistent": "Off",
+      "mssql_datetimeconvert": "Off"
     }
   }
 }

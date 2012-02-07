@@ -55,7 +55,8 @@
       "zlib_output_compression": "On",
       "eaccelerator_shm_size": 32,
       "session_save_handler": "user",
-      "auto_prepend_file": "/data/www/environment/mysql_session_handler.php"
+      "auto_prepend_file": "/data/www/environment/mysql_session_handler.php",
+      "mssql_datetimeconvert": "Off"
     },
     "memcached": {
       "user": "nobody",
