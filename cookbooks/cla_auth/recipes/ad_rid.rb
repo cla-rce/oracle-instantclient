@@ -27,7 +27,7 @@ when "ubuntu"
     Chef::Log.fatal("Only implemented for Ubuntu Lucid/10.04")
     raise 
   end
-  required_packages = %w{ winbind smbclient samba krb5-user }
+  required_packages = %w{ winbind smbclient samba krb5-user }  
 when "redhat","centos"
   required_packages = %w{ samba3x samba3x-winbind tdb-tools krb5-workstation}
 else
@@ -38,6 +38,21 @@ end
 # install the necessary packages
 required_packages.each do |pkg|
   package pkg
+end
+
+# configure the authentication package, using native OS tools
+case node[:platform]
+when "ubuntu"
+  cookbook_file "/etc/auth-client-config/profile.d/cla-auth-winbind" do 
+    source "cla-auth-winbind.profile"
+  end
+  execute "auth_client_conf_auth-winbind" do 
+    command "auth-client-config -p cla-auth-winbind -a"
+    # don't do anything if we don't need to (we match profile now)
+    not_if "auth-client-config -p cla-auth-winbind -a -s"
+  end
+when "redhat","centos"
+  Chef::Log.fatal("not implemented for RHEL tonight")
 end
 
 # install the kerberos config
@@ -53,6 +68,7 @@ end
 service "winbind" do 
   action :enable
 end
+
 
 # need to add code to join domain or test join, not done by default.  Needs a user password.
 
