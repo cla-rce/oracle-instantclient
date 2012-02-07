@@ -137,7 +137,7 @@ foreach my $ftype (@fstypes) {
 	foreach my $mount (@$mounts) {
 		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
 		" --official-db-only=yes --max-filesize=<%= node[:cla_clamav][:max_filesize] %> " . 
-		"$exclude_options $mount " . 
+		" --quiet $exclude_options $mount " . 
 		"| $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
 		### removed  --follow-file-symlinks=0 --follow-dir-symlinks=0 
 	}
