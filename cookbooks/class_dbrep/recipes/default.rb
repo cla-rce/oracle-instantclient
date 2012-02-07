@@ -46,7 +46,7 @@ directory "/home/dbrep/.ssh" do
   mode "0700"
 end
 
-%w{ authorized_keys id_rsa id_rsa.pub }.each do |file|
+%w{ authorized_keys dbrep ulook }.each do |file|
   cookbook_file "/home/dbrep/.ssh/#{file}" do
     source "#{file}"
     owner "dbrep"
