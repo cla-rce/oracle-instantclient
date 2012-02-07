@@ -53,8 +53,22 @@ template "/usr/local/bin/clamav_scan_local" do
 end
 
 cron "clamav" do
-  hour "1"
+  hour "2"
   minute "0"
+  case node[:cla_clamav][:run_frequency]
+  when :weekly
+    weekday "0" 
+  when :monthly
+    # do in the first week
+    weekday "0"
+    day "1-7"
+  when :quarterly
+    weekday "0" 
+    day "1-7"
+    month "1,4,7,10"
+  else
+    # daily
+  end
   mailto "#{node[:cla_clamav][:email_to]}"
   command "/usr/local/bin/clamav_scan_local"
 end
