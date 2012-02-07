@@ -33,22 +33,41 @@ when "redhat", "centos"
   rh_5_plist.each do |pkg|
     package pkg
   end
-
 end
+
 
 # install automounter configuration
 cookbook_file "/etc/auto.master" do 
   source "auto.master.mctfr"
+  notifies :restart, "service[autofs]"
 end
 
 cookbook_file "/etc/auto.home" do 
   source "auto.home.mctfr"
+  notifies :restart, "service[autofs]"
 end
 
 cookbook_file "/etc/auto.shared" do 
   source "auto.shared.mctfr"
+  notifies :restart, "service[autofs]"
+end
+
+# Set up the idmap daemon
+cookbook_file "/etc/idmapd.conf" do 
+  source "idmapd.conf.mctfr"
+  notifies :restart, "service[idmapd]"
 end
 
 service "autofs" do 
+  action [:enable, :start]
+end
+
+service "idmapd" do 
+  case node[:platform]
+  when "ubuntu"
+    service_name "idmapd"
+  when "redhat","centos"
+    service_name "rpcidmapd"
+  end
   action [:enable, :start]
 end
