@@ -40,22 +40,26 @@ end
 cookbook_file "/etc/auto.master" do 
   source "auto.master.mctfr"
   notifies :restart, "service[autofs]"
+  mode "0644"
 end
 
 cookbook_file "/etc/auto.home" do 
   source "auto.home.mctfr"
   notifies :restart, "service[autofs]"
+  mode "0644"
 end
 
 cookbook_file "/etc/auto.shared" do 
   source "auto.shared.mctfr"
   notifies :restart, "service[autofs]"
+  mode "0644"
 end
 
 # Set up the idmap daemon
 cookbook_file "/etc/idmapd.conf" do 
   source "idmapd.conf.mctfr"
   notifies :restart, "service[idmapd]"
+  mode "0644"
 end
 
 service "autofs" do 
@@ -69,5 +73,5 @@ service "idmapd" do
   when "redhat","centos"
     service_name "rpcidmapd"
   end
-  action [:enable, :start]
+  action [:enable]
 end
