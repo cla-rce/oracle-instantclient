@@ -1,0 +1,7 @@
+# Generated from Chef
+# update with node attributes, not by manual editing
+#
+#server[:port]		shared_secret		timeout
+<% node[:cla_auth][:mkey_radius_hosts].each do |radserver| %>
+<%= radserver %>	<%= node[:cla_auth][:mkey_radius_secret] %>	2
+<% end %>
