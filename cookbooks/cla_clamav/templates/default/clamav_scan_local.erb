@@ -21,7 +21,7 @@ if (not -x $LOGGER) {
 
 my @mountpaths = qw( /bin/mount /usr/bin/mount /sbin/mount /usr/sbin/mount );
 my $MOUNT = undef;
-foreach $mpath @mountpaths { 
+foreach $mpath (@mountpaths) { 
 	if ( -x $mpath ) {
 		$MOUNT = $mpath;
 		last;
@@ -129,7 +129,7 @@ foreach my $ftype (@fstypes) {
 	my $mounts = $mounts_by_type->{$ftype};
 	foreach my $mount (@$mounts) {
 		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
-		" --follow-file-symlinks=0 --follow-dir-symlinks=0 --official-db-only=yes " . 
-		 "$mount | $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
+		" --official-db-only=yes $mount | $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
+		### removed  --follow-file-symlinks=0 --follow-dir-symlinks=0 
 	}
 }
