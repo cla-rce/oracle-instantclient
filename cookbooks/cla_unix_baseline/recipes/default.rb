@@ -70,6 +70,10 @@ when "ubuntu"
     action :nothing
   end
 
+  cookbook_file "/etc/default/nfs-common"
+    source "etc_default_nfs-common"
+  end
+
 when "redhat", "centos"
   
   ## epel repository
