@@ -1,4 +1,5 @@
 include_recipe "apache2::default"
+include_recipe "logrotate_37signals::default"
 
 # remove vendor default sites
 %w{ default default-ssl }.each do |f|
@@ -70,4 +71,15 @@ end
   file "#{node[:apache][:log_dir]}/#{log}" do
     mode "0644"
   end
+end
+
+# rotate logs every month and preserve read-access
+logrotate "apache2" do
+  files ["/var/log/apache2/*.log"]
+  frequency :monthly
+  rotate_count 12
+  rotate_if_empty false
+  missing_ok true
+  compress true
+  restart_command "[ ! -f \"`. /etc/apache2/envvars ; echo ${APACHE_PID_FILE:-/var/run/apache2.pid}`\" ] || /etc/init.d/apache2 reload > /dev/null"
 end
