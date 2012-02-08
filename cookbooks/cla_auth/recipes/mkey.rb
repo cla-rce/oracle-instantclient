@@ -28,6 +28,10 @@ when "ubuntu"
     Chef::Log.fatal("Only implemented for Ubuntu Lucid/10.04")
     raise 
   end
+when "redhat","centos"
+  # the pam_radius module is in EPEL
+  include_recipe "yum::epel"
+  required_pacakges = %w{ pam_radius }
 else
   Chef::Log.fatal("Only implemented for Ubuntu")
   raise
@@ -92,6 +96,22 @@ when "ubuntu"
     Chef::Log.fatal("Only implemented for Ubuntu Lucid/10.04")
     raise 
   end
+when "redhat","centos"
+  ## authconfig doesn't support this scheme.  Have to set it up manually.
+  ## start with authconfig to set up basic local auth and disable any 
+  ## existing name service
+  execute "authconfig_disable" do 
+    command "/usr/bin/authconfig --disablesysnetauth --disablenis --disableldapauth --enableshadow --enablemd5 --updateall"
+    not_if "/usr/bin/grep pam_radius /etc/pam.d/system-auth"
+  end
+  
+  template "/etc/pam.d/system-auth" do 
+    source "pam_system-auth_radius.rhel5"
+    mode "0644"
+    owner "root"
+    group "root"
+  end
+  
 else
   Chef::Log.fatal("Only implemented for Ubuntu")
   raise
