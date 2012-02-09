@@ -34,12 +34,13 @@ libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-l
 python-libxml2 intelcompilers-libstdc++5-compat autofs5 ruby-dev xinetd ia32-libs 
 cvs mercurial mercurial-git )
 
-rh_5_plist = %w( python python-devel perl perl-devel perl-Tk ruby ruby-devel ruby-rdoc ruby-ri ruby-irb 
-gcc-gfortran gcc-c++ gcc-objc aspell aspell-en tcl tcl-devel tclx tclx-devel tk tk-devel tix expect expectk 
-git-all subversion vim emacs ctags nano psacct acl bzip2 cadaver cpio curl dialog enscript file 
-fortune-mod gdb gnupg gnuplot graphviz graphviz-devel graphviz-gd indent ksh openldap openldap-devel
-lftp elinks lynx m4 mailx mysql mysql-devel ncftp ntp OpenIPMI screen sudo sysstat tcsh wget xinetd 
-cvs mercurial tmux )
+rh_5_plist = []
+#rh_5_plist = %w( python python-devel perl perl-devel perl-Tk ruby ruby-devel ruby-rdoc ruby-ri ruby-irb 
+#gcc-gfortran gcc-c++ gcc-objc aspell aspell-en tcl tcl-devel tclx tclx-devel tk tk-devel tix expect expectk 
+#git-all subversion vim emacs ctags nano psacct acl bzip2 cadaver cpio curl dialog enscript file 
+#fortune-mod gdb gnupg gnuplot graphviz graphviz-devel graphviz-gd indent ksh openldap openldap-devel
+#lftp elinks lynx m4 mailx mysql mysql-devel ncftp ntp OpenIPMI screen sudo sysstat tcsh wget xinetd 
+#cvs mercurial tmux )
 
 case node[:platform]
 when "ubuntu"
