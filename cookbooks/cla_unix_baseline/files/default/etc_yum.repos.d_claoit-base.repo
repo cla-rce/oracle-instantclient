@@ -1,0 +1,6 @@
+[claoit-base]
+name=CLA-OIT Base packages
+baseurl=http://exodus.socsci.umn.edu/redhat/yum/rhel/5/
+enabled=1
+gpgcheck=1
+protect=1

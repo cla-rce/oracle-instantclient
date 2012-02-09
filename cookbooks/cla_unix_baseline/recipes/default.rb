@@ -82,6 +82,16 @@ when "redhat", "centos"
 
   ### need to fill in:
   ## local repositories
+
+  cookbook_file "/etc/yum.repos.d/claoit-base.repo" do
+    source "etc_yum.repos.d_claoit-base.repo"
+    mode "0644"
+  end
+
+  execute "import_cla-repo_gpg_key" do
+    command "rpm --import http://exodus.socsci.umn.edu/redhat/yum/CLA-RPM-GPG-KEY"
+    only_if "rpm -q gpg-pubkey-54c30f4c-4533abd1"
+  end
   
 end
 
