@@ -20,32 +20,15 @@
 # slightly modified from appbase recipe, to install the PHP tools without Apache
 # allow code to run, but no vhosts or a few added bits
 
-## merged from class perl::modules, crimson-tools::default, freetds, lasso (partial, no RH),
+## merged from class perl::modules and freetds
 ##   
 
-#### Done: jansson package
-#### Done: eaccelerator
-#### Done: gituser recipe
-  ## keep separate
-#### STUB: classadm::apache2
-#### Done: class crontasks
-  ## this creats a task user and sets up sudo rights
-  ## keep separate
-  
-# role runlist (for slave) needs this, gituser::default, crontasks::default, 
-#   class_hosts::default, class_clustersync::default
-# role runlist (for master) needs change to class_clustersync::master
-
-
 # merged from many of their cookbooks.
-ubuntu_lucid_plist = %w{ unison wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  imagemagick gsfonts freetds-bin liblasso3 php5-lasso php5-eaccelerator php5-sqlite
-  libjansson-dev libjansson4 }
+# installing php5-cli here to prevent the php5 metapackage from installing apache
+ubuntu_lucid_plist = %w{ php5-cli php5-sqlite freetds-bin }
 
-### not implemented for rhel: lasso eaccelerator jansson, no nodes expected on rhel
-###   but maintaining as much as possible in case of future use
-rh_5_plist = %w{ unison227 wv xpdf poppler-utils html2ps tidy aspell aspell-en 
-  ImageMagick ghostscript-fonts freetds }
+### no nodes expected on rhel but maintaining as much as possible in case of future use
+rh_5_plist = %w{ php-cli freetds }
 
 case node[:platform]
 when "ubuntu"
@@ -77,33 +60,18 @@ include_recipe "mysql::client"
 
 ## need a bunch of php stuff
 include_recipe "php::default"
+
 # this will overwrite php.ini and other stuff
 # we include from opscode recipe where possible, so that
 # the resource providers don't get overwritten
 include_recipe "class_php::default"
 include_recipe "php::module_curl"
-## needs to be built to package, not hack that exists now
-#include_recipe "class_php::module_eaccelerator"
-include_recipe "php::module_gd"
-include_recipe "class_php::module_imap"
-
-## don't use the recipe, just use package.
-# already included in package_list above
-# package "php5-lasso"
-#include_recipe "class_php::module_lasso"
-
-include_recipe "php::module_ldap"
-include_recipe "class_php::module_memcached"
 include_recipe "class_php::module_mssql"
 include_recipe "php::module_mysql"
 include_recipe "class_php::module_pdo"
 include_recipe "class_php::module_posix"
-include_recipe "class_php::module_soap"
-include_recipe "class_php::module_tidy"
 include_recipe "class_php::module_xml"
 include_recipe "class_php::module_xsl"
-
-#include_recipe "apache2::mod_php5"
 
 include_recipe "class_dbrep::default"
 
