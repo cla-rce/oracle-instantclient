@@ -2,11 +2,11 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures postfix for client or outbound relayhost, or to do SASL auth"
-version           "0.8.4"
+version           "0.8.5"
 recipe            "postfix", "Installs and configures postfix"
 recipe            "postfix::sasl_auth", "Set up postfix to auth to a server with sasl"
 
-%w{ubuntu debian}.each do |os|
+%w{ubuntu debian redhat centos}.each do |os|
   supports os
 end
 
