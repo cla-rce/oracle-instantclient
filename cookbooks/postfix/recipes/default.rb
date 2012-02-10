@@ -23,6 +23,12 @@ package "postfix" do
 end
 
 case node[:platform]
+when "ubuntu", "debian" 
+
+  service "postfix" do
+   action :enable
+  end
+
 when "redhat", "centos"
   service "sendmail" do
     action :stop
@@ -32,10 +38,10 @@ when "redhat", "centos"
     command "/usr/sbin/alternatives --set mta /usr/sbin/sendmail.postfix"
     not_if "/usr/bin/test /etc/alternatives/mta -ef /usr/sbin/sendmail.postfix"
   end
-end
 
-service "postfix" do
-  action :enable
+  service "postfix" do
+    action :start
+  end
 end
 
 %w{main master}.each do |cfg|
