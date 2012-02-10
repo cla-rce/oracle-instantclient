@@ -22,6 +22,18 @@ package "postfix" do
   action :install
 end
 
+case node[:platform]
+when "redhat", "centos"
+  service "sendmail" do
+    action :stop
+  end
+
+  execute "switch_mailer_to_postfix" do
+    command "/usr/sbin/alternatives --set mta /usr/sbin/sendmail.postfix"
+    not_if "/usr/bin/test /etc/alternatives/mta -ef /usr/sbin/sendmail.postfix"
+  end
+end
+
 service "postfix" do
   action :enable
 end
