@@ -1,0 +1,19 @@
+#!/usr/local/bin/php
+<?php
+
+$handle = mysql_connect("<%= node['class_phpmysqlsessions']['hostname'] %>","<%= node['class_phpmysqlsessions']['username'] %>","<%= node['class_phpmysqlsessions']['password'] %>") or trigger_error("Error establishing database connection", E_USER_ERROR);
+mysql_select_db("<%= node['class_phpmysqlsessions']['database'] %>", $handle);
+
+$max_lifetime = ini_get("session.gc_maxlifetime");
+$timestamp = time();
+
+$query =
+"DELETE LOW_PRIORITY FROM
+        `<%= node['class_phpmysqlsessions']['database'] %>`.`<%= node['class_phpmysqlsessions']['table'] %>`
+WHERE
+        `last_active` < FROM_UNIXTIME(". ($timestamp - $max_lifetime) .") AND
+        (`expiration` < FROM_UNIXTIME(". $timestamp .") OR `expiration` IS NULL)
+";
+$result = mysql_query($query, $handle) or trigger_error(mysql_error($handle), E_USER_ERROR);
+
+?>
