@@ -24,23 +24,15 @@ end
 
 case node[:platform]
 when "ubuntu", "debian" 
-
   service "postfix" do
    action :enable
   end
-
 when "redhat", "centos"
-  service "sendmail" do
-    action :stop
-  end
-
   execute "switch_mailer_to_postfix" do
     command "/usr/sbin/alternatives --set mta /usr/sbin/sendmail.postfix"
+    notifies :stop, resources(:service => "sendmail")
+    notifies :start, resources(:service => "postfix")
     not_if "/usr/bin/test /etc/alternatives/mta -ef /usr/sbin/sendmail.postfix"
-  end
-
-  service "postfix" do
-    action :start
   end
 end
 
