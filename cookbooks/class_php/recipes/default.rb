@@ -2,12 +2,13 @@ include_recipe "php::default"
 
 # update php.ini
 if platform?("debian","ubuntu")
-  %w{ apache2 cli }.each do |sapi|
+  %w{ apache2 cli cgi }.each do |sapi|
     template "#{node['class_php']['conf_dir']}/#{sapi}/php.ini" do
       source "php.ini.erb"
       owner "root"
       group "root"
       mode "0644"
+      only_if "test -d #{node['class_php']['conf_dir']}/#{sapi}"
     end
   end
 elsif platform?("centos","redhat","fedora","suse","scientific")

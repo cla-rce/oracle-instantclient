@@ -84,11 +84,11 @@
         "/data/www/mantis/": {
           "AllowOverride": "all",
           "Order": "allow,deny",
-          "Allow": "from 128.101.8"
+          "Allow": "from 128.101 134.84 160.94"
         },
         "/data/www/mysqladmin/": {
           "Order": "allow,deny",
-          "Allow": "from 128.101.8"
+          "Allow": "from 128.101 134.84 160.94"
         },
         "/data/www/wiki/": {
           "AllowOverride": "all"

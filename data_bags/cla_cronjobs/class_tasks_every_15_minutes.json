@@ -4,5 +4,5 @@
   "user": "class_tasks",
   "minute": "0,15,30,45",
   "mailto": "classoad@umn.edu",
-  "command": "test -d /data/www/tasks/every_15_min && run-parts /data/www/tasks/every_15_mins"
+  "command": "test -d /data/www/tasks/every_15_mins && run-parts /data/www/tasks/every_15_mins"
 }
