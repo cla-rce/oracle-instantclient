@@ -28,6 +28,12 @@ when "ubuntu", "debian"
    action :enable
   end
 when "redhat", "centos"
+  service "postfix" do
+    action :nothing
+  end
+  service "sendmail" do
+    action :nothing
+  end
   execute "switch_mailer_to_postfix" do
     command "/usr/sbin/alternatives --set mta /usr/sbin/sendmail.postfix"
     notifies :stop, resources(:service => "sendmail")
