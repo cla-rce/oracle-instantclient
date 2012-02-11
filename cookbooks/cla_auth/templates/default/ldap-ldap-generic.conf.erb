@@ -9,5 +9,5 @@ URI <%= node[:cla_auth][:ldap_servers].join " " %>
 
 LDAP_VERSION 3
 #rootbinddn cn=manager,dc=example,dc=net
-TLS_CACERT /etc/ssl/certs/cla_auth_cacert.pem
+TLS_CACERT <%= @cacert_dir %>/cla_auth_cacert.pem
 

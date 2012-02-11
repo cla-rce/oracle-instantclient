@@ -30,6 +30,10 @@ package "autofs" do
   end
 end
 
+# default this, override as needed
+cacert_dir = "/etc/ssl/certs"
+openldap_dir = "/etc/ldap"
+
 # Check platform
 case node[:platform]
 when "ubuntu"
@@ -69,14 +73,19 @@ when "ubuntu"
   end
 
 when "redhat", "centos"
+  # override cacert_dir
+  cacert_dir = "/etc/pki/tls/certs"
+  openldap_dir = "/etc/openldap"
+
   service "nscd" do 
     action :nothing
   end
 
   execute "authconfig_cla_ldap" do 
     not_if "grep cla_ldap_auth /etc/.chef_auth_current"
-    command "authconfig --enableshadow --enablemd5 --disablenis --enableldap --enableldapauth --ldapserver=#{node[:cla_auth][:ldap_servers].first} --ldapbasedn=#{node[:cla_auth][:ldap_base]} --enableldaptls --disablekrb5 --disablesmbauth --disablewinbind --disablewins --disablehesiod --disablesysnetauth --disablemkhomedir --updateall"
+    command "authconfig --enableshadow --enablemd5 --disablenis --enableldap --enableldapauth --ldapserver=#{node[:cla_auth][:ldap_servers].first} --ldapbasedn='#{node[:cla_auth][:ldap_base]}' --enableldaptls --disablekrb5 --disablesmbauth --disablewinbind --disablewins --disablehesiod --disablesysnetauth --disablemkhomedir --updateall"
   notifies :restart, "service[autofs]"
+  notifies :run, "execute[set_cla_ldap_auth_flag]"
   end
 
   execute "set_cla_ldap_auth_flag" do 
@@ -88,27 +97,46 @@ else
   Chef::Log.warn("Only implemented for Linux so far")
 end
 
+## make the cacert_dir
+directory cacert_dir do 
+  action :create
+  recursive true
+  mode "0755"
+end
 
 ### all unixy platforms get this part
 template "/etc/ldap.conf" do
   source "ldap-generic.conf.erb"
-  notifies :run, "execute[nssldap-update-ignoreusers]"
-  notifies :restart, "service[nscd]"
-  notifies :run, "execute[cache-updated-ignoreusers]"
+  variables (:cacert_dir => cacert_dir) 
+  case node[:platform]
+  when "ubuntu"
+    notifies :run, "execute[nssldap-update-ignoreusers]"
+    notifies :restart, "service[nscd]"
+    notifies :run, "execute[cache-updated-ignoreusers]"
+  end
+  mode "0644"
 end
 
-template "/etc/ldap/ldap.conf" do
+directory openldap_dir do 
+  action :create
+  mode "0755"
+end
+
+template "#{openldap_dir}/ldap.conf" do
   source "ldap-ldap-generic.conf.erb"
+  variables (:cacert_dir => cacert_dir) 
   #notifies :restart, "service[nscd]"
   notifies :restart, "service[autofs]"
+  mode "0644"
 end
 
-cookbook_file "/etc/ssl/certs/cla_auth_cacert.pem" do 
+cookbook_file "#{cacert_dir}/cla_auth_cacert.pem" do 
   source node[:cla_auth][:ldap_cacert_fname]
   notifies :restart, "service[autofs]"
+  mode "0644"
 end
 
 service "autofs" do 
   action :enable
-  supports :restart
+  supports [:restart]
 end

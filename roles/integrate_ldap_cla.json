@@ -15,6 +15,13 @@
     "cla_users": { 
       "local_users_use_password": false,
       "ignore_local_users": true
+    },
+    "cla_auth": {
+      "ldap_servers": [
+        "ldaps://ldap2.claoit.umn.edu",
+        "ldaps://ldap3.claoit.umn.edu"
+      ],
+      "ldap_base": "dc=cla,dc=umn,dc=edu"
     }
   }
 }
