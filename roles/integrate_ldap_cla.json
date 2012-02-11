@@ -6,7 +6,8 @@
   "env_run_lists": {
   },
   "run_list": [
-    "recipe[cla_unix_baseline::compatibility]"
+    "recipe[cla_unix_baseline::compatibility]",
+    "recipe[cla_auth::cla_ldap_auth]"
   ],
   "description": "LDAP integration tag",
   "chef_type": "role",
