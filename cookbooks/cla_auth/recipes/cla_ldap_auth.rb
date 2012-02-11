@@ -20,22 +20,19 @@
 # ensure base packages needed to modify authentication are present.
 include_recipe "cla_auth::default"
 
+# needed packages
+package "autofs" do 
+  case node[:platform]
+  when "ubuntu"
+    package_name "autofs5"
+  when "redhat","centos"
+    package_name "autofs"
+  end
+end
+
 # Check platform
 case node[:platform]
 when "ubuntu"
-  template "/etc/ldap.conf" do
-    source "ubuntu-ldap-generic.conf.erb"
-    notifies :run, "execute[nssldap-update-ignoreusers]"
-    notifies :restart, "service[nscd]"
-    notifies :run, "execute[cache-updated-ignoreusers]"
-  end
-  template "/etc/ldap/ldap.conf" do
-    source "ubuntu-ldap-ldap-generic.conf.erb"
-    #notifies :restart, "service[nscd]"
-  end
-  cookbook_file "/etc/ssl/certs/cla_auth_cacert.pem" do 
-    source node[:cla_auth][:ldap_cacert_fname]
-  end
   cookbook_file "/etc/auth-client-config/profile.d/cla-auth-ldap" do 
     source "cla-auth-ldap.profile"
   end
@@ -43,6 +40,7 @@ when "ubuntu"
     command "auth-client-config -p cla-auth-ldap -a"
     # don't do anything if we don't need to (we match profile now)
     not_if "auth-client-config -p cla-auth-ldap -a -s"
+  notifies :restart, "service[autofs]"
   end
 
   execute "nssldap-update-ignoreusers" do 
@@ -71,8 +69,18 @@ when "ubuntu"
   end
 
 when "redhat", "centos"
-  Chef::Log.warn("Only implemented for Ubuntu so far")
   service "nscd" do 
+    action :nothing
+  end
+
+  execute "authconfig_cla_ldap" do 
+    not_if "grep cla_ldap_auth /etc/.chef_auth_current"
+    command "authconfig --enableshadow --enablemd5 --disablenis --enableldap --enableldapauth --ldapserver=#{node[:cla_auth][:ldap_servers].first} --ldapbasedn=#{node[:cla_auth][:ldap_base]} --enableldaptls --disablekrb5 --disablesmbauth --disablewinbind --disablewins --disablehesiod --disablesysnetauth --disablemkhomedir --updateall"
+  notifies :restart, "service[autofs]"
+  end
+
+  execute "set_cla_ldap_auth_flag" do 
+    command "echo cla_ldap_auth > /etc/.chef_auth_current"
     action :nothing
   end
 
@@ -80,3 +88,27 @@ else
   Chef::Log.warn("Only implemented for Linux so far")
 end
 
+
+### all unixy platforms get this part
+template "/etc/ldap.conf" do
+  source "ldap-generic.conf.erb"
+  notifies :run, "execute[nssldap-update-ignoreusers]"
+  notifies :restart, "service[nscd]"
+  notifies :run, "execute[cache-updated-ignoreusers]"
+end
+
+template "/etc/ldap/ldap.conf" do
+  source "ldap-ldap-generic.conf.erb"
+  #notifies :restart, "service[nscd]"
+  notifies :restart, "service[autofs]"
+end
+
+cookbook_file "/etc/ssl/certs/cla_auth_cacert.pem" do 
+  source node[:cla_auth][:ldap_cacert_fname]
+  notifies :restart, "service[autofs]"
+end
+
+service "autofs" do 
+  action :enable
+  supports :restart
+end

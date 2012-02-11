@@ -24,13 +24,13 @@ include_recipe "cla_auth::default"
 case node[:platform]
 when "ubuntu"
   template "/etc/ldap.conf" do
-    source "ubuntu-ldap-generic.conf.erb"
+    source "ldap-generic.conf.erb"
     notifies :run, "execute[nssldap-update-ignoreusers]"
     notifies :restart, "service[nscd]"
     notifies :run, "execute[cache-updated-ignoreusers]"
   end
   template "/etc/ldap/ldap.conf" do
-    source "ubuntu-ldap-ldap-generic.conf.erb"
+    source "ldap-ldap-generic.conf.erb"
     #notifies :restart, "service[nscd]"
   end
   cookbook_file "/etc/ssl/certs/cla_auth_cacert.pem" do 
