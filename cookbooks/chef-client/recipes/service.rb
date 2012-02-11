@@ -20,7 +20,7 @@
 #
 
 root_group = value_for_platform(
-  ["openbsd", "freebsd", "mac_os_x"] => { "default" => "wheel" },
+  ["openbsd", "freebsd", "mac_os_x", "mac_os_x_server"] => { "default" => "wheel" },
   "default" => "root"
 )
 
@@ -194,6 +194,19 @@ when "daemontools"
     template "chef-client"
     action [:enable,:start]
     log true
+  end
+
+when "launchd"
+  template "/Library/LaunchDaemons/com.opscode.chef-client.plist" do
+    source "com.opscode.chef-client.plist.erb"
+    mode 0644
+    notifies :run, "execute[launchd_load_chef-client]", :delayed
+  end
+
+  execute "launchd_load_chef-client" do
+    command "/bin/launchctl load -w /Library/LaunchDaemons/com.opscode.chef-client.plist"
+   # only_if "/bin/launchctl list com.opscode.chef-client"
+    action :nothing
   end
 
 when "bsd"
