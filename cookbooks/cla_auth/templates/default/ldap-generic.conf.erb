@@ -10,6 +10,8 @@ uri <%= node[:cla_auth][:ldap_servers].join " " %>
 ldap_version 3
 #rootbinddn cn=manager,dc=example,dc=net
 pam_password md5
+ssl start_tls
+ssl on 
 tls_checkpeer yes
-tls_cacertfile /etc/ssl/certs/cla_auth_cacert.pem
+tls_cacertfile <%= @cacert_dir %>/<%= node[:cla_auth][:ldap_cacert_fname] %>
 

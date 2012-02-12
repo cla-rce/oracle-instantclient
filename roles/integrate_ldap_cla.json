@@ -6,7 +6,8 @@
   "env_run_lists": {
   },
   "run_list": [
-    "recipe[cla_unix_baseline::compatibility]"
+    "recipe[cla_unix_baseline::compatibility]",
+    "recipe[cla_auth::cla_ldap_auth]"
   ],
   "description": "LDAP integration tag",
   "chef_type": "role",
@@ -14,6 +15,14 @@
     "cla_users": { 
       "local_users_use_password": false,
       "ignore_local_users": true
+    },
+    "cla_auth": {
+      "ldap_servers": [
+        "ldaps://ldap2.claoit.umn.edu",
+        "ldaps://ldap3.claoit.umn.edu"
+      ],
+      "ldap_cacert_fname": "cla_ldap_cacert.pem",
+      "ldap_base": "dc=cla,dc=umn,dc=edu"
     }
   }
 }
