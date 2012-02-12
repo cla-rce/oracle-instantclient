@@ -118,7 +118,7 @@ template "#{openldap_dir}/ldap.conf" do
   mode "0644"
 end
 
-cookbook_file "#{cacert_dir}/cla_auth_cacert.pem" do
+cookbook_file "#{cacert_dir}/#{node[:cla_auth][:ldap_cacert_fname]}" do
   source node[:cla_auth][:ldap_cacert_fname]
   mode "0644"
 end
