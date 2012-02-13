@@ -20,24 +20,16 @@
 # ensure base packages needed to modify authentication are present.
 include_recipe "cla_auth::default"
 
+# default this, override as needed
+cacert_dir = "/etc/ssl/certs"
+openldap_dir = "/etc/ldap"
+
 # Check platform
 case node[:platform]
 when "ubuntu"
-  template "/etc/ldap.conf" do
-    source "ubuntu-ldap-generic.conf.erb"
-    notifies :run, "execute[nssldap-update-ignoreusers]"
-    notifies :restart, "service[nscd]"
-    notifies :run, "execute[cache-updated-ignoreusers]"
-  end
-  template "/etc/ldap/ldap.conf" do
-    source "ubuntu-ldap-ldap-generic.conf.erb"
-    #notifies :restart, "service[nscd]"
-  end
-  cookbook_file "/etc/ssl/certs/cla_auth_cacert.pem" do 
-    source node[:cla_auth][:ldap_cacert_fname]
-  end
   cookbook_file "/etc/auth-client-config/profile.d/cla-auth-ldaponly" do 
     source "cla-auth-ldaponly.profile"
+    mode "0644"
   end
   execute "auth_client_conf_ldap_authonly" do 
     command "auth-client-config -p cla-auth-ldaponly -a"
@@ -57,7 +49,7 @@ when "ubuntu"
     # keep a copy of the updated ignoreusers list
     # not called from the update, so that we can ensure it's run after
     # checking for a change so we can restart nscd
-    command "cp -p /etc/ldap.conf /etc/ldap.conf_after_ignoreusers"
+    command "cp /etc/ldap.conf /etc/ldap.conf_after_ignoreusers"
     action :nothing
   end
 
@@ -71,12 +63,63 @@ when "ubuntu"
   end
 
 when "redhat", "centos"
-  Chef::Log.warn("Only implemented for Ubuntu so far")
+  # override cacert_dir
+  cacert_dir = "/etc/pki/tls/certs"
+  openldap_dir = "/etc/openldap"
+
   service "nscd" do 
+    action :nothing
+  end
+
+  execute "authconfig_cla_ldap" do
+    not_if "grep ldap_auth_umn /etc/.chef_auth_current"
+    command "authconfig --enableshadow --enablemd5 --disablenis --disableldap --enableldapauth --ldapserver=#{node[:cla_auth][:ldap_servers].first} --ldapbasedn='#{node[:cla_auth][:ldap_base]}' --enableldaptls --disablekrb5 --disablesmbauth --disablewinbind --disablewins --disablehesiod --disablesysnetauth --disablemkhomedir --updateall"
+  notifies :run, "execute[set_cla_ldap_auth_flag]"
+  end
+
+  execute "set_cla_ldap_auth_flag" do
+    command "echo ldap_auth_umn > /etc/.chef_auth_current"
     action :nothing
   end
 
 else
   Chef::Log.warn("Only implemented for Linux so far")
+end
+
+## make the cacert_dir
+directory cacert_dir do
+  action :create
+  recursive true
+  mode "0755"
+end
+
+### all unixy platforms get this part
+template "/etc/ldap.conf" do
+  source "ldap-generic.conf.erb"
+  variables (:cacert_dir => cacert_dir)
+  case node[:platform]
+  when "ubuntu"
+    notifies :run, "execute[nssldap-update-ignoreusers]"
+    notifies :restart, "service[nscd]"
+    notifies :run, "execute[cache-updated-ignoreusers]"
+  end
+  mode "0644"
+end
+
+directory openldap_dir do
+  action :create
+  mode "0755"
+end
+
+template "#{openldap_dir}/ldap.conf" do
+  source "ldap-ldap-generic.conf.erb"
+  variables (:cacert_dir => cacert_dir)
+  #notifies :restart, "service[nscd]"
+  mode "0644"
+end
+
+cookbook_file "#{cacert_dir}/#{node[:cla_auth][:ldap_cacert_fname]}" do
+  source node[:cla_auth][:ldap_cacert_fname]
+  mode "0644"
 end
 

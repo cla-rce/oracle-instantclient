@@ -99,7 +99,9 @@ include_recipe "cla_shell::default"
 include_recipe "cla_sudo::default"
 include_recipe "cla_unix_baseline::syslog_setup"
 include_recipe "cla_unix_baseline::base_packages"
-include_recipe "cla_unix_baseline::system_proxy"
+if node[:cla_unix_baseline][:use_system_proxy] 
+  include_recipe "cla_unix_baseline::system_proxy"
+end 
 include_recipe "cla_cronjobs::default"
 include_recipe "logrotate::default"
 include_recipe "ntp::default"
