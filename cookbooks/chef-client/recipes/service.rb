@@ -205,7 +205,7 @@ when "launchd"
 
   execute "launchd_load_chef-client" do
     command "/bin/launchctl load -w /Library/LaunchDaemons/com.opscode.chef-client.plist"
-   # only_if "/bin/launchctl list com.opscode.chef-client"
+    not_if "/bin/launchctl list com.opscode.chef-client"
     action :nothing
   end
 
