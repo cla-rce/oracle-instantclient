@@ -26,7 +26,6 @@
       "servers": ["128.101.101.101", "134.84.84.84"]
     },
     "chef_client": {
-      "init_style": "runit",
       "server_url": "https://api.opscode.com/organizations/claumn",
       "splay": 60,
       "interval": 1800
