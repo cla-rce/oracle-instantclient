@@ -49,23 +49,41 @@ class CampfireHandler < Chef::Handler
 
   def initialize(opts = {})
     @config = opts
+    if @config[:use_system_proxy]
+      proxy = @config[:system_proxy].match(/(.*):(\d+)\/?/)
+      @proxy_host = proxy[1]
+      @proxy_port = proxy[2]
+      Chef::Log.info("Using proxy #{@proxy_host}for campfire handler")
+    end
   end
 
   def report()
-    if run_status.failed?
-      Chef::Log.error("Creating Campfire exception report")
-      CampfireHandler.base_uri    "https://#{@config[:subdomain]}.campfirenow.com"
-      CampfireHandler.basic_auth  @config[:token], 'x'
-      CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} #{run_status.formatted_exception}", :type => 'TextMessage' } }.to_json
-      CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => Array(backtrace).join("\n"), :type => 'PasteMessage' } }.to_json
-    else
-      Chef::Log.info("Creating Campfire run report")
-      CampfireHandler.base_uri    "https://#{@config[:subdomain]}.campfirenow.com"
-      CampfireHandler.basic_auth  @config[:token], 'x'
-      run_status.updated_resources.each do |res|
-        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} Updated #{res.to_s}", :type => 'TextMessage' } }.to_json
+    begin
+      if run_status.failed?
+        Chef::Log.error("Creating Campfire exception report")
+        CampfireHandler.base_uri    "https://#{@config[:subdomain]}.campfirenow.com"
+        CampfireHandler.basic_auth  @config[:token], 'x'
+        CampfireHandler.http_proxy(@proxy_host, @proxy_port) if @proxy_host
+        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", 
+        :body => { :message => { :body => "#{node.hostname} #{run_status.formatted_exception}", :type => 'TextMessage' } }.to_json
+        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", 
+        :body => { :message => { :body => Array(backtrace).join("\n"), :type => 'PasteMessage' } }.to_json
+      else
+        Chef::Log.info("Creating Campfire run report")
+        CampfireHandler.base_uri    "https://#{@config[:subdomain]}.campfirenow.com"
+        CampfireHandler.basic_auth  @config[:token], 'x'
+        CampfireHandler.http_proxy(@proxy_host, @proxy_port) if @proxy_host
+        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", 
+        :body => { :message => { :body => "#{node.hostname} Finished in #{run_status.elapsed_time}", :type => 'TextMessage' } }.to_json
+        res_ary = run_status.updated_resources.map do |r|
+          r.to_s
+        end
+        updated_resources = res_ary.join("\n")
+        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", 
+        :body => { :message => { :body => "#{node.hostname} updated resources:\n#{updated_resources}", :type => 'PasteMessage' } }.to_json
       end
-      CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} Finished in #{run_status.elapsed_time}", :type => 'TextMessage' } }.to_json
+    rescue Exception => e
+      Chef::Log.warn("Campfire handler failed due to #{e.to_s}")
     end
   end
 end
