@@ -58,6 +58,14 @@ class CampfireHandler < Chef::Handler
       CampfireHandler.basic_auth  @config[:token], 'x'
       CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} #{run_status.formatted_exception}", :type => 'TextMessage' } }.to_json
       CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => Array(backtrace).join("\n"), :type => 'PasteMessage' } }.to_json
+    else
+      Chef::Log.info("Creating Campfire run report")
+      CampfireHandler.base_uri    "https://#{@config[:subdomain]}.campfirenow.com"
+      CampfireHandler.basic_auth  @config[:token], 'x'
+      run_status.updated_resources.each do |res|
+        CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} Updated #{res.to_s}", :type => 'TextMessage' } }.to_json
+      end
+      CampfireHandler.post "/room/#{@config[:room_id]}/speak.json", :body => { :message => { :body => "#{node.hostname} Finished in #{run_status.elapsed_time}", :type => 'TextMessage' } }.to_json
     end
   end
 end
