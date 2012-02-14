@@ -56,9 +56,9 @@ if ( not defined $FIND ) {
 
 # locate find, we need to have gnu find so search for that first
 
-my @try_greps = ("/bin/grep", "/usr/bin/grep", "/usr/local/bin/grep" 
+my @try_greps = ("/bin/grep", "/usr/bin/grep", "/usr/local/bin/grep",
 	"/usr/local/bin/ggrep");
-my $GREO = undef;
+my $GREP = undef;
 
 foreach my $try (@try_greps) { 
 	if ( -x $try ) {
