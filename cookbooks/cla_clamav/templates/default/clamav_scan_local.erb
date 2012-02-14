@@ -139,6 +139,7 @@ foreach my $ftype (@fstypes) {
 		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
 		" --official-db-only=yes --max-filesize=<%= node[:cla_clamav][:max_filesize] %> " . 
 		" --infected $exclude_options $mount 2>&1 " . 
+		"| /usr/bin/grep -v 'LibClamAV Warning:' " .
 		"| $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
 		system "$LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL 'Finished scan of $mount'";
 		### removed  --follow-file-symlinks=0 --follow-dir-symlinks=0 
