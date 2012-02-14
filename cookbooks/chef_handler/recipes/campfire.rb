@@ -23,9 +23,13 @@
 # fires for compile phase exceptions
 
 # required for the handler to function
-gem_package "httparty" do
-  action :install
+# we need to force this to run at compile time
+# see http://wiki.opscode.com/display/chef/Evaluate+and+Run+Resources+at+Compile+Time
+gem_httparty = gem_package "httparty" do
+  action :nothing
 end
+gem_httparty.run_action(:install)
+
 
 chef_handler "CampfireHandler" do
   source "#{node['chef_handler']['handler_path']}/campfire_handler.rb"
