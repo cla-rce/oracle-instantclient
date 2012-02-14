@@ -17,6 +17,7 @@
   "run_list": [
     "recipe[chef_handler::default]",
     "recipe[chef_handler::cla_syslog]",
+    "recipe[chef_handler::campfire]",
     "recipe[chef-client::default]",
     "recipe[chef-client::delete_validation]",
     "recipe[cla_unix_baseline::default]",
