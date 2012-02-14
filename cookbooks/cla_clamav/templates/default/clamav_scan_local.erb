@@ -54,6 +54,25 @@ if ( not defined $FIND ) {
 	exit 1;
 }
 
+# locate find, we need to have gnu find so search for that first
+
+my @try_greps = ("/bin/grep", "/usr/bin/grep", "/usr/local/bin/grep" 
+	"/usr/local/bin/ggrep");
+my $GREO = undef;
+
+foreach my $try (@try_greps) { 
+	if ( -x $try ) {
+		$GREP = $try;
+		last;
+	}
+}
+
+if ( not defined $GREP ) {
+	print STDERR "Unable to find grep binary.\n";
+	exit 1;
+}
+
+
 # find clamscan
 my @try_clams = ("/opt/csw/bin/clamscan", "/usr/local/bin/clamscan", "/usr/bin/clamscan", 
 	"/opt/local/bin/clamscan");
@@ -139,7 +158,7 @@ foreach my $ftype (@fstypes) {
 		system "$CLAMSCAN -i --stdout --no-summary --cross-fs=no -r --phishing-scan-urls=no " . 
 		" --official-db-only=yes --max-filesize=<%= node[:cla_clamav][:max_filesize] %> " . 
 		" --infected $exclude_options $mount 2>&1 " . 
-		"| /usr/bin/grep -v 'LibClamAV Warning:' " .
+		"| $GREP -v 'LibClamAV Warning:' " .
 		"| $LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL";
 		system "$LOGGER -i -t clamscan_wrapper -p $FACILITY.$ERRORLEVEL 'Finished scan of $mount'";
 		### removed  --follow-file-symlinks=0 --follow-dir-symlinks=0 
