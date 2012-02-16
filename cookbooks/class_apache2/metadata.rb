@@ -1,7 +1,7 @@
 maintainer        "CLASS-OAD"
 maintainer_email  "classoad@umn.edu"
 description       "Additional CLASS-specific configuration for apache"
-version           "0.1.4"
+version           "0.1.5"
 
 depends "apache2"
 depends "logrotate_37signals"
