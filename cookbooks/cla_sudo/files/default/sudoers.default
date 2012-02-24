@@ -355,6 +355,12 @@ Cmnd_Alias	WINBIND_RESTARTER=/usr/local/bin/restart-winbind
 User_Alias	LUCIANA_WINBIND_RESTARTERS=_winbind_restart
 LUCIANA_WINBIND_RESTARTERS	LUCIANA_UNIX_SERVERS=WINBIND_RESTARTER
 
+## RT101342, allow specified mpc users to restart nagios service and check config
+Host_Alias      NAGIOS_SERVER=nagios.socsci.umn.edu,nagios
+Cmnd_Alias      NAGIOS_RESTARTER=/etc/init.d/nagios *,!/etc/init.d/nagios stop
+User_Alias      NAGIOS_ADMINS=peterson
+NAGIOS_ADMINS   NAGIOS_SERVER=NAGIOS_RESTARTER
+
 #### this needs to be at the end, for now.  Other bits will move here once the LWRP is
 #### completed and working, currently in flux
 #### Note: this is *not* a comment, the leading # is needed for it to work
