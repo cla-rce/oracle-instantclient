@@ -1,7 +1,7 @@
 {
 	"id": "berk0081",
 	"server_roles": [ "cla_web_dev", "cla_web_prod" ],
-	"groups": [ "railscla" ],
+	"groups": [ "railscla", "claweb" ],
 	"class": "normal",
 	"shell": "/bin/bash",
 	"comment": "Michael Berkowski",

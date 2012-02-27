@@ -1,10 +1,10 @@
 {
-	"id": "andersen",
+	"id": "mcfa0086",
 	"server_roles": [ "cla_web_dev", "cla_web_prod" ],
-	"groups": [ "railscla", "claweb" ],
+	"groups": [ "claweb" ],
 	"class": "normal",
 	"shell": "/bin/bash",
-	"comment": "Ryan Andersen",
+	"comment": "Colin McFadden",
 	"password_hash": "*",
 	"ssh_keys": [ ]
 }

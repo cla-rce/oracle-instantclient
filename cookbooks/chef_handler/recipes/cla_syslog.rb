@@ -1,10 +1,10 @@
-
 #
-# Author:: Seth Chisamore (<schisamo@opscode.com>)
+# Author:: Joshua Buysse <buysse@umn.edu
 # Cookbook Name:: chef_handlers
-# Recipe:: json_file
+# Recipe:: cla_syslog
 #
 # Copyright 2011, Opscode, Inc.
+# Copyright 2012, Regents of the Universiyt of Minnesota
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

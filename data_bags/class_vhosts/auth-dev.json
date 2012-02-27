@@ -1,0 +1,17 @@
+{
+  "id": "auth-dev",
+  "server_roles": ["class_appserver_dev"],
+  "vhosts": {
+    "128.101.60.9:80": {
+      "ServerName": "auth.class.umn.edu",
+      "RedirectMatch": {
+        "/(.*)": "https://auth.class.umn.edu/$1"
+      }
+    },
+    "128.101.60.9:443": {
+      "ServerName": "auth.class.umn.edu",
+      "DocumentRoot": "/data/www/minion_auth/",
+      "SSLCertificate": "auth_class_umn_edu"
+    }
+  }
+}

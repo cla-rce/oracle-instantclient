@@ -5,6 +5,10 @@
       "local_users_add_ssh_keys": true,
       "local_users_user_password": true,
       "ignore_local_users": false
+    },
+    "cla_clamav": { 
+      "run_frequency": "weekly",
+      "max_filesize": "512K"
     }
   },
   "json_class": "Chef::Role",
@@ -13,11 +17,13 @@
   "run_list": [
     "recipe[chef_handler::default]",
     "recipe[chef_handler::cla_syslog]",
+    "recipe[chef_handler::campfire]",
     "recipe[chef-client::default]",
     "recipe[chef-client::delete_validation]",
     "recipe[cla_unix_baseline::default]",
     "recipe[cla_users::local_admins]",
-    "recipe[cla_users::default]"
+    "recipe[cla_users::default]",
+    "recipe[cla_clamav::default]"
   ],
   "description": "",
   "chef_type": "role",

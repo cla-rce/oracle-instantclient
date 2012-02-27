@@ -70,5 +70,10 @@ cron "clamav" do
     # daily
   end
   mailto "#{node[:cla_clamav][:email_to]}"
-  command "/usr/local/bin/clamav_scan_local"
+  # set up nice value
+  nice = ""
+  if node[:cla_clamav][:nice_value].to_i > 0 
+    nice = "nice -n #{node[:cla_clamav][:nice_value].to_i}"
+  end
+  command "#{nice} /usr/local/bin/clamav_scan_local"
 end

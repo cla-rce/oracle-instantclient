@@ -10,8 +10,8 @@
 	<% end -%>
 	DirectoryIndex <%= items.has_key?("DirectoryIndex") ? items['DirectoryIndex'] : "index.php index.html" %>
 	LogLevel warn
-	LogFormat "%v:%p(%A) %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
-	CustomLog /var/log/apache2/access.log combined
+	LogFormat "%v:%p(%A) %h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combinedVhost
+	CustomLog /var/log/apache2/access.log combinedVhost
 	ErrorLog /var/log/apache2/error.log
 	<% if items.has_key?("SSLCertificate") -%>
 	SSLEngine on
