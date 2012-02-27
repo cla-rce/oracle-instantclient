@@ -2,16 +2,20 @@ bash -c '
 <%= "export http_proxy=\"#{knife_config[:bootstrap_proxy]}\"" if knife_config[:bootstrap_proxy] -%>
 
 if [ ! -f /usr/bin/chef-client ]; then
-  wget <%= "--proxy=on " if knife_config[:bootstrap_proxy] %>http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
-  rpm -Uvh epel-release-5-4.noarch.rpm
-  wget <%= "--proxy=on " if knife_config[:bootstrap_proxy] %>http://rpm.aegisco.com/aegisco/rhel/aegisco-rhel.rpm
-  rpm -Uvh aegisco-rhel.rpm
+#  wget <%= "--proxy=on " if knife_config[:bootstrap_proxy] %>http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
+#  rpm -Uvh epel-release-5-4.noarch.rpm
+#  wget <%= "--proxy=on " if knife_config[:bootstrap_proxy] %>http://rpm.aegisco.com/aegisco/rhel/aegisco-rhel.rpm
+#  rpm -Uvh aegisco-rhel.rpm
 
-  # Remove version ruby 1.8.5 packages
-  yum remove -y ruby ruby-devel ruby-libs
+#  # Remove version ruby 1.8.5 packages
+#  yum remove -y ruby ruby-devel ruby-libs
+#
+# Install CLA-OIT repo
+rpm --import http://exodus.socsci.umn.edu/redhat/yum/CLA-RPM-GPG-KEY
+cd /etc/yum.repos.d && wget http://exodus.socsci.umn.edu/redhat/kickstart/claoit-base.repo
 
-  # Install ruby 1.8.7 packages
-  yum install -y ruby ruby-devel-1.8.7.299 rubygems gcc gcc-c++ automake autoconf make
+# Install ruby packages
+yum install -y ruby ruby-devel rubygems gcc gcc-c++ automake autoconf make ruby-ri ruby-rdoc ruby-irb
 
 ## Not installing rubygems from source
 #  cd /tmp
@@ -21,10 +25,10 @@ if [ ! -f /usr/bin/chef-client ]; then
 #  ruby setup.rb --no-format-executable
 fi
 
-gem update --system
 gem update
 gem install ohai --no-rdoc --no-ri --verbose
 gem install chef --no-rdoc --no-ri --verbose <%= bootstrap_version_string %>
+gem install httparty --no-rdoc --no-ri
 
 mkdir -p /etc/chef
 
