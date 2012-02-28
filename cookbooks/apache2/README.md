@@ -75,6 +75,9 @@ These are general settings used in recipes and templates. Default values are not
 * `node['apache']['keepalive']` - Value for the KeepAlive directive. Default is On.
 * `node['apache']['keepaliverequests']` - Value for MaxKeepAliveRequests. Default is 100.
 * `node['apache']['keepalivetimeout']` - Value for the KeepAliveTimeout directive. Default is 5.
+* `node['apache']['default_modules']` - Array of module names. Can take "mod_FOO" or "FOO" as names, where FOO is the apache module, e.g. "`mod_status`" or "`status`".
+
+The modules listed in `default_modules` will be included as recipes in `recipe[apache::default]`.
 
 Prefork attributes
 ------------------
@@ -99,6 +102,17 @@ Worker attributes are used for tuning the Apache HTTPD worker MPM configuration.
 * `node['apache']['worker']['maxsparethreads]` - Maximum number of spare worker threads. Default 192.
 * `node['apache']['worker']['maxrequestsperchild']` - Maximum number of requests a child process will handle.
 
+mod\_auth\_openid attributes
+----------------------------
+
+The following attributes are in the `attributes/mod_auth_openid.rb` file. Like all Chef attributes files, they are loaded as well, but they're logistically unrelated to the others, being specific to the `mod_auth_openid` recipe.
+
+* `node['apache']['mod_auth_openid']['checksum']` - sha256sum of the tarball containing the source.
+* `node['apache']['mod_auth_openid']['version']` - version of the `mod_auth_openid` to download.
+* `node['apache']['mod_auth_openid']['cache_dir']` - the cache directory is where the sqlite3 database is stored. It is separate so it can be managed as a directory resource.
+* `node['apache']['mod_auth_openid']['dblocation']` - filename of the sqlite3 database used for directive `AuthOpenIDDBLocation`, stored in the `cache_dir` by default.
+* `node['apache']['mod_auth_openid']['configure_flags']` - optional array of configure flags passed to the `./configure` step in the compilation of the module.
+
 Recipes
 =======
 
@@ -111,20 +125,28 @@ On RHEL Family distributions, certain modules ship with a config file with the p
 default
 -------
 
-The default recipe does a number of things to set up Apache HTTPd.
+The default recipe does a number of things to set up Apache HTTPd. It also includes a number of modules based on the attribute `node['apache']['default_modules']` as recipes.
 
 mod\_auth\_openid
 -----------------
+
+**Changed via COOK-915**
 
 This recipe compiles the module from source. In addition to `build-essential`, some other packages are included for installation like the GNU C++ compiler and development headers.
 
 To use the module in your own cookbooks to authenticate systems using OpenIDs, specify an array of OpenIDs that are allowed to authenticate with the attribute `node['apache']['allowed_openids']`. Use the following in a vhost to protect with OpenID authentication:
 
-    AuthOpenIDEnabled On
-    AuthOpenIDDBLocation /var/cache/apache2/mod_auth_openid.db
-    AuthOpenIDUserProgram /usr/local/bin/mod_auth_openid.rb
+    AuthType OpenID
+    require user <%= node['apache']['allowed_openids'].join(' ') %>
+    AuthOpenIDDBLocation <%= node['apache']['mod_auth_openid']['dblocation'] %>
 
-Change the DBLocation as appropriate for your platform. You'll need to change the file in the recipe to match. The UserProgram is optional if you don't want to limit access by certain OpenIDs.
+Change the DBLocation with the attribute as required; this file is in a different location than previous versions, see below. It should be a sane default for most platforms, though, see `attributes/mod_auth_openid.rb`.
+
+### Changes from COOK-915:
+
+* `AuthType OpenID` instead of `AuthOpenIDEnabled On`.
+* `require user` instead of `AuthOpenIDUserProgram`.
+* A bug(?) in `mod_auth_openid` causes it to segfault when attempting to update the database file if the containing directory is not writable by the HTTPD process owner (e.g., www-data), even if the file is writable. In order to not interfere with other settings from the default recipe in this cookbook, the db file is moved.
 
 mod\_fcgid
 ----------
@@ -292,10 +314,37 @@ Using this cookbook is relatively straightforward. Add the desired recipes to th
 
 For examples of using the definitions in your own recipes, see their respective sections above.
 
-Changes
-=======
+Changes/Roadmap
+===============
 
-## v1.0.0
+### v1.1.0:
+
+* [COOK-861] - Add `mod_perl` and apreq2
+* [COOK-941] - fix `mod_auth_openid` on FreeBSD
+* [COOK-1021] - add a commented-out LoadModule directive to keep apxs happy
+* [COOK-1022] - consistency for icondir attribute
+* [COOK-1023] - fix platform test for attributes
+* [COOK-1024] - fix a2enmod script so it runs cleanly on !bash
+* [COOK-1026] - fix `error_log` location on FreeBSD
+
+### v1.0.8:
+
+* COOK-548 - directory resource doesn't have backup parameter
+
+### v1.0.6:
+
+* COOK-915 - update to `mod_auth_openid` version 0.6, see __Recipes/mod_auth_openid__ below.
+* COOK-548 - Add support for FreeBSD.
+
+### v1.0.4:
+
+* COOK-859 - don't hardcode module paths
+
+### v1.0.2
+
+* Tickets resolved in this release: COOK-788, COOK-782, COOK-780
+
+### v1.0.0
 
 * Red Hat family support is greatly improved, all recipes except `god_monitor` converge.
 * Recipe `mod_auth_openid` now works on RHEL family distros
