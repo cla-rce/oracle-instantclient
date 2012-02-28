@@ -10,7 +10,7 @@ if [ ! -f /usr/bin/add-apt-repository ]; then
   apt-get install -y python-software-properties
 fi
 
-# add my ppa for newer rubygems
+# add buysse/umn ppa for newer rubygems
 if [ ! -f /etc/apt/sources.list.d/buysse-umn-lucid.list ]; then 
   add-apt-repository ppa:buysse/umn
 fi
@@ -19,18 +19,8 @@ fi
 apt-get update
 apt-get install -y ruby ruby1.8-dev build-essential wget libruby-extras libruby1.8-extras rubygems
 
-#### we are not installing rubygems from source
-#if [ ! -f /usr/bin/chef-client ]; then
-#  apt-get update
-#  apt-get install -y ruby ruby1.8-dev build-essential wget libruby-extras libruby1.8-extras
-#  cd /tmp
-#  wget <%= "--proxy=on " if knife_config[:bootstrap_proxy] %>http://production.cf.rubygems.org/rubygems/rubygems-1.6.2.tgz
-#  tar zxf rubygems-1.6.2.tgz
-#  cd rubygems-1.6.2
-#  #ruby setup.rb --no-format-executable
-#fi
-
-gem update --no-rdoc --no-ri
+#gem update --no-rdoc --no-ri
+gem install httparty --no-rdoc --no-ri
 gem install ohai --no-rdoc --no-ri --verbose
 gem install chef --no-rdoc --no-ri --verbose <%= bootstrap_version_string %>
 

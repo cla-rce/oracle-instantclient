@@ -3,16 +3,17 @@ bash -c '
 
 # Install CLA-OIT repo
 rpm --import http://exodus.socsci.umn.edu/redhat/yum/CLA-RPM-GPG-KEY
-cd /etc/yum.repos.d && wget http://exodus.socsci.umn.edu/redhat/kickstart/claoit-base.repo
+test -d /etc/yum.repos.d || mkdir -p /etc/yum.repos.d
+curl http://exodus.socsci.umn.edu/redhat/kickstart/claoit-base.repo > /etc/yum.repos.d/claoit-base.repo
 
 # Install ruby packages
 yum install -y ruby ruby-devel ruby-rubygems gcc gcc-c++ automake autoconf make ruby-ri ruby-rdoc ruby-irb
 
+gem install httparty --no-rdoc --no-ri
 gem install ohai --no-rdoc --no-ri --verbose
 gem install chef --no-rdoc --no-ri --verbose <%= bootstrap_version_string %>
-gem install httparty --no-rdoc --no-ri
 
-mkdir -p /etc/chef
+test -d /etc/chef || mkdir -p /etc/chef
 
 (
 cat <<'EOP'
