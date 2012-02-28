@@ -18,7 +18,7 @@
 #
 
 ubuntu_lucid_plist = %w{ unison wv html2ps tidy aspell aspell-en 
-  imagemagick gsfonts }
+  imagemagick gsfonts htmldoc }
 
 rh_5_plist = %w{ unison227 wv html2ps tidy aspell aspell-en 
   ImageMagick ghostscript-fonts }
@@ -28,6 +28,7 @@ when "ubuntu"
   ubuntu_lucid_plist.each do |pkg|
     package pkg
   end  
+  # packaged perl modules from repositories
   perl_modules = %w{ }
   
 when "redhat", "centos" 
@@ -35,12 +36,19 @@ when "redhat", "centos"
   rh_5_plist.each do |pkg|
     package pkg
   end
+  # packaged perl modules from repositories
   perl_modules = %w{ }
   
 end
 
 ### ensure perl, from CLASS perl::modules recipe
 include_recipe "perl"
+
+perl_modules.each do |pkg|
+  package pkg do
+    action :install
+  end
+end
 
 include_recipe "mysql::client"
 include_recipe "apache2::default"

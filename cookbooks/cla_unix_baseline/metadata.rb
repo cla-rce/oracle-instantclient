@@ -4,7 +4,7 @@ license          "Apache 2.0"
 description      "Installs/Configures cla_unix_baseline"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 
-version          "0.14.0"
+version          "0.14.1"
 
 supports "ubuntu", ">= 10.04"
 supports "redhat", ">= 5.0"
