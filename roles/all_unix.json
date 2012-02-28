@@ -23,7 +23,8 @@
     "recipe[cla_unix_baseline::default]",
     "recipe[cla_users::local_admins]",
     "recipe[cla_users::default]",
-    "recipe[cla_clamav::default]"
+    "recipe[cla_clamav::default]", 
+    "recipe[cla_cacerts::default]"
   ],
   "description": "",
   "chef_type": "role",

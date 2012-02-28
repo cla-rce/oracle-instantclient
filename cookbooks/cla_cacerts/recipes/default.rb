@@ -40,5 +40,4 @@ end
 
 execute "/usr/bin/c_rehash" do 
   action :nothing
-  supports :run
 end
