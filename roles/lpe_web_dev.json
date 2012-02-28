@@ -1,0 +1,15 @@
+{
+  "json_class": "Chef::Role",
+  "name": "lpe_web_dev",
+  "env_run_lists": {
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "description": "Tag for development hosts for LPE (grants access to contractor",
+  "run_list": [
+
+  ],
+  "default_attributes": {
+  }
+}

@@ -1,0 +1,10 @@
+{
+	"id": "bsampietro",
+	"server_roles": [ "lpe_web_dev" ],
+	"groups": [ "railscla", "claweb" ],
+	"class": "normal",
+	"shell": "/bin/bash",
+	"comment": "Bruno Sampietro",
+	"password_hash": "*",
+	"ssh_keys": [ ]
+}

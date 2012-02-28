@@ -48,3 +48,9 @@ include_recipe "apache2::mod_deflate"
 include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_ssl"
 
+# after apache configuration, drop a couple of our own files
+template "#{node['apache']['dir']}/conf.d/extended-log-format.conf" do 
+  source "extended-log-format.conf.erb"
+  owner "root"
+  mode "0644"
+end
