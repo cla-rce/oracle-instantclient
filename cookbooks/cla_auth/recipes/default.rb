@@ -17,6 +17,9 @@
 # limitations under the License.
 #
 
+# ensure certs are in place
+include_recipe "cla_cacerts::default"
+
 # ensure base packages needed to modify authentication are present.
 
 # Check platform
