@@ -81,6 +81,8 @@ include_recipe "apache2::mod_rewrite"
 include_recipe "apache2::mod_dir"
 include_recipe "apache2::mod_ssl"
 
+apache_module "vhost_alias"
+
 ## need a bunch of php stuff
 include_recipe "php::default"
 # this will overwrite php.ini and other stuff

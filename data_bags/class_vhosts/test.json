@@ -1,0 +1,23 @@
+{
+  "id": "test",
+  "server_roles": ["class_appserver_dev"],
+  "vhosts": {
+    "128.101.60.12:80": {
+      "ServerName": "*.test.class.umn.edu",
+      "UseCanonicalName": "Off",
+      "VirtualDocumentRoot": "/data/www/test/%1",
+      "Rewrite#0": [
+        "RewriteEngine on",
+        "RewriteCond %{HTTPS} off",
+        "RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI}"
+      ]
+    },
+    "128.101.60.12:443": {
+      "ServerName": "*.test.class.umn.edu",
+      "SSLCertificate": "star_test_class_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "UseCanonicalName": "Off",
+      "VirtualDocumentRoot": "/data/www/test/%1"
+    }
+  }
+}
