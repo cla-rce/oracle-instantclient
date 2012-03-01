@@ -117,6 +117,8 @@ Cmnd_Alias	ACTIVEMQ_CMND=/opt/activemq/current/bin/*
 
 Cmnd_Alias      KILLER=/usr/bin/kill,/usr/bin/pkill
 
+Cmnd_Alias	PROCTOOLS=/usr/bin/pargs,/usr/bin/pkill,/usr/bin/pgrep,/usr/bin/pstack,/usr/bin/pfiles,/usr/bin/pcred,/usr/bin/pwdx,/usr/bin/pflags,/usr/bin/pwait,/usr/bin/psig,/usr/bin/pldd
+
 Cmnd_Alias      CRONTAB=/usr/bin/crontab
 
 # for now, we need to be able to run all.  We can work around later 
@@ -171,6 +173,7 @@ Cmnd_Alias	RAILS_PASSENGER_STATUS=/usr/bin/passenger-status,/usr/bin/passenger-m
 %raillang       LANG_RAILS_HOSTS=NOPASSWD: /etc/init.d/cla_rails
 
 %jsrv-mpc       MPC_SERVLET_HOSTS=(jsrv-mpc)KILLER
+%jsrv-mpc	MPC_SERVLET_HOSTS=(jsrv-mpc)PROCTOOLS
 %jsrv-mpc       MPC_SERVLET_HOSTS=/etc/init.d/ssrf-tomcat5
 %jsrv-mpc       MPC_SERVLET_HOSTS=/etc/init.d/cla_tomcat
 %jsrv-mpc	MPC_SERVLET_HOSTS=HTTPD_ADMIN
