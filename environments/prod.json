@@ -1,0 +1,18 @@
+{
+  "description": "Production Chef Environment",
+  "chef_type": "environment",
+  "override_attributes": {
+  },
+  "default_attributes": {
+  },
+  "json_class": "Chef::Environment",
+  "cookbook_versions": {
+    "cla_sudo": "= 0.12.5",
+    "chef-client": "= 1.0.6",
+    "runit": "= 0.14.2",
+    "cla_unix_baseline": "= 0.14.3",
+    "cla_auth": "= 0.7.0",
+    "postfix": "= 0.8.5"
+  },
+  "name": "prod"
+}
