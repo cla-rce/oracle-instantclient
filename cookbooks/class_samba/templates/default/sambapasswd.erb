@@ -1,9 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ ! -z "${SUDO_USER}" ]; then
-  # set password and enable user
-  smbpasswd -a "${SUDO_USER}" && smbpasswd -e "${SUDO_USER}"
+  	if [ "${UID}" != "0" ]; then 
+		# shenanigans, somebody's playing with environment variables
+		echo "Run sambapasswd with sudo, please ('sudo sambapasswd')." 1>&2
+		logger -i -p local7.crit -t "sambapasswd" "Shenanigans: ${UID}/${USER} is impersonating ${SUDO_USER} and trying to fake out $0"
+		exit 1
+  	fi
+  	# set password and enable user
+  	/usr/bin/logger -i -p local7.warn -t "sambapasswd" "Self-service reset samba password for ${SUDO_USER} initiated"
+  	/usr/bin/smbpasswd -a "${SUDO_USER}" && /usr/bin/smbpasswd -e "${SUDO_USER}"
 else
-  # run script under sudo
-  sudo sambapasswd
+  	# run script under sudo
+  	/usr/bin/logger -i -p local7.warn -t "sambapasswd" "Re-executing sambapasswd under sudo for ${UID}/${USER}"
+  	exec sudo /usr/local/bin/sambapasswd
 fi
