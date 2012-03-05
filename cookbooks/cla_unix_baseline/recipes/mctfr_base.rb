@@ -75,3 +75,10 @@ service "idmapd" do
   end
   action [:enable]
 end
+
+## compatibility links
+link "/mtfs" do 
+  to "/shared/malone/mtfs"
+  link_type :symbolic
+  action :create
+end
