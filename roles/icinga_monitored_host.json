@@ -1,0 +1,15 @@
+{
+  "chef_type": "role",
+  "description": "Hosts that will be automatically monitored (minimally) by icinga",
+  "name": "icinga_monitored_host",
+  "override_attributes": {
+  },
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+
+  ]
+}

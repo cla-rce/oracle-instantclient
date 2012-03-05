@@ -1,0 +1,15 @@
+{
+  "env_run_lists": {
+  },
+  "name": "icinga_server",
+  "run_list": [
+
+  ],
+  "chef_type": "role",
+  "override_attributes": {
+  },
+  "default_attributes": {
+  },
+  "description": "Icinga server host",
+  "json_class": "Chef::Role"
+}
