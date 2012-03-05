@@ -24,7 +24,8 @@
     "recipe[cla_users::local_admins]",
     "recipe[cla_users::default]",
     "recipe[cla_clamav::default]", 
-    "recipe[cla_cacerts::default]"
+    "recipe[cla_cacerts::default]",
+    "role[icinga_monitored_host]"
   ],
   "description": "",
   "chef_type": "role",
