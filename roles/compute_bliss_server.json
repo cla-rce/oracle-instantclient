@@ -9,7 +9,7 @@
   },
   "name": "compute_bliss_server",
   "run_list": [
-
+    "role[compute_server]"
   ],
   "description": ""
 }

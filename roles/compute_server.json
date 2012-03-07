@@ -6,7 +6,7 @@
   "env_run_lists": {
   },
   "run_list": [
-
+    "recipe[cla_unix_baseline::bliss_compute_packages]"
   ],
   "description": "",
   "chef_type": "role",
