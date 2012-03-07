@@ -36,7 +36,7 @@ libgdome2-dev libdcmtk1-dev libnetcdf-dev libxslt-dev medcon xmedcon
 libgtksourceview1.0-0 )
 
 ## this is not complete, relying on kickstart right now for this to work.
-rh_5_plist = %w( )
+rh_5_plist = %w( gtksourceview )
 
 case node[:platform]
 when "ubuntu"
