@@ -130,13 +130,20 @@ end
 
 # generate sites-available files for each vhost
 enabled_vhosts.each do |vhost_name,vhost|
-  template "#{node[:apache][:dir]}/sites-available/#{vhost_name}" do
-    source "vhost.erb"
-    owner "root"
-    group "root"
-    mode 0644
-    variables(:vhost => vhost, :ssl_certs => ssl_certs)
+  t = nil
+
+  # create vhost conf file
+  begin
+    t = resources(:template => "#{node[:apache][:dir]}/sites-available/#{vhost_name}") # reopen from apache2 cookbook (for default site)
+  rescue Chef::Exceptions::ResourceNotFound
+    t = template "#{node[:apache][:dir]}/sites-available/#{vhost_name}" # new resource
   end
+
+  t.cookbook "class_apache2"
+  t.source "vhost.erb"
+  t.mode 0644
+  t.variables['vhost'] = vhost
+  t.variables['ssl_certs'] = ssl_certs
 
   # enable the vhost
   apache_site vhost_name

@@ -1,12 +1,10 @@
 include_recipe "apache2::default"
 include_recipe "logrotate_37signals::default"
 
-# remove vendor default sites
-%w{ default default-ssl }.each do |f|
-  file "#{node[:apache][:dir]}/sites-available/#{f}" do
-    action :delete
-    backup false
-    only_if "grep 'DocumentRoot /var/www/' #{node[:apache][:dir]}/sites-available/#{f}"
+# disable vendor default sites
+%w{ default-ssl }.each do |s|
+  apache_site s do
+    enable false
   end
 end
 

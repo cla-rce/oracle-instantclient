@@ -1,22 +1,34 @@
 include_recipe "php::default"
 
-# update php.ini
-if platform?("debian","ubuntu")
-  %w{ apache2 cli cgi }.each do |sapi|
-    template "#{node['class_php']['conf_dir']}/#{sapi}/php.ini" do
-      source "php.ini.erb"
-      owner "root"
-      group "root"
-      mode "0644"
-      only_if "test -d #{node['class_php']['conf_dir']}/#{sapi}"
+# php.ini locations
+# - debian/ubuntu uses separate php.ini files for each sapi
+# - redhat uses one php.ini for all sapis
+conf_dirs = value_for_platform(
+  [ "debian", "ubuntu" ] => {
+    "default" => [
+      "#{node['class_php']['conf_dir']}/apache2",
+      "#{node['class_php']['conf_dir']}/cli",
+      "#{node['class_php']['conf_dir']}/cgi"
+    ]
+  },
+  "default" => [ node['class_php']['conf_dir'] ]
+)
+
+# update php.ini with CLASS configuration
+conf_dirs.each do |conf_dir|
+  if ::File.exists?(conf_dir)
+    t = nil
+
+    begin
+      t = resources(:template => "#{conf_dir}/php.ini") # reopen resource from php cookbook
+    rescue Chef::Exceptions::ResourceNotFound
+      t = template "#{conf_dir}/php.ini" # new resource
     end
-  end
-elsif platform?("centos","redhat","fedora","suse","scientific")
-  template "#{node['class_php']['conf_dir']}/php.ini" do
-    source "php.ini.erb"
-    owner "root"
-    group "root"
-    mode "0644"
+
+    t.cookbook "class_php"
+    t.source "php.ini.erb"
+    t.cookbook "class_php"
+    t.mode "0644"
   end
 end
 
