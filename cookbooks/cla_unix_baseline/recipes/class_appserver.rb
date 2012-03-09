@@ -72,7 +72,10 @@ include_recipe "perl"
 
 include_recipe "mysql::client"
 
-include_recipe "apache2::default"
+# NOTE: include_recipe considers apache2 and apache2::default as separate recipes.
+# The apache2 LWRPs use 'apache2' and will re-include the default recipe if apache2::default is used here (CHEF-2970).
+include_recipe "apache2"
+
 include_recipe "class_apache2::default"
 include_recipe "apache2::mod_alias"
 include_recipe "apache2::mod_cgi"

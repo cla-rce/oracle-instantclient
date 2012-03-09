@@ -1,4 +1,4 @@
-include_recipe "apache2::default"
+include_recipe "apache2"
 
 template "#{node[:apache][:dir]}/mods-available/userdir.conf" do
   source "userdir.conf.erb"

@@ -1,4 +1,4 @@
-include_recipe "apache2::default"
+include_recipe "apache2"
 include_recipe "logrotate_37signals::default"
 
 # disable vendor default sites
