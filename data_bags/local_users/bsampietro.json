@@ -6,5 +6,8 @@
 	"shell": "/bin/bash",
 	"comment": "Bruno Sampietro",
 	"password_hash": "*",
-	"ssh_keys": [ ]
+	"ssh_keys": [ 
+        	"ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvpsGwJ4vRNZx8c+vfsFIgs0jEwnp/+k9k9kNFmDvqhlat1q8oxmW5ao9E8mNnV+suV4aoaGg1fBntzbswTt4ZgFOtDozmZk1I12/+DzpOve6RA9kxsda2GOywFChVxKwz++/LSYqqCdX1iKRIKgCkdEGouojEt9v7Icd7YXyz5LzyldWrjXytar0Y4J4YjIrRqtHwyOKDlMbvE0mXP7d7IQdzBBvJjMskOmnZMIBp4RI8yXGKNtSojokT1qEMC6tRxcSvyVwJkEqyQUmUIMoWZvHJ4nRZA8q83VBiP99gUfvqUW4Exwc4+Qh4JcX6I32Zbo0Dz85vg3rs8likyojKQ== bruno2@linux-gqac"
+	]
+
 }
