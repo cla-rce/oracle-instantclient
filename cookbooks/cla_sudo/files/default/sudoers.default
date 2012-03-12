@@ -105,7 +105,7 @@ Host_Alias	CLA_RAILS_HOSTS=infotechfees2,infotechfees2.socsci.umn.edu,dcl2,dcl2.
 
 Host_Alias	CLA_DEV_RAILS_HOSTS=railsdev,railsdev.socsci.umn.edu
 
-Host_Alias	LANG_RAILS_HOSTS=lang-center,lang-center.cla.umn.edu
+Host_Alias	LANG_RAILS_HOSTS=lang-center,lang-center.cla.umn.edu,lpe-rails-a.cla.umn.edu,lpe-rails-a
 
 Host_Alias      MPC_SERVLET_HOSTS=nhgis-prod.socsci.umn.edu,nhgis-prod,sda,sda.socsci.umn.edu,bitsy,bitsy.socsci.umn.edu,scruffy,scruffy.socsci.umn.edu,hypnotoad,hypnotoad.cla.umn.edu,bender,bender.cla.umn.edu,lrrr,lrrr.socsci.umn.edu,sda2.cla.umn.edu,sda2,dwight,dwight.cla.umn.edu,thedonald,thedonald.cla.umn.edu
 
