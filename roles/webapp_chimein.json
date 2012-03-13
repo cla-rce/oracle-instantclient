@@ -1,0 +1,16 @@
+{
+  "name": "webapp_chimein",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "env_run_lists": {
+  },
+  "run_list": [
+    "role[web_php]",
+    "recipe[cla_unix_baseline::webapp_chimein]"
+  ],
+  "description": "install specific dependencies for web application",
+  "chef_type": "role",
+  "override_attributes": {
+  }
+}
