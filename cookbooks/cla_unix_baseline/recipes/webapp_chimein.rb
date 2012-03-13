@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( php5-mcrypt php5-soap php5-xmlrpc php5-curl
+ubuntu_lucid_plist = %w( php5-mcrypt php-soap php5-xmlrpc php5-curl
 php5-mysql php5-imap )
 
 # STUB:
