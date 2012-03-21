@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev sun-java6-jdk
-sun-java6-fonts sun-java6-demo dbus-x11 defoma-doc binfmt-support ttf-unfonts ttf-unfonts-core libmyodbc tdsodbc
-unixodbc-dev unixodbc-bin x-ttcidfont-conf sun-java6-source ghostscript-x mesa-utils libpng3 libtiff4 libmotif3
+ubuntu_lucid_plist = %w( ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev 
+dbus-x11 defoma-doc binfmt-support ttf-unfonts ttf-unfonts-core libmyodbc tdsodbc
+unixodbc-dev unixodbc-bin x-ttcidfont-conf ghostscript-x mesa-utils libpng3 libtiff4 libmotif3
 libexpat1 lsof a2ps abicheck axiom axiom-doc axiom-graphics axiom-databases axiom-graphics-data axiom-tex
 axiom-hypertex axiom-hypertex-data bcrypt bc bioperl bioperl-run biosquid-dev biosquid blast2 cadabra cflow ctioga
 ctsim ctsim-doc ctsim-help dcmtk dcmtk-doc dc dicom3tools dicomnifti dicomscope dx dx-doc epix exrtools extrema
