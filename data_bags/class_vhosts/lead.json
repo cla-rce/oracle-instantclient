@@ -3,8 +3,8 @@
   "server_roles": ["class_appserver_master","class_appserver_slave"],
   "vhosts": {
     "*:10080": {
-      "ServerName": "www.lead.umn.edu",
-      "ServerAlias": "lead.umn.edu",
+      "ServerName": "www.leadup.umn.edu",
+      "ServerAlias": "leadup.umn.edu www.lead.umn.edu lead.umn.edu",
       "DocumentRoot": "/data/www/crimson/",
       "CommID": 54
     }
