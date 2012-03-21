@@ -30,7 +30,7 @@ octave3.2-doc otter pari-gp pari-extra pari-doc poa psychopy python-biopython-do
 python-imaging python-imaging-tk python-imaging-doc python-nifti python-numeric python-numeric-ext python-numpy
 python-numpy-ext python-scientific python-scientific-doc python-scitools python-scipy r-base r-base-html r-base-dev
 r-base-core r-doc-html r-doc-pdf r-mathlib r-recommended samtools seaview slicer slicer-data texlive-full
-texlive-lang-all texpower tkdiff tkinfo tkman ttf-freefont mathematica-fonts tulip tulip-doc ugene-data ugene velvet
+texlive-lang-all texpower tkdiff tkinfo tkman ttf-freefont tulip tulip-doc ugene-data ugene velvet
 velvet-example wise wise-doc xaw3dg xfig xfig-libs transfig xgrep xmaxima xmldiff xpdf firefox libgdome2-0
 libgdome2-dev libdcmtk1-dev libnetcdf-dev libxslt-dev medcon xmedcon 
 libgtksourceview1.0-0 libxp6 )
@@ -42,6 +42,9 @@ case node[:platform]
 when "ubuntu"
   ubuntu_lucid_plist.each do |pkg|
     package pkg
+  end
+  package "mathematica-fonts" do
+    response_file "mathematica-fonts.seed"
   end
 when "redhat", "centos" 
   rh_5_plist.each do |pkg|
