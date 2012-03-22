@@ -24,7 +24,7 @@ include_recipe "cla_auth::default"
 package "autofs" do 
   case node[:platform]
   when "ubuntu"
-    package_name "autofs5"
+    package_name "autofs5-ldap"
   when "redhat","centos"
     package_name "autofs"
   end
