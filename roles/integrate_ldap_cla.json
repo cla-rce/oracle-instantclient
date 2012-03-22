@@ -21,7 +21,6 @@
         "ldaps://ldap2.claoit.umn.edu",
         "ldaps://ldap3.claoit.umn.edu"
       ],
-      "ldap_cacert_fname": "ca-certificates.crt",
       "ldap_base": "dc=cla,dc=umn,dc=edu"
     }
   }
