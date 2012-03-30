@@ -68,6 +68,9 @@ when "redhat", "centos"
   ## expand groups to append to package list
   rh_5_yum_grouplist.each do |pgrp|
     # expand it with shell call to yum
+    md = false
+    id = false
+    io = false
     pkgs_in_group = `/usr/bin/yum groupinfo "#{pgrp}"`
     pkgs_in_group.each_line do |line| 
       line.chomp!
@@ -97,8 +100,6 @@ when "redhat", "centos"
       if id then 
         rh_5_plist << line
       end
-      # no optionals right now
-      #rh_5_plist << line if io
     end
   end
   ### adding the groups may have made duplicates, remove them
