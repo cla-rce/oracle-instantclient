@@ -5,6 +5,7 @@ bash -c '
 rpm --import http://exodus.socsci.umn.edu/redhat/yum/CLA-RPM-GPG-KEY
 test -d /etc/yum.repos.d || mkdir -p /etc/yum.repos.d
 curl http://exodus.socsci.umn.edu/redhat/kickstart/claoit-base.repo > /etc/yum.repos.d/claoit-base.repo
+curl http://exodus.socsci.umn.edu/redhat/kickstart/claoit-ruby.repo > /etc/yum.repos.d/claoit-ruby.repo
 
 # Install ruby packages
 yum install -y ruby ruby-devel ruby-rubygems gcc gcc-c++ automake autoconf make ruby-ri ruby-rdoc ruby-irb
