@@ -46,7 +46,9 @@ rh_5_yum_grouplist = [
   "System Tools",
   "Text-based Internet",
   "X Software Development",
-  "X Window System"
+  "X Window System",
+  "XFCE-4.4",
+  "Window Managers"
   ]
   
   
@@ -69,17 +71,29 @@ when "redhat", "centos"
     pkgs_in_group = `/usr/bin/yum groupinfo "#{pgrp}"`
     pkgs_in_group.each_line do |line| 
       line.chomp!
+      if line =~ /Mandatory Packages:/ then
+        md = true
+        id = false
+        io = false
+        next
+      end
       if line =~ /Default Packages:/ then
+        md = false
         id = true
+        io = false
         next
       end
       if line =~ /Optional Packages:/ then
+        md = false
         id = false
         io = true
         next
       end
       # remove leading spaces from package name
       line.lstrip!
+      if md then 
+        rh_5_plist << line
+      end
       if id then 
         rh_5_plist << line
       end
