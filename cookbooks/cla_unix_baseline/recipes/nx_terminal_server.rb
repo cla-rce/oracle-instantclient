@@ -27,7 +27,6 @@ rh_5_yum_grouplist = [
   "Authoring and Publishing",
   "Development Tools",
   "Editors",
-  "Electronic Lab",
   "Engineering and Scientific",
   "GNOME Desktop Environment",
   "GNOME Software Development",
