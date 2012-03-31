@@ -46,7 +46,7 @@ when "ubuntu"
     # don't do anything if we don't need to (we match profile now)
     not_if "auth-client-config -p cla-auth-ldap -a -s"
     notifies :restart, "service[autofs]"
-    notifies :run, "cookbook_file[/etc/nsswitch.conf]"
+    notifies :create, "cookbook_file[/etc/nsswitch.conf]"
   end
 
   # Templatized /etc/nsswitch.conf because auth-client-config on Ubuntu
