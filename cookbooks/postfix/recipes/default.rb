@@ -25,10 +25,12 @@ end
 case node[:platform]
 when "ubuntu", "debian" 
   service "postfix" do
-   action :enable
+    pattern "master"
+    action :enable
   end
 when "redhat", "centos"
   service "postfix" do
+    pattern "master"
     action :nothing
   end
   service "sendmail" do
