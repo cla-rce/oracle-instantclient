@@ -41,14 +41,6 @@ when "ubuntu"
     source "cla-auth-ldap.profile"
   end
 
-  execute "auth_client_conf_ldap_auth" do 
-    command "auth-client-config -p cla-auth-ldap -a"
-    # don't do anything if we don't need to (we match profile now)
-    not_if "auth-client-config -p cla-auth-ldap -a -s"
-    notifies :restart, "service[autofs]"
-    notifies :create, "cookbook_file[/etc/nsswitch.conf]"
-  end
-
   # Templatized /etc/nsswitch.conf because auth-client-config on Ubuntu
   # does not support nss_automount keyword, so the automount: line must
   # be added manually
@@ -57,6 +49,14 @@ when "ubuntu"
     mode "0644"
     notifies :restart, "service[autofs]"
     action :nothing
+  end
+
+  execute "auth_client_conf_ldap_auth" do 
+    command "auth-client-config -p cla-auth-ldap -a"
+    # don't do anything if we don't need to (we match profile now)
+    not_if "auth-client-config -p cla-auth-ldap -a -s"
+    notifies :create, "cookbook_file[/etc/nsswitch.conf]"
+    notifies :restart, "service[autofs]"
   end
 
   execute "nssldap-update-ignoreusers" do 
