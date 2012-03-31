@@ -116,7 +116,7 @@ end
 ### all unixy platforms get this part
 template "/etc/ldap.conf" do
   source "ldap-generic.conf.erb"
-  variables (:cacert_dir => cacert_dir) 
+  variables(:cacert_dir => cacert_dir) 
   case node[:platform]
   when "ubuntu"
     notifies :run, "execute[nssldap-update-ignoreusers]"
@@ -133,7 +133,7 @@ end
 
 template "#{openldap_dir}/ldap.conf" do
   source "ldap-ldap-generic.conf.erb"
-  variables (:cacert_dir => cacert_dir) 
+  variables(:cacert_dir => cacert_dir) 
   #notifies :restart, "service[nscd]"
   notifies :restart, "service[autofs]"
   mode "0644"
