@@ -24,7 +24,7 @@ include_recipe "cla_auth::default"
 package "autofs" do 
   case node[:platform]
   when "ubuntu"
-    package_name "autofs5"
+    package_name "autofs5-ldap"
   when "redhat","centos"
     package_name "autofs"
   end
@@ -37,15 +37,24 @@ openldap_dir = "/etc/ldap"
 # Check platform
 case node[:platform]
 when "ubuntu"
-  cookbook_file "/etc/auth-client-config/profile.d/cla-auth-ldap" do 
-    source "cla-auth-ldap.profile"
+  #cookbook_file "/etc/auth-client-config/profile.d/cla-auth-ldap" do 
+  #  source "cla-auth-ldap.profile"
+  #end
+
+  # Templatized /etc/nsswitch.conf because auth-client-config on Ubuntu
+  # does not support nss_automount keyword, so the automount: line must
+  # be added manually
+  cookbook_file "/etc/nsswitch.conf" do
+    source "cla-auth-ldap-nsswitch.conf"
+    mode "0644"
+    notifies :restart, "service[autofs]"
   end
-  execute "auth_client_conf_ldap_auth" do 
-    command "auth-client-config -p cla-auth-ldap -a"
+  #execute "auth_client_conf_ldap_auth" do 
+  #  command "auth-client-config -p cla-auth-ldap -a"
     # don't do anything if we don't need to (we match profile now)
-    not_if "auth-client-config -p cla-auth-ldap -a -s"
-  notifies :restart, "service[autofs]"
-  end
+  #  not_if "auth-client-config -p cla-auth-ldap -a -s"
+  #notifies :restart, "service[autofs]"
+  #end
 
   execute "nssldap-update-ignoreusers" do 
     # normally runs at boot, and it modifies /etc/ldap.conf to include
@@ -130,11 +139,11 @@ template "#{openldap_dir}/ldap.conf" do
   mode "0644"
 end
 
-cookbook_file "#{cacert_dir}/#{node[:cla_auth][:ldap_cacert_fname]}" do 
-  source node[:cla_auth][:ldap_cacert_fname]
-  notifies :restart, "service[autofs]"
-  mode "0644"
-end
+#cookbook_file "#{cacert_dir}/#{node[:cla_auth][:ldap_cacert_fname]}" do 
+#  source node[:cla_auth][:ldap_cacert_fname]
+#  notifies :restart, "service[autofs]"
+#  mode "0644"
+#end
 
 service "autofs" do 
   action :enable

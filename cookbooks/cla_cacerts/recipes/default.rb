@@ -21,23 +21,38 @@ package "openssl" do
   action :install
 end
 
-if node[:platform] == "redhat" or node[:platform] == "centos"
+case node[:platform]
+when "ubuntu"
+  execute "/usr/sbin/update-ca-certificates" do
+    action :nothing
+  end
+
+  remote_directory node[:cla_cacerts][:cacert_dir] do
+    source "ca-certificates"
+    purge false
+    overwrite true
+    files_owner "root"
+    files_group "root"
+    files_backup 0
+    notifies :run, "execute[/usr/sbin/update-ca-certificates]"
+  end
+
+when "redhat", "centos"
   package "openssl-perl" do 
     action :install
   end
-end
 
-remote_directory node[:cla_cacerts][:cacert_dir] do
-  source "cacerts"
-  purge false
-  overwrite true
-  files_owner "root"
-  files_group "root"
-  files_backup 0
-  notifies :run, "execute[/usr/bin/c_rehash]"
-end
+  remote_directory node[:cla_cacerts][:cacert_dir] do
+   source "cacerts"
+   purge false
+   overwrite true
+   files_owner "root"
+   files_group "root"
+   files_backup 0
+   notifies :run, "execute[/usr/bin/c_rehash]"
+  end
 
-
-execute "/usr/bin/c_rehash" do 
-  action :nothing
+  execute "/usr/bin/c_rehash" do 
+   action :nothing
+  end
 end
