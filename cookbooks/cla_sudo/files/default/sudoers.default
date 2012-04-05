@@ -107,6 +107,7 @@ Host_Alias	CLA_DEV_RAILS_HOSTS=railsdev,railsdev.socsci.umn.edu
 
 Host_Alias	LANG_RAILS_HOSTS=lang-center,lang-center.cla.umn.edu,lpe-rails-a.cla.umn.edu,lpe-rails-a
 
+
 Host_Alias      MPC_SERVLET_HOSTS=nhgis-prod.socsci.umn.edu,nhgis-prod,sda,sda.socsci.umn.edu,bitsy,bitsy.socsci.umn.edu,scruffy,scruffy.socsci.umn.edu,hypnotoad,hypnotoad.cla.umn.edu,bender,bender.cla.umn.edu,lrrr,lrrr.socsci.umn.edu,sda2.cla.umn.edu,sda2,dwight,dwight.cla.umn.edu,thedonald,thedonald.cla.umn.edu
 
 Cmnd_Alias      TOMCAT_CMND=/opt/tomcat5/current/bin/shutdown.sh,/opt/tomcat5/current/bin/startup.sh
@@ -364,8 +365,14 @@ Cmnd_Alias      NAGIOS_RESTARTER=/etc/init.d/nagios *,!/etc/init.d/nagios stop
 User_Alias      NAGIOS_ADMINS=peterson
 NAGIOS_ADMINS   NAGIOS_SERVER=NAGIOS_RESTARTER
 
+## RT103523, grant sudo rights to contractor on lpe staging host only
+Host_Alias	LPE_DEV_SERVERS=lpe-rails-b,lpe-rails-b.cla.umn.edu
+User_Alias	LPE_DEV_USERS=bsampietro,wozniak
+LPE_DEV_USERS	LPE_DEV_SERVERS=ALL,!SHELLS
+
 #### this needs to be at the end, for now.  Other bits will move here once the LWRP is
 #### completed and working, currently in flux
 #### Note: this is *not* a comment, the leading # is needed for it to work
 #### ugly-ass syntax bullsh*t
 #includedir /etc/sudoers.d
+
