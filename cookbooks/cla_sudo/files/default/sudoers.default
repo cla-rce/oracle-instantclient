@@ -368,7 +368,7 @@ NAGIOS_ADMINS   NAGIOS_SERVER=NAGIOS_RESTARTER
 ## RT103523, grant sudo rights to contractor on lpe staging host only
 Host_Alias	LPE_DEV_SERVERS=lpe-rails-b,lpe-rails-b.cla.umn.edu
 User_Alias	LPE_DEV_USERS=bsampietro,wozniak
-LPE_DEV_USERS	LPE_DEV_SERVERS=ALL,!SHELLS
+LPE_DEV_USERS	LPE_DEV_SERVERS=NOPASSWD: ALL,!SHELLS
 
 #### this needs to be at the end, for now.  Other bits will move here once the LWRP is
 #### completed and working, currently in flux
