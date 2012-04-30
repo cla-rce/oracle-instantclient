@@ -38,6 +38,8 @@ libgtksourceview1.0-0 libxp6 )
 ## this is not complete, relying on kickstart right now for this to work.
 rh_5_plist = %w( gtksourceview )
 
+gem_list = %w( optimus-ep )
+
 case node[:platform]
 when "ubuntu"
   ubuntu_lucid_plist.each do |pkg|
@@ -50,6 +52,10 @@ when "redhat", "centos"
   rh_5_plist.each do |pkg|
     package pkg
   end
+end
+
+gem_list.each do |gpkg| 
+  gem_package gpkg
 end
 
 include_recipe "cla_unix_baseline::bliss_old_libs"
