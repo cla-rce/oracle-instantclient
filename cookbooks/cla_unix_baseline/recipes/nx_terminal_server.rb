@@ -59,7 +59,7 @@ rh_5_plist = %w{ tetex-xdvi emacs nedit thunderbird firefox graphviz gv gimp xfi
 ## some of these need the RHEL 5 supplemental or productivity repos 
 ## and don't work on CentOS directly
 ### install with ignore_failure true
-rh_5_optional_plist = %w{ WindowMaker acroread acroread-plugin flash-player cla-ssh-add-wrapper 
+rh_5_optional_plist = %w{ WindowMaker acroread acroread-plugin flash-plugin cla-ssh-add-wrapper 
   evolution evolution-webcal finch fluxbox fortune-mod fvwm gnome-spell icewm inkscape kdeaddons 
   kdegames kdegraphics kdepim konversation lv lyx lyx-fonts nethack 
   openoffice.org-calc openoffice.org-core openoffice.org-draw openoffice.org-graphicfilter openoffice.org-impress
