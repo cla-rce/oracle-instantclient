@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+lucid_only_plist = %w( libcompress-zlib-perl )
+
 ubuntu_lucid_plist = %w( python perl ispell wamerican tcl tk tix
 blt tclreadline expect python-software-properties build-essential git-core git-svn
 ruby-full libtcltk-ruby vim emacs vim-common nano openssh-server acct acl alpine-pico
@@ -29,7 +31,7 @@ numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
 openssl-blacklist-extra openssl p7zip perl-doc perl-tk pkgsync psutils pv
 python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen tmux
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
-libcompress-zlib-perl libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
+libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
 libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-ldap
 python-libxml2 intelcompilers-libstdc++5-compat autofs5 ruby-dev xinetd ia32-libs 
 cvs mercurial mercurial-git )
