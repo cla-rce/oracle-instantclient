@@ -17,7 +17,8 @@
 # limitations under the License.
 #
 
-lucid_only_plist = %w( libcompress-zlib-perl )
+lucid_only_plist = %w( libcompress-zlib-perl ia32-libs )
+## ia32-libs currently broken in precise, bug # 923904 apt failing to calculate multiarch
 
 ubuntu_lucid_plist = %w( python perl ispell wamerican tcl tk tix
 blt tclreadline expect python-software-properties build-essential git-core git-svn
@@ -33,7 +34,7 @@ python-docutils python-openssl python-setuptools python-setupdocs python-tk ruby
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
 libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
 libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-ldap
-python-libxml2 autofs5 ruby-dev xinetd ia32-libs 
+python-libxml2 autofs5 ruby-dev xinetd  
 cvs mercurial mercurial-git )
 
 rh_5_plist = []
