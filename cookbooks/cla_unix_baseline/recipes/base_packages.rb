@@ -17,14 +17,14 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( python perl gfortran gfortran-multilib ispell wamerican tcl tk tix
-blt tclreadline expect expectk python-software-properties build-essential git-core git-svn
-ruby-full libtcltk-ruby vim emacs ctags vim-common nano openssh-server acct acl alpine-pico
-apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver cfengine2
+ubuntu_lucid_plist = %w( python perl ispell wamerican tcl tk tix
+blt tclreadline expect python-software-properties build-essential git-core git-svn
+ruby-full libtcltk-ruby vim emacs vim-common nano openssh-server acct acl alpine-pico
+apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver
 cpio curl dconf debget debhelper detox devscripts dialog enscript extract file fortune-mod
 fortunes-bofh-excuses fortunes fortunes-spam gdb getlibs gnupg gnupg-doc gnuplot gnuplot-doc
 gnuplot-x11 gobjc gpc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils lftp links
-lynx m4 mailutils memstat multitail mysql-client ncftp newbiedoc nfs4-acl-tools ntp ntpdate
+lynx m4 mailutils memstat multitail mysql-client newbiedoc nfs4-acl-tools ntp ntpdate
 numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
 openssl-blacklist-extra openssl openssl-doc p7zip perl-doc perl-tk pkgsync psutils pv
 python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen tmux
