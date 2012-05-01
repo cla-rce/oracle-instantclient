@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev 
+ubuntu_lucid_plist = %w( getlibs ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev 
 dbus-x11 defoma-doc binfmt-support ttf-unfonts ttf-unfonts-core libmyodbc tdsodbc
 unixodbc-dev unixodbc-bin x-ttcidfont-conf ghostscript-x mesa-utils libpng3 libtiff4 libmotif3
 libexpat1 lsof a2ps abicheck axiom axiom-doc axiom-graphics axiom-databases axiom-graphics-data axiom-tex

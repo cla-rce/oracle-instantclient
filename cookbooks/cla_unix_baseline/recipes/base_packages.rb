@@ -22,7 +22,7 @@ blt tclreadline expect python-software-properties build-essential git-core git-s
 ruby-full libtcltk-ruby vim emacs vim-common nano openssh-server acct acl alpine-pico
 apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver
 cpio curl dconf debget debhelper detox devscripts dialog enscript extract file fortune-mod
-fortunes-bofh-excuses fortunes fortunes-spam gdb getlibs gnupg gnupg-doc gnuplot gnuplot-doc
+fortunes-bofh-excuses fortunes fortunes-spam gdb gnupg gnupg-doc gnuplot gnuplot-doc
 gnuplot-x11 gobjc gpc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils lftp links
 lynx m4 mailutils memstat multitail mysql-client newbiedoc nfs4-acl-tools ntp ntpdate
 numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
