@@ -46,14 +46,25 @@ rh_5_yum_grouplist = [
   "Text-based Internet",
   "X Software Development",
   "X Window System",
-  "XFCE-4.4",
   "Window Managers"
   ]
   
   
 # these are packages that are optional in the groups, but still needed on the box  
 rh_5_plist = %w{ tetex-xdvi emacs nedit thunderbird firefox graphviz gv gimp xfig
-  alpine lynx git mercurial subversion cvs
+  alpine lynx git mercurial subversion cvs dia plotutils rdesktop recode ruby-mode
+  ruby-tcltk expect tix tkinter xpdf 
+  }
+
+## some of these need the RHEL 5 supplemental or productivity repos 
+## and don't work on CentOS directly
+### install with ignore_failure true
+rh_5_optional_plist = %w{ WindowMaker acroread acroread-plugin flash-player cla-ssh-add-wrapper 
+  evolution evolution-webcal finch fluxbox fortune-mod fvwm gnome-spell icewm inkscape kdeaddons 
+  kdegames kdegraphics kdepim konversation lv lyx lyx-fonts nethack 
+  openoffice.org-calc openoffice.org-core openoffice.org-draw openoffice.org-graphicfilter openoffice.org-impress
+  openoffice.org-math openoffice.org-writer openoffice.org-xsltfilter
+  planner pidgin scribus taskjuggler
   }
 
 case node[:platform]
@@ -107,5 +118,9 @@ when "redhat", "centos"
   rh_5_plist.each do |pkg|
     package pkg
   end
-  
+  rh_5_optional_plist.each do |pkg|
+    package pkg do 
+      ignore_failure true 
+    end
+  end
 end
