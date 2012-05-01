@@ -26,7 +26,7 @@ fortunes-bofh-excuses fortunes fortunes-spam gdb gnupg gnupg-doc gnuplot gnuplot
 gnuplot-x11 gobjc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils lftp links
 lynx m4 mailutils memstat multitail mysql-client newbiedoc nfs4-acl-tools ntp ntpdate
 numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
-openssl-blacklist-extra openssl openssl-doc p7zip perl-doc perl-tk pkgsync psutils pv
+openssl-blacklist-extra openssl p7zip perl-doc perl-tk pkgsync psutils pv
 python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen tmux
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
 libcompress-zlib-perl libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
