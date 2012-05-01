@@ -20,7 +20,7 @@
 lucid_only_plist = %w( libcompress-zlib-perl ia32-libs )
 ## ia32-libs currently broken in precise, bug # 923904 apt failing to calculate multiarch
 
-ubuntu_lucid_plist = %w( python perl ispell wamerican tcl tk tix
+ubuntu_plist = %w( python perl ispell wamerican tcl tk tix
 blt tclreadline expect python-software-properties build-essential git-core git-svn
 ruby-full libtcltk-ruby vim emacs vim-common nano openssh-server acct acl alpine-pico
 apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver
@@ -47,8 +47,15 @@ rh_5_plist = []
 
 case node[:platform]
 when "ubuntu"
-  ubuntu_lucid_plist.each do |pkg|
+  ubuntu_plist.each do |pkg|
     package pkg
+  end
+  # special packages for versions
+  case node[:platform_version].to_f 
+  when 10.04
+    lucid_only_plist.each do |pkg|
+      package pkg
+    end
   end
 when "redhat", "centos" 
   rh_5_plist.each do |pkg|
