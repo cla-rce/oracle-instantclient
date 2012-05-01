@@ -33,7 +33,7 @@ python-docutils python-openssl python-setuptools python-setupdocs python-tk ruby
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
 libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
 libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-ldap
-python-libxml2 intelcompilers-libstdc++5-compat autofs5 ruby-dev xinetd ia32-libs 
+python-libxml2 autofs5 ruby-dev xinetd ia32-libs 
 cvs mercurial mercurial-git )
 
 rh_5_plist = []
