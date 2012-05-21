@@ -29,7 +29,7 @@ gem_httparty = gem_package "httparty" do
   action :nothing
 end
 gem_httparty.run_action(:install)
-
+Gem.clear_paths
 
 chef_handler "CampfireHandler" do
   source "#{node['chef_handler']['handler_path']}/campfire_handler.rb"
