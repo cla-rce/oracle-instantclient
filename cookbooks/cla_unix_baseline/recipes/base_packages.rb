@@ -17,21 +17,24 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( python perl gfortran gfortran-multilib ispell wamerican tcl tk tix
-blt tclreadline expect expectk python-software-properties build-essential git-core git-svn
-ruby-full libtcltk-ruby vim emacs ctags vim-common nano openssh-server acct acl alpine-pico
-apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver cfengine2
+lucid_only_plist = %w( libcompress-zlib-perl ia32-libs )
+## ia32-libs currently broken in precise, bug # 923904 apt failing to calculate multiarch
+
+ubuntu_plist = %w( python perl ispell wamerican tcl tk tix
+blt tclreadline expect python-software-properties build-essential git-core git-svn
+ruby-full libtcltk-ruby vim emacs vim-common nano openssh-server acct acl alpine-pico
+apt-file apt-listchanges beav bsdgames bsdgames-nonfree buffer bvi bzip2 cadaver
 cpio curl dconf debget debhelper detox devscripts dialog enscript extract file fortune-mod
-fortunes-bofh-excuses fortunes fortunes-spam gdb getlibs gnupg gnupg-doc gnuplot gnuplot-doc
-gnuplot-x11 gobjc gpc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils lftp links
-lynx m4 mailutils memstat multitail mysql-client ncftp newbiedoc nfs4-acl-tools ntp ntpdate
+fortunes-bofh-excuses fortunes fortunes-spam gdb gnupg gnupg-doc gnuplot gnuplot-doc
+gnuplot-x11 gobjc graphviz graphviz-dev graphviz-doc indent ksh ldap-utils lftp links
+lynx m4 mailutils memstat multitail mysql-client newbiedoc nfs4-acl-tools ntp ntpdate
 numactl openipmi openssh-blacklist openssl-blacklist openssh-blacklist-extra
-openssl-blacklist-extra openssl openssl-doc p7zip perl-doc perl-tk pkgsync psutils pv
+openssl-blacklist-extra openssl p7zip perl-doc perl-tk pkgsync psutils pv
 python-docutils python-openssl python-setuptools python-setupdocs python-tk rubygems screen tmux
 sharutils shtool strace subversion subversion-tools sudo sysstat tcsh trend wget whois
-libcompress-zlib-perl libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
+libdbd-csv-perl libdbd-mysql-perl libdbi-perl libdbd-pg-perl
 libdbd-sqlite3-perl libwww-perl python-gtk2 python-glade2 python-sqlite python-ldap
-python-libxml2 intelcompilers-libstdc++5-compat autofs5 ruby-dev xinetd ia32-libs 
+python-libxml2 autofs5 ruby-dev xinetd  
 cvs mercurial mercurial-git )
 
 rh_5_plist = []
@@ -44,8 +47,15 @@ rh_5_plist = []
 
 case node[:platform]
 when "ubuntu"
-  ubuntu_lucid_plist.each do |pkg|
+  ubuntu_plist.each do |pkg|
     package pkg
+  end
+  # special packages for versions
+  case node[:platform_version].to_f 
+  when 10.04
+    lucid_only_plist.each do |pkg|
+      package pkg
+    end
   end
 when "redhat", "centos" 
   rh_5_plist.each do |pkg|

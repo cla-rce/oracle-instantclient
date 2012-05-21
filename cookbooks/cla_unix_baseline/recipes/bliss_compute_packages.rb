@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-ubuntu_lucid_plist = %w( ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev 
+ubuntu_lucid_plist = %w( getlibs ia32-libs libsm-dev libglu1-mesa-dev libxext-dev libxmu-dev libxt-dev 
 dbus-x11 defoma-doc binfmt-support ttf-unfonts ttf-unfonts-core libmyodbc tdsodbc
 unixodbc-dev unixodbc-bin x-ttcidfont-conf ghostscript-x mesa-utils libpng3 libtiff4 libmotif3
 libexpat1 lsof a2ps abicheck axiom axiom-doc axiom-graphics axiom-databases axiom-graphics-data axiom-tex
@@ -33,7 +33,8 @@ r-base-core r-doc-html r-doc-pdf r-mathlib r-recommended samtools seaview slicer
 texlive-lang-all texpower tkdiff tkinfo tkman ttf-freefont tulip tulip-doc ugene-data ugene velvet
 velvet-example wise wise-doc xaw3dg xfig xfig-libs transfig xgrep xmaxima xmldiff xpdf firefox libgdome2-0
 libgdome2-dev libdcmtk1-dev libnetcdf-dev libxslt-dev medcon xmedcon 
-libgtksourceview1.0-0 libxp6 )
+libgtksourceview1.0-0 libxp6 gfortran gfortran-multilib 
+intelcompilers-libstdc++5-compat )
 
 ## this is not complete, relying on kickstart right now for this to work.
 rh_5_plist = %w( gtksourceview )
