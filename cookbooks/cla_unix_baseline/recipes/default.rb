@@ -58,8 +58,13 @@ when "ubuntu"
     interpreter "bash"
     user "root"
     cwd "/tmp"
+    if node[:platform_version].to_f >= 11.10 then
+      add_apt_repo_flags = "-y" 
+    else
+      add_apt_repo_flags = ""
+    end
     code <<-EOH
-    /usr/bin/add-apt-repository #{node[:cla_unix_baseline][:base_ppa]}
+    /usr/bin/add-apt-repository #{add_apt_repo_flags} #{node[:cla_unix_baseline][:base_ppa]}
     EOH
     not_if "/usr/bin/test -f /etc/apt/sources.list.d/buysse-umn-lucid.list"
     notifies :run, "execute[apt_update]", :immediately
