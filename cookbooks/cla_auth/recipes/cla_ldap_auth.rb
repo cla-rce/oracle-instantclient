@@ -67,6 +67,7 @@ when "ubuntu"
     command "/usr/sbin/nssldap-update-ignoreusers"
     action :nothing
   end
+  
   execute "cache-updated-ignoreusers" do 
     # keep a copy of the updated ignoreusers list
     # not called from the update, so that we can ensure it's run after
@@ -75,6 +76,13 @@ when "ubuntu"
     action :nothing
   end
 
+  # for NFS 4 to work, need to update idmapd.conf with the "correct" domain
+  template "/etc/idmapd.conf" do 
+    source "idmapd-ubuntu.conf.erb"
+    notifies :restart, "service[idmapd]"
+  end
+  
+  
   # this is a bit tricky
   service "nscd" do 
     # don't run if the file wasn't really changed after the template.
@@ -150,5 +158,10 @@ end
 
 service "autofs" do 
   action :enable
+  supports [:restart]
+end
+
+service "idmapd" do 
+  action :nothing
   supports [:restart]
 end

@@ -1,0 +1,10 @@
+[General]
+
+Verbosity = 0
+Pipefs-Directory = /run/rpc_pipefs
+Domain = <%= node[:cla_auth][:nfs4_domain_override] %>
+
+[Mapping]
+
+Nobody-User = nobody
+Nobody-Group = nogroup
