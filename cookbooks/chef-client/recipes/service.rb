@@ -41,8 +41,11 @@ end
 %w{run_path cache_path backup_path log_dir}.each do |key|
   directory node["chef_client"][key] do
     recursive true
-    owner "root"
-    group root_group
+    # Work-around for CHEF-2633
+    unless node["platform"] == "windows"
+      owner "root"
+      group root_group
+    end
     mode 0755
   end
 end
@@ -151,7 +154,7 @@ when "arch"
   service "chef-client" do
     action [:enable, :start]
   end
-  
+
 when "runit"
 
   include_recipe "runit"
@@ -196,17 +199,39 @@ when "daemontools"
     log true
   end
 
-when "launchd"
-  template "/Library/LaunchDaemons/com.opscode.chef-client.plist" do
-    source "com.opscode.chef-client.plist.erb"
-    mode 0644
-    notifies :run, "execute[launchd_load_chef-client]", :delayed
+when "winsw"
+
+  directory node["chef_client"]["winsw_dir"] do
+    action :create
   end
 
-  execute "launchd_load_chef-client" do
-    command "/bin/launchctl load -w /Library/LaunchDaemons/com.opscode.chef-client.plist"
-    not_if "/bin/launchctl list com.opscode.chef-client"
+  template "#{node["chef_client"]["winsw_dir"]}/chef-client.xml" do
+    source "chef-client.xml.erb"
+    notifies :run, "execute[restart chef-client using winsw wrapper]", :delayed
+  end
+
+  winsw_path = File.join(node["chef_client"]["winsw_dir"], node["chef_client"]["winsw_exe"])
+  remote_file winsw_path do
+    source node["chef_client"]["winsw_url"]
+    not_if { File.exists?(winsw_path) }
+  end
+
+  # Work-around for CHEF-2541
+  # Should be replaced by a service :restart action
+  # in Chef 0.10.6
+  execute "restart chef-client using winsw wrapper" do
+    command "#{winsw_path} restart"
+    not_if { WMI::Win32_Service.find(:first, :conditions => {:name => "chef-client"}).nil? }
     action :nothing
+  end
+
+  execute "Install chef-client service using winsw" do
+    command "#{winsw_path} install"
+    only_if { WMI::Win32_Service.find(:first, :conditions => {:name => "chef-client"}).nil? }
+  end
+
+  service "chef-client" do
+    action :start
   end
 
 when "bsd"
