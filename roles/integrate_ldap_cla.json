@@ -21,7 +21,8 @@
         "ldaps://ldap2.claoit.umn.edu",
         "ldaps://ldap3.claoit.umn.edu"
       ],
-      "ldap_base": "dc=cla,dc=umn,dc=edu"
+      "ldap_base": "dc=cla,dc=umn,dc=edu",
+      "nfs4_domain_override": "socsci.umn.edu"
     }
   }
 }
