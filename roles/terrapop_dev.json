@@ -1,0 +1,15 @@
+{
+  "env_run_lists": {
+  },
+  "run_list": [
+
+  ],
+  "json_class": "Chef::Role",
+  "description": "",
+  "chef_type": "role",
+  "name": "terrapop_dev",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  }
+}

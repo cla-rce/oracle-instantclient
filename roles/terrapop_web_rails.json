@@ -1,0 +1,15 @@
+{
+  "name": "terrapop_web_rails",
+  "run_list": [
+
+  ],
+  "default_attributes": {
+  },
+  "description": "",
+  "override_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "chef_type": "role",
+  "env_run_lists": {
+  }
+}
