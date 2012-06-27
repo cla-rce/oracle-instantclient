@@ -1,7 +1,7 @@
 {
   "name": "terrapop_web_rails",
   "run_list": [
-
+    "recipe[postgresql::default]"
   ],
   "default_attributes": {
   },

@@ -3,7 +3,7 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
-
+    "recipe[postgresql::server]"
   ],
   "override_attributes": {
   },
