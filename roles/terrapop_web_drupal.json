@@ -10,6 +10,8 @@
   },
   "json_class": "Chef::Role",
   "run_list": [
-    "recipe[postgresql::default]"
+    "recipe[postgresql::default]",
+    "recipe[cla_unix_baseline::web_packages]",
+    "recipe[cla_unix_baseline::web_php_packages]"
   ]
 }
