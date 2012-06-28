@@ -18,3 +18,6 @@
 #
 
 include_recipe "cla_terrapop::web"
+
+## PHP packages needed here.
+## STUB
