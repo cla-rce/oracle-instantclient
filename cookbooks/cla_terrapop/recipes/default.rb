@@ -22,3 +22,5 @@
 include_recipe "postgresql::default"
 include_recipe "mysql::client"
 
+# install java
+include_recipe "java::default"

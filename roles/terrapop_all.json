@@ -2,17 +2,16 @@
   "env_run_lists": {
   },
   "run_list": [
-    "role[terrapop_all]"
   ],
   "json_class": "Chef::Role",
   "description": "",
   "chef_type": "role",
-  "name": "terrapop_dev",
+  "name": "terrapop_all",
   "default_attributes": {
   },
   "override_attributes": {
-    "apache2": {
-     "contact": "4help@umn.edu"
+    "java": {
+      "jdk_version": "7"
     }
   }
 }

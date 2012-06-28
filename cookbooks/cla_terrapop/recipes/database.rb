@@ -21,3 +21,9 @@ include_recipe "cla_terrapop::default"
 
 include_recipe "postgresql::server"
 
+## stub:
+# sudo rights
+#   edit /etc/postgresql/9.1/*.conf
+#   restart postgres
+#   group terrapop
+

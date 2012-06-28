@@ -17,3 +17,5 @@
 # limitations under the License.
 #
 
+# java 7
+include_recipe "cla_terrapop::default"
