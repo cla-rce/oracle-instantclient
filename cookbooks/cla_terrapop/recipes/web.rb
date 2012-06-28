@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: cla_terrapop
-# Recipe:: web_drupal
+# Recipe:: web
 #
 # Copyright 2012, Joshua Buysse, (C) Regents of the University of Minnesota
 #
@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-include_recipe "cla_terrapop::web"
+include_recipe "apache2::default"

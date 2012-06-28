@@ -10,5 +10,8 @@
   "default_attributes": {
   },
   "override_attributes": {
+    "apache2": {
+     "contact": "4help@umn.edu"
+   }
   }
 }

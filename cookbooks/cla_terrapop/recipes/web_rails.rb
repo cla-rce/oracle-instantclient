@@ -18,6 +18,7 @@
 #
 
 include_recipe "cla_terrapop::default"
+include_recipe "cla_terrapop::web"
 
 ### Set up ruby environment
 include_recipe "rvm::system_install"
@@ -35,3 +36,4 @@ install_rubies.each do |rb|
     end
   end
 end
+"

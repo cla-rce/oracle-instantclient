@@ -10,6 +10,7 @@ depends "rvm"
 depends "postgresql"
 depends "cla_unix_baseline"
 depends "mysql"
+depends "apache2"
 
 # pending writing this one
 #depends "cla_postgis"
