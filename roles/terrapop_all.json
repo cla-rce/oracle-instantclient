@@ -11,7 +11,8 @@
   },
   "override_attributes": {
     "java": {
-      "jdk_version": "7"
+      "jdk_version": "7",
+      "java_home": "/usr/lib/jvm/java-7-openjdk-amd64"
     }
   }
 }
