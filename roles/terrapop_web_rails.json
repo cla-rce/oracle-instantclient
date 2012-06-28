@@ -4,6 +4,7 @@
     "recipe[postgresql::default]",
     "recipe[cla_unix_baseline::web_packages]",
     "recipe[cla_unix_baseline::web_rails_packages]",
+    "recipe[java]",
     "recipe[rvm::system_install]"
   ],
   "default_attributes": {
