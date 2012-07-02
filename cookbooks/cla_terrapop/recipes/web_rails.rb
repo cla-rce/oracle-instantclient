@@ -91,7 +91,7 @@ vhosts.each do |vh|
     mode "0710"
   end
 
-  file "/etc/ssl/certs/#{vh}.crt" do 
+  cookbook_file "/etc/ssl/certs/#{vh}.crt" do 
     source "#{vh}.crt"
     owner "root"
     group "root"
@@ -105,7 +105,7 @@ vhosts.each do |vh|
 #    mode "0644"
 #  end
   
-  file "/etc/ssl/private/#{vh}.key" do 
+  cookbook_file "/etc/ssl/private/#{vh}.key" do 
     source "#{vh}.key"
     owner "root"
     group "root"
