@@ -30,9 +30,9 @@ end
     Order Deny,Allow
     Deny from all
     Allow from 127.0.0.1
- 	<% if @params['server_status_allow'] %><%= @params['server_status_allow'].each do |ip| %>
+ 	<% if @params['server_status_allow'] %><% @params['server_status_allow'].each do |ip| %>
     Allow from <%= ip %>
-    <% end %>
+    <% end %><% end %>
   </Location>
 
   <% if @params['ssl_enabled'] %>
