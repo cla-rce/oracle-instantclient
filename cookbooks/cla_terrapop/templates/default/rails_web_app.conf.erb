@@ -1,18 +1,21 @@
 ### copied from apache2 cookbook, web_app.conf.erb, and updated to include SSL support and Rails support
 <% 
-if @params['ssl_enabled'] 
+if @params[:ssl_enabled] 
 	@portnumber = 443
 else
 	@portnumber = 80
 end
-%>
-<VirtualHost <%= @params['server_name'] %>:<%= @portnumber %>>
-  ServerName <%= @params['server_name'] %>
-  ServerAlias <% @params['server_aliases'].each do |a| %><%= "#{a}" %> <% end %>
-  DocumentRoot <%= @params['docroot'] %>
+-%>
+<VirtualHost <%= @params[:server_name] %>:<%= @portnumber %>>
+  ServerName <%= @params[:server_name] %>
+  DocumentRoot <%= @params[:docroot] %>
+
+  <% if @params[:server_aliases] -%>
+  ServerAlias <% @params[:server_aliases].each do |a| %><%= "#{a}" %> <% end -%>
+  <% end -%>
   RewriteEngine On
   
-  <Directory <%= @params['docroot'] %>>
+  <Directory <%= @params[:docroot] %>>
     Options FollowSymLinks
     AllowOverride None
     Order allow,deny
@@ -30,29 +33,33 @@ end
     Order Deny,Allow
     Deny from all
     Allow from 127.0.0.1
- 	<% if @params['server_status_allow'] %><% @params['server_status_allow'].each do |ip| %>
+ 	<% if @params[:server_status_allow] -%><% @params[:server_status_allow].each do |ip| -%>
     Allow from <%= ip %>
-    <% end %><% end %>
+    <% end -%><% end -%>
   </Location>
+  
+  <% if @params[:additional_directives] -%>
+  <%= @params[:additional_directives] %>
+  <% end -%>
 
-  <% if @params['ssl_enabled'] %>
-  SSLCertificateFile <%= @params['ssl_certificate_file'] %>
-  SSLCertificateKeyFile <%= @params['ssl_certificate_key_file'] %>
-  <% if @params['ssl_certificate_chain_file'] %>SSLCertificateChainFile <%= @params['ssl_certificate_chain_file'] %><% end %>
-  <% end %>
+  <% if @params[:ssl_enabled] -%>
+  SSLCertificateFile <%= @params[:ssl_certificate_file] %>
+  SSLCertificateKeyFile <%= @params[:ssl_certificate_key_file] %>
+  <% if @params[:ssl_certificate_chain_file] -%>SSLCertificateChainFile <%= @params[:ssl_certificate_chain_file] %><% end -%>
+  <% end -%>
 
   LogLevel info
-  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params['name'] %>_<%= @portnumber %>_error.log
-  CustomLog <%= node['apache']['log_dir'] %>/<%= @params['name'] %>_<%= @portnumber %>_access.log combined
+  ErrorLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>_<%= @portnumber %>_error.log
+  CustomLog <%= node[:apache][:log_dir] %>/<%= @params[:name] %>_<%= @portnumber %>_access.log combined
 
   RewriteEngine On
-  RewriteLog <%= node['apache']['log_dir'] %>/<%= @application_name %>-rewrite.log
+  RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
   RewriteLogLevel 0
 
-  # Canonical host, <%= @params['server_name'] %>
-  RewriteCond %{HTTP_HOST}   !^<%= @params['server_name'] %> [NC]
+  # Canonical host, <%= @params[:server_name] %>
+  RewriteCond %{HTTP_HOST}   !^<%= @params[:server_name] %> [NC]
   RewriteCond %{HTTP_HOST}   !^$
-  RewriteRule ^/(.*)$        http://<%= @params['server_name'] %>/$1 [L,R=301]
+  RewriteRule ^/(.*)$        http://<%= @params[:server_name] %>/$1 [L,R=301]
 
   RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
   RewriteCond %{SCRIPT_FILENAME} !maintenance.html
