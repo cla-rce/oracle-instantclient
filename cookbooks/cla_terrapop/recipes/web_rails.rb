@@ -37,10 +37,13 @@ install_rubies.each do |rb|
   end
 end
 
-rvm_gem "passenger" do 
-  ruby_string "1.9.3"
-  action :install
-end
+#rvm_gem "passenger" do 
+#  ruby_string "1.9.3"
+#  action :install
+#end
+
+include "rvm_passenger::apache2"
+
 
 # configure passenger for Apache
 # stub

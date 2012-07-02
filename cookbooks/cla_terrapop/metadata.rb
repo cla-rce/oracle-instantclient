@@ -11,6 +11,7 @@ depends "postgresql"
 depends "cla_unix_baseline"
 depends "mysql"
 depends "apache2"
+depends "rvm_passenger"
 
 # pending writing this one
 #depends "cla_postgis"

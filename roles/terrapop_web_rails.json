@@ -1,16 +1,19 @@
 {
   "name": "terrapop_web_rails",
   "run_list": [
-    "recipe[cla_terrapop::web_rails]",
     "recipe[cla_unix_baseline::web_packages]",
     "recipe[cla_unix_baseline::web_rails_packages]",
-    "recipe[java]",
-    "recipe[rvm::system_install]"
+    "recipe[rvm::system_install]",
+    "recipe[cla_terrapop::web_rails]",
+    "recipe[java]"
   ],
   "default_attributes": {
   },
   "description": "",
   "override_attributes": {
+    "rvm_passenger": { 
+      "rvm_ruby": "1.9.3"
+    }
   },
   "json_class": "Chef::Role",
   "chef_type": "role",
