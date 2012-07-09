@@ -42,7 +42,7 @@ end
 #  action :install
 #end
 
-include "rvm_passenger::apache2"
+include_recipe "rvm_passenger::apache2"
 
 
 # configure passenger for Apache
