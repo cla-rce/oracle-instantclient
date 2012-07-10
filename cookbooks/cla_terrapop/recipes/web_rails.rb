@@ -18,24 +18,9 @@
 #
 
 include_recipe "cla_terrapop::default"
+### default now includes the ruby setup baselines
+
 include_recipe "cla_terrapop::web"
-
-### Set up ruby environment
-include_recipe "rvm::system_install"
-
-install_rubies = [ "1.9.3", "jruby" ]
-install_gems_global = [ "bundler", "mysql", "pg" ]
-install_rubies.each do |rb|
-  rvm_ruby rb do
-    action :install
-  end
-  install_gems_global.each do |rbgem|
-    rvm_gem rbgem do 
-      ruby_string rb
-      action :install
-    end
-  end
-end
 
 #rvm_gem "passenger" do 
 #  ruby_string "1.9.3"
