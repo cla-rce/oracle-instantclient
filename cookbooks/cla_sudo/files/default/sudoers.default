@@ -116,7 +116,7 @@ Host_Alias	MPC_ACTIVEMQ_HOSTS=bitsy,bitsy.socsci.umn.edu,scruffy,scruffy.socsci.
 
 Cmnd_Alias	ACTIVEMQ_CMND=/opt/activemq/current/bin/*
 
-Cmnd_Alias      KILLER=/usr/bin/kill,/usr/bin/pkill
+Cmnd_Alias      KILLER=/usr/bin/kill,/usr/bin/pkill,/bin/kill
 
 Cmnd_Alias	PROCTOOLS=/usr/bin/pargs,/usr/bin/pkill,/usr/bin/pgrep,/usr/bin/pstack,/usr/bin/pfiles,/usr/bin/pcred,/usr/bin/pwdx,/usr/bin/pflags,/usr/bin/pwait,/usr/bin/psig,/usr/bin/pldd
 
