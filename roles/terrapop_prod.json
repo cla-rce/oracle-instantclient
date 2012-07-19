@@ -1,0 +1,15 @@
+{
+  "env_run_lists": {
+  },
+  "chef_type": "role",
+  "name": "terrapop_prod",
+  "description": "",
+  "default_attributes": {
+  },
+  "override_attributes": {
+  },
+  "run_list": [
+    "role[terrapop_all]"
+  ],
+  "json_class": "Chef::Role"
+}

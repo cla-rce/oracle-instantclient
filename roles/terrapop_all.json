@@ -1,0 +1,18 @@
+{
+  "env_run_lists": {
+  },
+  "run_list": [
+  ],
+  "json_class": "Chef::Role",
+  "description": "",
+  "chef_type": "role",
+  "name": "terrapop_all",
+  "default_attributes": {
+  },
+  "override_attributes": {
+    "java": {
+      "jdk_version": "7",
+      "java_home": "/usr/lib/jvm/java-7-openjdk-amd64"
+    }
+  }
+}

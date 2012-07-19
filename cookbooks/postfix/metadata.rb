@@ -2,17 +2,25 @@ maintainer        "Opscode, Inc."
 maintainer_email  "cookbooks@opscode.com"
 license           "Apache 2.0"
 description       "Installs and configures postfix for client or outbound relayhost, or to do SASL auth"
-version           "0.8.6"
+version           "1.2.0"
 recipe            "postfix", "Installs and configures postfix"
 recipe            "postfix::sasl_auth", "Set up postfix to auth to a server with sasl"
+recipe            "postfix::aliases", "Manages /etc/aliases"
+recipe            "postfix::client", "Searches for the relayhost based on an attribute"
+recipe            "postfix::server", "Sets the mail_type attribute to master"
 
-%w{ubuntu debian redhat centos}.each do |os|
+%w{ubuntu debian redhat centos amazon scientific}.each do |os|
   supports os
 end
 
 attribute "postfix",
   :display_name => "Postfix",
   :description => "Hash of Postfix attributes",
+  :type => "hash"
+
+attribute "postfix/aliases",
+  :display_name => "Postfix Aliases",
+  :description => "Hash of Postfix aliases mapping a name to a value.  Example 'root' => 'operator@example.com'.  See aliases man page for details.",
   :type => "hash"
 
 attribute "postfix/mail_type",
@@ -80,3 +88,17 @@ attribute "postfix/smtp_sasl_passwd",
   :description => "Password for smtp_sasl_user_name",
   :default => ""
 
+attribute "postfix/aliases",
+  :display_name => "Postfix mail aliases",
+  :description => "Hash of mail aliases for /etc/aliases",
+  :default => ""
+
+attribute "postfix/relayhost_role",
+  :display_name => "Postfix Relayhost's role",
+  :description => "String containing the role name",
+  :default => "relayhost"
+
+attribute "postfix/multi_environment_relay",
+  :display_name => "Postfix Search for relayhost in any environment",
+  :description => "If true, then the client recipe will search any environment instead of just the node's",
+  :default => ""

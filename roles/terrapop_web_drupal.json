@@ -1,0 +1,17 @@
+{
+  "chef_type": "role",
+  "override_attributes": {
+  },
+  "description": "",
+  "name": "terrapop_web_drupal",
+  "env_run_lists": {
+  },
+  "default_attributes": {
+  },
+  "json_class": "Chef::Role",
+  "run_list": [
+    "recipe[cla_terrapop::web_drupal]",
+    "recipe[cla_unix_baseline::web_packages]",
+    "recipe[cla_unix_baseline::web_php_packages]"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "appointments",
+  "server_roles": ["class_appserver_master","class_appserver_slave"],
+  "vhosts": {
+    "*:15080": {
+      "ServerName": "*.appointments.umn.edu",
+      "ServerAlias": "appointments.umn.edu",
+      "UseCanonicalName": "Off",
+      "Rewrite#0": [
+        "RewriteEngine on",
+        "RewriteCond %{HTTP_HOST} ^appointments\\.umn\\.edu$ [NC]",
+        "RewriteRule ^(.*)$ https://www.appointments.umn.edu%{REQUEST_URI} [L]",
+        "RewriteCond %{HTTPS} off",
+        "RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L]"
+      ]
+    },
+    "*:15443": {
+      "ServerName": "*.appointments.umn.edu",
+      "ServerAlias": "appointments.umn.edu",
+      "DocumentRoot": "/data/www/mycla/",
+      "SSLCertificate": "star_appointments_umn_edu",
+      "SSLCertificateChain": "incommon",
+      "UseCanonicalName": "Off",
+      "Rewrite#0": [
+        "RewriteEngine on",
+        "RewriteCond %{HTTP_HOST} ^appointments\\.umn\\.edu$ [NC]",
+        "RewriteRule ^(.*)$ https://www.appointments.umn.edu%{REQUEST_URI} [L]"
+      ]      
+    }
+  }
+}

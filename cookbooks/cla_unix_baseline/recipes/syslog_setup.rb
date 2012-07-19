@@ -24,10 +24,7 @@ config_style = "modular"
 case node[:platform]
 when "ubuntu"
   syslog_style = "rsyslog"
-  
-  if node[:platform_version].to_f != 10.04 then
-    Chef::Log.warn("Only tested for Ubuntu Lucid/10.04")
-  end
+  config_style = "modular"
   
 when "redhat", "centos"
   if node[:platform_version].to_f < 6.0 then
@@ -53,6 +50,14 @@ when "traditional"
   end
 when "rsyslog"
   if "config_style" == "modular" then 
+    template "/etc/rsyslog.conf" do 
+      source "rsyslog-modular.erb"
+      mode "0644"
+      owner "root"
+      group "root"
+      action :create
+      notifies :restart, "service[rsyslog]"
+    end
     template "/etc/rsyslog.d/99-claoit.conf" do 
       source "rsyslog-config.erb"
       mode "0644"
@@ -66,7 +71,7 @@ when "rsyslog"
       command "rm /etc/rsyslog.d/99-singularity.conf"
       notifies :restart, "service[rsyslog]"
     end
-  else
+  else # config_style is monolithic
     template "/etc/rsyslog.conf" do 
       source "rsyslog-monolithic.erb"
       mode "0644"

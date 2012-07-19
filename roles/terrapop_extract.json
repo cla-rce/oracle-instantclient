@@ -1,0 +1,15 @@
+{
+  "override_attributes": {
+  },
+  "name": "terrapop_extract",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "run_list": [
+    "recipe[cla_terrapop::extract]"
+  ],
+  "description": "",
+  "chef_type": "role",
+  "env_run_lists": {
+  }
+}
