@@ -9,7 +9,10 @@
   "chef_type": "role",
   "run_list": [
     "recipe[chef-client::default]",
-    "recipe[chef-client::delete_validation]"
+    "recipe[chef-client::delete_validation]",
+    "recipe[chef_handler::default]",
+    "recipe[chef_handler::campfire]",
+    "recipe[windows::reboot_handler]"
   ],
   "env_run_lists": {
   }
