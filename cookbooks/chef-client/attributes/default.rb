@@ -59,9 +59,10 @@ when "windows"
   default["chef_client"]["bin"]         = "C:/opscode/chef/bin/chef-client.bat"
   #Required for minsw wrapper
   default["chef_client"]["ruby_bin"]    = File.join(RbConfig::CONFIG['bindir'], "ruby.exe")
-  default["chef_client"]["winsw_url"]   = "http://maven.dyndns.org/2/com/sun/winsw/winsw/1.8/winsw-1.8-bin.exe"
+  default["chef_client"]["winsw_url"]   = "http://download.java.net/maven/2/com/sun/winsw/winsw/1.9/winsw-1.9-bin.exe"
   default["chef_client"]["winsw_dir"]   = "C:/chef/bin"
   default["chef_client"]["winsw_exe"]   = "chef-client.exe"
+  default["chef_client"]["conf_dir"]    = "C:/chef/log"
 else
   default["chef_client"]["init_style"]  = "none"
   default["chef_client"]["run_path"]    = "/var/run"
