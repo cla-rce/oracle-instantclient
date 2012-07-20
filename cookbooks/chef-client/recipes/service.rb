@@ -26,7 +26,8 @@ root_group = value_for_platform(
 
 # COOK-635 account for alternate gem paths
 # try to use the bin provided by the node attribute
-if ::File.executable?(node["chef_client"]["bin"])
+# Ruby on Windows doesn't consider the chef-client script to be executable so don't check
+if ::File.executable?(node["chef_client"]["bin"]) or node["platform"] == "windows"
   client_bin = node["chef_client"]["bin"]
 # search for the bin in some sane paths
 elsif Chef::Client.const_defined?('SANE_PATHS') && (chef_in_sane_path=Chef::Client::SANE_PATHS.map{|p| p="#{p}/chef-client";p if ::File.executable?(p)}.compact.first) && chef_in_sane_path
