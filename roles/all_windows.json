@@ -8,7 +8,8 @@
   },
   "chef_type": "role",
   "run_list": [
-
+    "recipe[chef-client::default]",
+    "recipe[chef-client::delete_validation]"
   ],
   "env_run_lists": {
   }
