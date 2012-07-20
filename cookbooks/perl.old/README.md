@@ -1,7 +1,7 @@
 Description
 ===========
 
-Manages Perl installation and provides `cpan_module`, to install modules
+Manages Perl installation and provides `cpan_module`, to install modules 
 from... CPAN.
 
 Requirements
@@ -12,17 +12,6 @@ Requirements
 * Debian/Ubuntu/Mint
 * RHEL/CentOS/Scientific/Oracle/Fedora
 * ArchLinux
-
-Attributes
-==========
-
-  * perl\['packages'\] - platform specific packages installed by default recipe
-
-  * perl\['cpanm'\]\['path'\] - platform specific path for `cpanm` binary to live
-
-  * perl\['cpanm'\]\['url'\] - URL to download cpanm script from
-
-  * perl\['cpanm'\]\['checksum'\] - checksum for the above remote file
 
 Usage
 =====
@@ -41,6 +30,7 @@ License and Author
 ==================
 
 Author:: Joshua Timberman (<joshua@opscode.com>)
+
 Copyright:: 2009, Opscode, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,4 +44,3 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
