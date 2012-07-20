@@ -35,7 +35,7 @@ chef_handler "CampfireHandler" do
   source "#{node['chef_handler']['handler_path']}/campfire_handler.rb"
   # this should come from attributes, user is borkborkbork (buysse@ugmail.com)
   # right now
-  if node[:cla_unix_baseline][:use_system_proxy]
+  if node["platform"] != "windows" and node[:cla_unix_baseline][:use_system_proxy]
     arguments :subdomain => "universityofminnesota5", 
       :token => 'e7ad3accfb4d586457178088c272eb51a26d3005',
       :room_id => '455767',
