@@ -20,7 +20,7 @@
 #
 
 windows_package "Symantec Endpoint Protection" do
-  source '\\cla-util.ad.umn.edu\apps$\Symantec\Endpoint Protection\setup.exe'
+  source '"\\\\cla-util.ad.umn.edu\\apps$\\Symantec\\Endpoint Protection\\setup.exe"'
   installer_type :custom
   action :install
 end

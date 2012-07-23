@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-#include_recipe "cla_windows_baseline::sep"
+include_recipe "cla_windows_baseline::sep"
