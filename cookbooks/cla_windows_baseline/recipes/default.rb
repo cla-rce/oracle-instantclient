@@ -17,4 +17,8 @@
 # limitations under the License.
 #
 
+windows_feature "Telnet-Client" do
+  action :install
+end
+
 include_recipe "cla_windows_baseline::sep"
