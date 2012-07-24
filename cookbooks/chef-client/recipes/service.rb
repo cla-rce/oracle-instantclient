@@ -231,6 +231,12 @@ when "winsw"
     only_if { WMI::Win32_Service.find(:first, :conditions => {:name => "chef-client"}).nil? }
   end
 
+  execute "Make chef-client service start type 'Automatic (Delayed Start)" do
+    command "C:\\windows\\system32\\sc.exe config chef-client start= delayed-auto"
+    only_if { WMI::Win32_Service.find(:first, :conditions => {:name => "chef-client"}) and
+      !(%x[c:\\windows\\system32\\sc.exe qc chef-client] =~ /DELAYED/) }
+  end
+
   service "chef-client" do
     action :start
   end
