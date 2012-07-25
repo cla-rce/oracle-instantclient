@@ -20,11 +20,8 @@
 # Install the following roles:
 # AppServer - Remote Desktop Session Host
 # AppServer-UI - Remote Desktop Session Host Configuration Tools
-# FailoverCluster-FullServer - Failover Clustering
-# SessionDirectory - Remote Desktop Connection Broker
-# SBMgr-UI - Remote Desktop Connection Broker Configuration Tools
 
-%w{AppServer AppServer-UI FailoverCluster-FullServer SessionDirectory SBMgr-UI}.each do |feature|
+%w{AppServer AppServer-UI}.each do |feature|
   windows_feature feature do
    action :install
   end
