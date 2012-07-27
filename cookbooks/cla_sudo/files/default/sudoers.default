@@ -370,9 +370,12 @@ Host_Alias	LPE_DEV_SERVERS=lpe-rails-b,lpe-rails-b.cla.umn.edu
 User_Alias	LPE_DEV_USERS=bsampietro,wozniak
 LPE_DEV_USERS	LPE_DEV_SERVERS=NOPASSWD: ALL,!SHELLS
 
+### temporary add for Fran on mpc-redmine
+Host_Alias	MPC_REDMINE_SERVERS=mpc-redmine,mpc-redmine.cla.umn.edu
+fran		MPC_REDMINE_SERVERS=(root) /usr/bin/newaliases,sudoedit /etc/aliases
+
 #### this needs to be at the end, for now.  Other bits will move here once the LWRP is
 #### completed and working, currently in flux
-#### Note: this is *not* a comment, the leading # is needed for it to work
-#### ugly-ass syntax bullsh*t
+#### Note: this is *not* a comment, the leading hash is needed for it to work
+#### ugly-ass syntax bullshit
 #includedir /etc/sudoers.d
-
