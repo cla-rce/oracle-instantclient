@@ -12,8 +12,7 @@
   },
   "chef_type": "role",
   "run_list": [
-    "recipe[cla_tsfarm::default]",
-    "recipe[cla_tsfarm::certificate]"
+    "recipe[cla_tsfarm::default]"
   ],
   "env_run_lists": {
   }

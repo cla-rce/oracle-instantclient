@@ -26,3 +26,6 @@
    action :install
   end
 end
+
+include_recipe "cla_tsfarm::certificate"
+include_recipe "cla_tsfarm::apps"
