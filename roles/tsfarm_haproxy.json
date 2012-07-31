@@ -1,10 +1,10 @@
 {
-  "name": "wts_haproxy",
+  "name": "tsfarm_haproxy",
   "description": "",
   "json_class": "Chef::Role",
   "default_attributes": {
     "haproxy": {
-      "app_server_role": "wts_terminal_server_farm",
+      "app_server_role": "tsfarm_session_host",
       "incoming_port": "3389",
       "member_port": "3389"
     }
