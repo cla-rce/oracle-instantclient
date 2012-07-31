@@ -5,10 +5,15 @@
   "default_attributes": {
   },
   "override_attributes": {
+    "cla_tsfarm": {
+      "cert_location": "\\\\cla-util.ad.umn.edu\\apps$\\private\\certificates\\wts.umn.edu.pfx",
+      "cert_thumbprint": "D91437E32CE9037C6C38E2EDAB8B9B5197CCA9F0"
+    }
   },
   "chef_type": "role",
   "run_list": [
-    "recipe[cla_tsfarm::default]"
+    "recipe[cla_tsfarm::default]",
+    "recipe[cla_tsfarm::certificate]"
   ],
   "env_run_lists": {
   }
