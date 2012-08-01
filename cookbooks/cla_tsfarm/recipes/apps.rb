@@ -24,9 +24,9 @@ windows_package "Mozilla Firefox 10.0.6 (x86 en-US)" do
   action :install
 end
 
-windows_package "Stata 11" do
+windows_package "Stata 12" do
   source "c:/windows/sysnative/cmd.exe"
-  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\stata\\11\\install.bat"'
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\stata\\12\\install.bat"'
   installer_type :custom
   action :install
 end
