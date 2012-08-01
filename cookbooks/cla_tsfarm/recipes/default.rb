@@ -21,9 +21,14 @@
 # AppServer - Remote Desktop Session Host
 # AppServer-UI - Remote Desktop Session Host Configuration Tools
 
+windows_reboot 60 do
+  action :nothing
+end
+
 %w{AppServer AppServer-UI}.each do |feature|
   windows_feature feature do
    action :install
+   notifies :request, 'windows_reboot[60]'
   end
 end
 
