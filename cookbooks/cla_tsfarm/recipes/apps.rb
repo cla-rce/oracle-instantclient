@@ -115,3 +115,16 @@ windows_package "MATLAB R2012a" do
   installer_type :custom
   action :install
 end
+
+#.NET 3.5 is needed for Amos
+windows_feature "NetFx3" do
+  action :enable
+end
+
+windows_package "IBM SPSS Amos 20" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\SPSS\\20\\install-amos.bat"'
+  installer_type :custom
+  action :install
+end
+
