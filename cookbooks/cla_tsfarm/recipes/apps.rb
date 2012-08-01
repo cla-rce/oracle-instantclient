@@ -62,7 +62,7 @@ end
 
 windows_package "Java(TM) 6 Update 33" do
   source "c:/windows/sysnative/cmd.exe"
-  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\oracle\\java\\1.6.0_33\\install.bat"'
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\oracle\\jre\\1.6.0_33\\install.bat"'
   installer_type :custom
   action :install
 end
