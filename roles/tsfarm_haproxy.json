@@ -6,7 +6,8 @@
     "haproxy": {
       "app_server_role": "tsfarm_session_host",
       "incoming_port": "3389",
-      "member_port": "3389"
+      "member_port": "3389",
+      "member_max_connections": "1000"
     }
   },
   "override_attributes": {
