@@ -18,19 +18,22 @@
 #
 
 windows_package "Mozilla Firefox 10.0.6 (x86 en-US)" do
-  source '"\\\\cla-util.ad.umn.edu\\apps$\\firefox\\10.0.6esr\\install.bat"'
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\firefox\\10.0.6esr\\install.bat"'
   installer_type :custom
   action :install
 end
 
 windows_package "Stata 11" do
-  source '"\\\\cla-util.ad.umn.edu\\apps$\\stata\\11\\install.bat"'
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\stata\\11\\install.bat"'
   installer_type :custom
   action :install
 end
 
 windows_package "IBM SPSS Statistics 20" do
-  source '"\\\\cla-util.ad.umn.edu\\apps$\\spss\\20\\install.bat"'
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\spss\\20\\install.bat"'
   installer_type :custom
   action :install
 end
