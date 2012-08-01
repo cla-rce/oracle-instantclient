@@ -66,7 +66,7 @@ windows_package "NX Client for Windows 3.5.0-7" do
   action :install
 end
 
-windows_package "Matlab R2012a" do
+windows_package "MATLAB R2012a" do
   source "c:/windows/sysnative/cmd.exe"
   options '/c "\\\\cla-util.ad.umn.edu\\apps$\\Matlab\\R2012a\\install.bat"'
   installer_type :custom
