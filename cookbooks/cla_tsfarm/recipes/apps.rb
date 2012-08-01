@@ -118,7 +118,7 @@ end
 
 #.NET 3.5 is needed for Amos
 windows_feature "NetFx3" do
-  action :enable
+  action :install
 end
 
 windows_package "IBM SPSS Amos 20" do
