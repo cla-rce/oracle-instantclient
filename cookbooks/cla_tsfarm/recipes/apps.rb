@@ -37,3 +37,31 @@ windows_package "IBM SPSS Statistics 20" do
   installer_type :custom
   action :install
 end
+
+windows_package "TextPad 5" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\TextPad\\5.4.2\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
+windows_package "7-Zip 9.20 (x64 edition)" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\7-zip\\9.20\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
+windows_package "Wolfram Mathematica 8 (M-WIN-L 8.0.1 2063990)" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\Mathematica\\8.0.1\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
+windows_package "NX Client for Windows 3.5.0-7" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\NX Client\\3.5.0-7\\install.bat"'
+  installer_type :custom
+  action :install
+end
