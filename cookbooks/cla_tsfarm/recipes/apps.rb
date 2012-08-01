@@ -65,3 +65,24 @@ windows_package "NX Client for Windows 3.5.0-7" do
   installer_type :custom
   action :install
 end
+
+windows_package "Matlab R2012a" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\Matlab\\R2012a\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
+windows_package "PuTTY version 0.62" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\putty\\0.62\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
+windows_package "WinSCP 4.3.7" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\winscp\\4.3.7\\install.bat"'
+  installer_type :custom
+  action :install
+end
