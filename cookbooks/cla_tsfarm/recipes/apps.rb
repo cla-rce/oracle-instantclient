@@ -74,6 +74,13 @@ windows_package "NX Client for Windows 3.5.0-7" do
   action :install
 end
 
+windows_package "Microsoft Office Professional Plus 2010" do
+  source "c:/windows/sysnative/cmd.exe"
+  options '/c "\\\\cla-util.ad.umn.edu\\apps$\\microsoft\\office\\2010\\install.bat"'
+  installer_type :custom
+  action :install
+end
+
 windows_package "Adobe Reader X (10.1.3)" do
   source "c:/windows/sysnative/cmd.exe"
   options '/c "\\\\cla-util.ad.umn.edu\\apps$\\adobe\\reader\\10.1.3\\install.bat"'
