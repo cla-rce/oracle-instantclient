@@ -14,18 +14,17 @@ defaults
         option  httplog
         option  dontlognull
         retries 3
-        redispatch
         maxconn 2000
         contimeout      5000
-        clitimeout      50000
-        srvtimeout      50000
-        <% if node["haproxy"]["x_forwarded_for"] -%>
-        option httpclose
-        option forwardfor
-        <% end -%>
-        
+        clitimeout      1h
+        srvtimeout      1h
+
 # Set up rdp listeners here.
 listen rdp 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
+  mode tcp
+  option tcpka
+  option tcplog
+  option redispatch
   balance <%= node["haproxy"]["balance_algorithm"] %>
   <% @pool_members.each do |member| -%>
   server <%= member[:hostname] %> <%= member[:ipaddress] %>:<%= node["haproxy"]["member_port"] %> weight 1 maxconn <%= node["haproxy"]["member_max_connections"] %> check inter 2000 rise 2 fall 3

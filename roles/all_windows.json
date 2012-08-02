@@ -5,6 +5,9 @@
   "default_attributes": {
   },
   "override_attributes": {
+    "windows": {
+      "allow_pending_reboots": false
+    }
   },
   "chef_type": "role",
   "run_list": [
