@@ -28,7 +28,7 @@ defaults
 listen rdp 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
   balance <%= node["haproxy"]["balance_algorithm"] %>
   <% @pool_members.each do |member| -%>
-  server <%= member[:hostname] %> <%= member[:ipaddress] %>:<%= node["haproxy"]["member_port"] %> weight 1 maxconn <%= node["haproxy"]["member_max_connections"] %> check
+  server <%= member[:hostname] %> <%= member[:ipaddress] %>:<%= node["haproxy"]["member_port"] %> weight 1 maxconn <%= node["haproxy"]["member_max_connections"] %> check inter 2000 rise 2 fall 3
   <% end -%>
 
 <% if node["haproxy"]["enable_admin"] -%>
