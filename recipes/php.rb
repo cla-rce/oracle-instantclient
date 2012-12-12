@@ -29,8 +29,17 @@ else
 end
 
 # we need expect to build the pecl module
-package "expect"
-package "expect-dev"
+pkg_list = value_for_platform(
+    ["centos","redhat","fedora", "scientific"] =>
+        {"default" => %w{ expect expect-devel }},
+    [ "debian", "ubuntu" ] =>
+        {"default" => %w{ expect expect-dev }},
+    "default" => %w{ expect expect-dev }
+  )
+
+pkg_list.each do |pkg| 
+  package pkg
+end
 
 template "/var/tmp/install_pecl_oci8.exp" do
   source "install_pecl_oci8.exp.erb"
