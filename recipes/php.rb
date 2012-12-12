@@ -29,8 +29,17 @@ else
 end
 
 # we need expect to build the pecl module
-package "expect"
-package "expect-dev"
+pkg_list = value_for_platform(
+    ["centos","redhat","fedora", "scientific"] =>
+        {"default" => %w{ expect expect-devel }},
+    [ "debian", "ubuntu" ] =>
+        {"default" => %w{ expect expect-dev }},
+    "default" => %w{ expect expect-dev }
+  )
+
+pkg_list.each do |pkg| 
+  package pkg
+end
 
 template "/var/tmp/install_pecl_oci8.exp" do
   source "install_pecl_oci8.exp.erb"
@@ -38,12 +47,23 @@ template "/var/tmp/install_pecl_oci8.exp" do
   owner "root"
 end
 
-template "/etc/php5/conf.d/oci8.ini" do 
+php_conf_dir = value_for_platform(
+	["centos","redhat","fedora", "scientific"] => 
+		{"default" => "/etc/php.d"},
+	"default" => "/etc/php5/conf.d"
+  )
+
+template "#{php_conf_dir}/oci8.ini" do 
   source "oci8.ini.erb"
   mode "0755"
 end
 
+php_lib_dir = value_for_platform(
+	["centos","redhat","fedora", "scientific"] => 
+		{"default" => "/usr/lib/php/modules"},
+	"default" => "/usr/lib/php5/20090626"
+  )
 execute "build_php_oci8_mod" do
   command "/usr/bin/expect /var/tmp/install_pecl_oci8.exp"
-  not_if "test -f /usr/lib/php5/20090626/oci8.so"
+  not_if "test -f #{php_lib_dir}/oci8.so"
 end
