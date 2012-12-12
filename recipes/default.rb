@@ -20,7 +20,14 @@
 # installs from remote files
 
 # dependencies
-pkg_list = ["unzip", "libaio1"]
+pkg_list = value_for_platform(
+    ["centos","redhat","fedora", "scientific"] =>
+        {"default" => %w{ unzip libaio }},
+    [ "debian", "ubuntu" ] =>
+        {"default" => %w{ unzip libaio1 }},
+    "default" => %w{ unzip libaio1 }
+  )
+
 pkg_list.each do |pkg| 
   package pkg
 end
