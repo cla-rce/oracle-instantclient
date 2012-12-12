@@ -20,7 +20,14 @@
 # installs from remote files
 
 # dependencies
-pkg_list = ["unzip", "libaio1"]
+pkg_list = value_for_platform(
+    ["centos","redhat","fedora", "scientific"] =>
+        {"default" => %w{ unzip libaio }},
+    [ "debian", "ubuntu" ] =>
+        {"default" => %w{ unzip libaio1 }},
+    "default" => %w{ unzip libaio1 }
+  )
+
 pkg_list.each do |pkg| 
   package pkg
 end
@@ -75,6 +82,9 @@ execute "unpack_instant_client" do
   command "/usr/bin/unzip #{node[:oracle_instantclient][:install_dir]}/dist/#{basic_file_name} -d #{node[:oracle_instantclient][:install_dir]}"
   action :nothing
   notifies :run, "script[add_soname_symlink]", :immediately
+  not_if do 
+    ::File.exists?("#{node[:oracle_instantclient][:install_dir]}/#{node[:oracle_instantclient][:client_dir_name]}") 
+  end
 end
 
 script "add_soname_symlink" do 
