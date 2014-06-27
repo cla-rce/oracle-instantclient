@@ -48,10 +48,14 @@ template "/var/tmp/install_pecl_oci8.exp" do
 end
 
 php_conf_dir = value_for_platform(
-	["centos","redhat","fedora", "scientific"] => 
-		{"default" => "/etc/php.d"},
-	"default" => "/etc/php5/conf.d"
-  )
+  ["centos","redhat","fedora", "scientific"] => 
+    {"default" => "/etc/php.d"},
+  "ubuntu" => {
+    "14.04" => "/etc/php5/mods-available",
+    "default" => "/etc/php5/conf.d"
+  },
+  "default" => "/etc/php5/conf.d"
+)
 
 template "#{php_conf_dir}/oci8.ini" do 
   source "oci8.ini.erb"
@@ -59,11 +63,27 @@ template "#{php_conf_dir}/oci8.ini" do
 end
 
 php_lib_dir = value_for_platform(
-	["centos","redhat","fedora", "scientific"] => 
-		{"default" => "/usr/lib/php/modules"},
-	"default" => "/usr/lib/php5/20090626"
-  )
+  ["centos","redhat","fedora", "scientific"] => 
+    {"default" => "/usr/lib/php/modules"},
+  "ubuntu" => {
+    "14.04" => "/usr/lib/php5/20121212",
+    "default" => "/usr/lib/php5/20090626",
+  },
+  "default" => "/usr/lib/php5/20090626"
+)
+
 execute "build_php_oci8_mod" do
   command "/usr/bin/expect /var/tmp/install_pecl_oci8.exp"
   not_if "test -f #{php_lib_dir}/oci8.so"
+end
+
+execute "enable_oci8_mod" do
+  command "php5enmod oci8/20"
+  only_if { File.exist?("/etc/php5/mods-available/oci8.ini") }
+  not_if do
+    File.symlink?("/etc/php5/apache2/conf.d/20-oci8.ini") ||
+    File.symlink?("/etc/php5/cli/conf.d/20-oci8.ini") ||
+    File.symlink?("/etc/php5/cgi/conf.d/20-oci8.ini") ||
+    File.symlink?("/etc/php5/fpm/conf.d/20-oci8.ini")
+  end
 end
