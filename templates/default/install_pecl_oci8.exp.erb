@@ -1,12 +1,7 @@
-set timeout -1
-spawn "/bin/bash"
-match_max 100000
-expect -exact "# "
-send -- "pecl update-channels\r"
-expect -exact "# "
-send -- "pecl install oci8\r"
+set timeout 300
+spawn pecl update-channels
+expect eof
+spawn pecl install oci8
 expect " compiling with Oracle Instant Client"
 send -- "instantclient,<%= "#{node[:oracle_instantclient][:install_dir]}/#{node[:oracle_instantclient][:client_dir_name]}" %>\r"
-expect "install ok:" 
-send "exit\r"
-
+expect "install ok:"
