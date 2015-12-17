@@ -1,7 +1,7 @@
 set timeout 300
 spawn pecl update-channels
 expect eof
-spawn pecl install oci8
+spawn pecl install <%= node[:oracle_instantclient][:php_pecl_package] %>
 expect " compiling with Oracle Instant Client"
 send -- "instantclient,<%= "#{node[:oracle_instantclient][:install_dir]}/#{node[:oracle_instantclient][:client_dir_name]}" %>\r"
 expect "install ok:"
