@@ -22,21 +22,17 @@
 
 include_recipe "oracle-instantclient::default"
 
-if node[:kernel][:machine] == "x86_64" then
-  arch_flag = ".x64"
-else
-  arch_flag = ""
-end
-
+arch_flag = node["kernel"]["machine"] == "x86_64" ? ".x64" : ""
 basic_file_name = "instantclient-jdbc-linux#{arch_flag}-#{node[:oracle_instantclient][:client_version]}.zip"
+install_dir = node["oracle_instantclient"]["install_dir"]
 
-remote_file "#{node[:oracle_instantclient][:install_dir]}/dist/#{basic_file_name}" do
+remote_file "#{install_dir}/dist/#{basic_file_name}" do
   source "#{node[:oracle_instantclient][:download_base]}/#{basic_file_name}"
   action :create_if_missing
   notifies :run, "execute[unpack_instant_client_jdbc]", :immediately
 end
 
 execute "unpack_instant_client_jdbc" do
-  command "/usr/bin/unzip #{node[:oracle_instantclient][:install_dir]}/dist/#{basic_file_name} -d #{node[:oracle_instantclient][:install_dir]}"
+  command "/usr/bin/unzip #{install_dir}/dist/#{basic_file_name} -d #{install_dir}"
   action :nothing
 end

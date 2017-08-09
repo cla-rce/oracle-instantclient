@@ -17,73 +17,49 @@
 # limitations under the License.
 #
 
-# installs from remote files
-# requires the default recipe
+if node["platform_version"].to_f == 14.04
+  conf_dir      = "/etc/php5"
+  ext_conf_dir  = "/etc/php5/mods-available"
+  extension_dir = "/usr/lib/php5/20121212"
+  package %w( expect expect-dev )
+else # Newer than 14.04
+  conf_dir      = "/etc/php/7.0"
+  ext_conf_dir  = "/etc/php/7.0/mods-available"
+  extension_dir = "/usr/lib/php/20151012"
+  package "expect"
+end
 
 include_recipe "oracle-instantclient::sdk"
 
-if node[:kernel][:machine] == "x86_64" then
-  arch_flag = ".x64"
-else
-  arch_flag = ""
-end
-
-# we need expect to build the pecl module
-pkg_list = value_for_platform(
-    ["centos","redhat","fedora", "scientific"] =>
-        {"default" => %w{ expect expect-devel }},
-    [ "debian", "ubuntu" ] =>
-        {"default" => %w{ expect expect-dev }},
-    "default" => %w{ expect expect-dev }
-  )
-
-pkg_list.each do |pkg| 
-  package pkg
-end
-
 template "/var/tmp/install_pecl_oci8.exp" do
   source "install_pecl_oci8.exp.erb"
-  mode "0755"
   owner "root"
-end
-
-php_conf_dir = value_for_platform(
-  ["centos","redhat","fedora", "scientific"] => 
-    {"default" => "/etc/php.d"},
-  "ubuntu" => {
-    "14.04" => "/etc/php5/mods-available",
-    "default" => "/etc/php5/conf.d"
-  },
-  "default" => "/etc/php5/conf.d"
-)
-
-template "#{php_conf_dir}/oci8.ini" do 
-  source "oci8.ini.erb"
+  group "root"
   mode "0755"
 end
 
-php_lib_dir = value_for_platform(
-  ["centos","redhat","fedora", "scientific"] => 
-    {"default" => "/usr/lib/php/modules"},
-  "ubuntu" => {
-    "14.04" => "/usr/lib/php5/20121212",
-    "default" => "/usr/lib/php5/20090626",
-  },
-  "default" => "/usr/lib/php5/20090626"
-)
-
-execute "build_php_oci8_mod" do
-  command "/usr/bin/expect /var/tmp/install_pecl_oci8.exp"
-  not_if "test -f #{php_lib_dir}/oci8.so"
+template "#{ext_conf_dir}/oci8.ini" do
+  source "oci8.ini.erb"
+  owner "root"
+  group "root"
+  mode "0755"
+  only_if { File.exist?(conf_dir) }
 end
 
-execute "enable_oci8_mod" do
-  command "php5enmod oci8/20"
-  only_if { File.exist?("/etc/php5/mods-available/oci8.ini") }
-  not_if do
-    File.symlink?("/etc/php5/apache2/conf.d/20-oci8.ini") ||
-    File.symlink?("/etc/php5/cli/conf.d/20-oci8.ini") ||
-    File.symlink?("/etc/php5/cgi/conf.d/20-oci8.ini") ||
-    File.symlink?("/etc/php5/fpm/conf.d/20-oci8.ini")
-  end
+execute "build oci8 php module" do
+  command "/usr/bin/expect /var/tmp/install_pecl_oci8.exp"
+  only_if { File.exist?(extension_dir) }
+  not_if { File.exist?("#{extension_dir}/oci8.so") }
+end
+
+execute "enable oci8 php module" do
+  command "php5enmod oci8/20" if node["platform_version"].to_f == 14.04
+  command "phpenmod oci8/20" if node["platform_version"].to_f >= 16.04
+  only_if { File.exist?("#{ext_conf_dir}/oci8.ini") }
+  not_if {
+    File.symlink?("#{conf_dir}/apache2/conf.d/20-oci8.ini") ||
+    File.symlink?("#{conf_dir}/cli/conf.d/20-oci8.ini") ||
+    File.symlink?("#{conf_dir}/cgi/conf.d/20-oci8.ini") ||
+    File.symlink?("#{conf_dir}/fpm/conf.d/20-oci8.ini")
+  }
 end

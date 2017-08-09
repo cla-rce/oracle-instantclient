@@ -17,87 +17,59 @@
 # limitations under the License.
 #
 
-# installs from remote files
+arch_flag = node["kernel"]["machine"] == "x86_64" ? ".x64" : ""
+basic_file_name = "instantclient-basic-linux#{arch_flag}-#{node["oracle_instantclient"]["client_version"]}.zip"
+install_dir = node["oracle_instantclient"]["install_dir"]
 
-# dependencies
-pkg_list = value_for_platform(
-    ["centos","redhat","fedora", "scientific"] =>
-        {"default" => %w{ unzip libaio }},
-    [ "debian", "ubuntu" ] =>
-        {"default" => %w{ unzip libaio1 }},
-    "default" => %w{ unzip libaio1 }
-  )
+package %w( unzip libaio1 )
 
-pkg_list.each do |pkg| 
-  package pkg
-end
-
-if node[:kernel][:machine] == "x86_64" then
-  arch_flag = ".x64"
-else
-  arch_flag = ""
-end
-
-basic_file_name = "instantclient-basic-linux#{arch_flag}-#{node[:oracle_instantclient][:client_version]}.zip"
-
-directory node[:oracle_instantclient][:install_dir] do
-  mode "0755"
+directory "#{install_dir}/dist" do
   owner "root"
   group "root"
-end
-
-directory "#{node[:oracle_instantclient][:install_dir]}/dist" do
   mode "0755"
-  owner "root"
-  group "root"
+  recursive true
 end
 
-remote_file "#{node[:oracle_instantclient][:install_dir]}/dist/#{basic_file_name}" do
+remote_file "#{install_dir}/dist/#{basic_file_name}" do
   source "#{node[:oracle_instantclient][:download_base]}/#{basic_file_name}"
   action :create_if_missing
   notifies :run, "execute[unpack_instant_client]", :immediately
-  notifies :run, "execute[run_ldconfig]", :delayed
+end
+
+execute "unpack_instant_client" do
+  command "/usr/bin/unzip #{install_dir}/dist/#{basic_file_name} -d #{install_dir}"
+  action :nothing
+  notifies :run, "execute[run_ldconfig]"
 end
 
 template "/etc/ld.so.conf.d/oracle_instantclient.conf" do 
   source "oracle_instantclient.conf.erb"
-  mode "0644"
   owner "root"
-  notifies :run, "execute[run_ldconfig]", :delayed
+  group "root"
+  mode "0644"
+  notifies :run, "execute[run_ldconfig]"
 end
 
 template "/etc/profile.d/oracle_instantclient.csh" do 
   source "oracle_instantclient.csh.erb"
-  mode "0644"
   owner "root"
+  group "root"
+  mode "0644"
 end
 
 template "/etc/profile.d/oracle_instantclient.sh" do 
   source "oracle_instantclient.sh.erb"
-  mode "0644"
   owner "root"
+  group "root"
+  mode "0644"
 end
 
-execute "unpack_instant_client" do
-  command "/usr/bin/unzip #{node[:oracle_instantclient][:install_dir]}/dist/#{basic_file_name} -d #{node[:oracle_instantclient][:install_dir]}"
-  action :nothing
-  notifies :run, "script[add_soname_symlink]", :immediately
-  not_if do 
-    ::File.exists?("#{node[:oracle_instantclient][:install_dir]}/#{node[:oracle_instantclient][:client_dir_name]}") 
-  end
-end
-
-script "add_soname_symlink" do 
-  interpreter "bash"
-  code <<-EOC
-  cd #{node[:oracle_instantclient][:install_dir]}/#{node[:oracle_instantclient][:client_dir_name]}
-  ln -sf libclntsh.so.11.1 libclntsh.so
-  EOC
-  action :nothing
+link "libclntsh.so" do
+  target_file "#{install_dir}/#{node["oracle_instantclient"]["client_dir_name"]}/libclntsh.so"
+  to "libclntsh.so.#{node["oracle_instantclient"]["client_version"].split(".")[0]}.1"
 end
 
 execute "run_ldconfig" do 
   command "/sbin/ldconfig"
   action :nothing
 end
-
