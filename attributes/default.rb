@@ -1,4 +1,4 @@
-default["oracle_instantclient"]["download_base"] = "http://leviticus.claoit.umn.edu/redhat/oracle-instantclient"
+default["oracle_instantclient"]["download_base"] = "http://leviticus.claoit.umn.edu/oracle/instantclient"
 default["oracle_instantclient"]["install_dir"] = "/usr/local"
 
 default["oracle_instantclient"]["client_version"] = "12.2.0.1.0"

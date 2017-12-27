@@ -24,28 +24,31 @@ packages.each do |pkg|
   end
 end
 
-describe file("#{orahome}/SQLPLUS_README") do
-  it { should be_owned_by "root" }
-  it { should be_grouped_into "root" }
-  it { should be_mode 664 }
-  its(:content) { should match %r|#{oravers}| }
-end
-
-describe file("#{orahome}/JDBC_README") do
-  it { should be_owned_by "root" }
-  it { should be_grouped_into "root" }
-  it { should be_mode 664 }
-  its(:content) { should match %r|#{oravers}| }
-end
-
-# We run this via Bash to test whether the scripts we dropped in
-# /etc/profile.d are working correctly
-describe command("/bin/bash -lc 'echo | $ORACLE_HOME/sqlplus'") do
-  its(:stdout) { should match %r|^SQL\*Plus: Release #{oravers}| }
+%w( JDBC_README sdk/SDK_README ).each do |filename|
+  describe file("#{orahome}/#{filename}") do
+    it { should be_owned_by "root" }
+    it { should be_grouped_into "root" }
+    it { should be_mode 664 }
+    its(:content) { should match %r|#{oravers}| }
+  end
 end
 
 if os[:family] == "ubuntu"
   describe command("/usr/bin/php --modules") do
     its(:stdout) { should match %r|^oci8$| }
+  end
+end
+
+# We run these commands via Bash to test whether the scripts we dropped in
+# /etc/profile.d are working correctly, in addition to testing whether the
+# executables were unpacked correctly
+
+describe command("/bin/bash -lc 'echo | $ORACLE_HOME/sqlplus'") do
+  its(:stdout) { should match %r|^SQL\*Plus: Release #{oravers}| }
+end
+
+if oravers.to_i >= 12
+  describe command("/bin/bash -lc '$ORACLE_HOME/sqlldr --foo'") do
+    its(:stderr) { should match %r|^SQL\*Loader: Release #{oravers}| }
   end
 end

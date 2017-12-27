@@ -19,6 +19,7 @@
 
 arch_flag = node["kernel"]["machine"] == "x86_64" ? ".x64" : ""
 basic_file_name = "instantclient-basic-linux#{arch_flag}-#{node["oracle_instantclient"]["client_version"]}.zip"
+tools_file_name = "instantclient-tools-linux#{arch_flag}-#{node["oracle_instantclient"]["client_version"]}.zip"
 install_dir = node["oracle_instantclient"]["install_dir"]
 
 case node["platform"]
@@ -43,6 +44,19 @@ end
 
 execute "unpack_instant_client" do
   command "/usr/bin/unzip #{install_dir}/dist/#{basic_file_name} -d #{install_dir}"
+  action :nothing
+  notifies :run, "execute[run_ldconfig]"
+end
+
+remote_file "#{install_dir}/dist/#{tools_file_name}" do
+  source "#{node["oracle_instantclient"]["download_base"]}/#{tools_file_name}"
+  action :create_if_missing
+  notifies :run, "execute[unpack_tools]", :immediately
+  only_if { node["oracle_instantclient"]["client_version"].to_f >= 12.0 }
+end
+
+execute "unpack_tools" do
+  command "/usr/bin/unzip #{install_dir}/dist/#{tools_file_name} -d #{install_dir}"
   action :nothing
   notifies :run, "execute[run_ldconfig]"
 end
