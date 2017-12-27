@@ -21,7 +21,12 @@ arch_flag = node["kernel"]["machine"] == "x86_64" ? ".x64" : ""
 basic_file_name = "instantclient-basic-linux#{arch_flag}-#{node["oracle_instantclient"]["client_version"]}.zip"
 install_dir = node["oracle_instantclient"]["install_dir"]
 
-package %w( unzip libaio1 )
+case node["platform"]
+when "ubuntu"
+  package %w( unzip libaio1 )
+when "redhat", "centos"
+  package %w( unzip libaio )
+end
 
 directory "#{install_dir}/dist" do
   owner "root"

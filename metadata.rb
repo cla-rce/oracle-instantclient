@@ -6,6 +6,8 @@ description      "Installs/Configures oracle-instantclient"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.4.0"
 
+supports "centos", ">= 6.0"
+supports "redhat", ">= 6.0"
 supports "ubuntu", ">= 14.04"
 
 chef_version ">= 12.1" if respond_to?(:chef_version)

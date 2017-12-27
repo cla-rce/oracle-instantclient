@@ -17,6 +17,11 @@
 # limitations under the License.
 #
 
+if !platform?("ubuntu")
+  Chef::Log.error("oracle-instantclient::php is only implemented for Ubuntu")
+  return
+end
+
 if node["platform_version"].to_f == 14.04
   conf_dir      = "/etc/php5"
   ext_conf_dir  = "/etc/php5/mods-available"

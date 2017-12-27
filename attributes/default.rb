@@ -1,14 +1,18 @@
 default["oracle_instantclient"]["download_base"] = "http://leviticus.claoit.umn.edu/redhat/oracle-instantclient"
 default["oracle_instantclient"]["install_dir"] = "/usr/local"
 
-case node["platform_version"].to_f
-when 14.04
+default["oracle_instantclient"]["client_version"] = "12.2.0.1.0"
+default["oracle_instantclient"]["client_dir_name"] = "instantclient_12_2"
+default["oracle_instantclient"]["php_pecl_package"] = "oci8"
+
+if platform?("ubuntu") && node["platform_version"].to_f == 14.04
   default["oracle_instantclient"]["client_version"] = "11.2.0.3.0"
   default["oracle_instantclient"]["client_dir_name"] = "instantclient_11_2"
   # oci8-2.0.10 is the final version for PHP 5
   default["oracle_instantclient"]["php_pecl_package"] = "oci8-2.0.10"
-else # Newer than 14.04
-  default["oracle_instantclient"]["client_version"] = "12.2.0.1.0"
-  default["oracle_instantclient"]["client_dir_name"] = "instantclient_12_2"
-  default["oracle_instantclient"]["php_pecl_package"] = "oci8"
+end
+
+if platform?("redhat", "centos") && node["platform_version"].to_i <= 7
+  # oci8-2.0.10 is the final version for PHP 5
+  default["oracle_instantclient"]["php_pecl_package"] = "oci8-2.0.10"
 end
