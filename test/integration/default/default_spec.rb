@@ -1,12 +1,10 @@
-require_relative "./spec_helper"
-
 case os[:family]
 when "redhat"
   packages = %w( unzip libaio )
   orahome = "/usr/local/instantclient_12_2"
   oravers = "12.2.0.1.0"
 
-when "ubuntu"
+when "debian"
   packages = %w( unzip libaio1 )
   if os[:release].to_f == 14.04
     orahome = "/usr/local/instantclient_11_2"
@@ -28,7 +26,7 @@ end
   describe file("#{orahome}/#{filename}") do
     it { should be_owned_by "root" }
     it { should be_grouped_into "root" }
-    it { should be_mode 664 }
+    it { should be_mode 0664 }
     its(:content) { should match %r|#{oravers}| }
   end
 end
