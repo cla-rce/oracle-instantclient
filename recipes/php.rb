@@ -27,11 +27,14 @@ if node["platform_version"].to_f == 14.04
   ext_conf_dir  = "/etc/php5/mods-available"
   extension_dir = "/usr/lib/php5/20121212"
   package %w( expect expect-dev )
-else # Newer than 14.04
+elsif node["platform_version"].to_f == 16.04
   conf_dir      = "/etc/php/7.0"
   ext_conf_dir  = "/etc/php/7.0/mods-available"
   extension_dir = "/usr/lib/php/20151012"
-  package "expect"
+else # Newer than 16.04
+  conf_dir      = "/etc/php/7.2"
+  ext_conf_dir  = "/etc/php/7.2/mods-available"
+  extension_dir = "/usr/lib/php/20170718"
 end
 
 include_recipe "oracle-instantclient::sdk"
