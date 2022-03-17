@@ -31,10 +31,16 @@ elsif node["platform_version"].to_f == 16.04
   conf_dir      = "/etc/php/7.0"
   ext_conf_dir  = "/etc/php/7.0/mods-available"
   extension_dir = "/usr/lib/php/20151012"
-else # Newer than 16.04
+elsif node["platform_version"].to_f == 18.04
   conf_dir      = "/etc/php/7.2"
   ext_conf_dir  = "/etc/php/7.2/mods-available"
   extension_dir = "/usr/lib/php/20170718"
+elsif node["platform_version"].to_f == 20.04
+  conf_dir      = "/etc/php/7.4"
+  ext_conf_dir  = "/etc/php/7.4/mods-available"
+  extension_dir = "/usr/lib/php/20190902"
+else
+  raise "Not implemented for Ubuntu version #{node['platform_version']}"
 end
 
 include_recipe "oracle-instantclient::sdk"
